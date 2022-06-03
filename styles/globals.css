@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* my custom css */
+/* @media (min-width: 640px) { */
+/* some stuff */
+/* } */
+
+._swiper-content-padding {
+  padding-inline: 18%;
+}
+
+@media (min-width: 768px) {
+  ._show-on-md {
+    display: flex;
+  }
+  ._not-fixed-on-md {
+    position: relative;
+    z-index: auto;
+  }
+    ._handle-swiper-height {
+    height: 28rem;
+  }
+}
+
+/* only for mobile */
+@media (max-width: 768px) {
+  ._fixed-on-mobile {
+    position: fixed; /* fixed */
+    z-index: 50; /* z-50 */
+  }
+  ._fixed-on-mobile + main {
+    padding-top: 6rem; /* pt-24 */
+  }
+}
+
+/* custom animations */
+@keyframes pulse-custom {
+  50% {
+    opacity: .90;
+  }
+}
+.animate-custom-pulse {
+  animation: pulse-custom 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/*  swiper css */
+:root {
+    --swiper-theme-color: #fb923c;
+    --brand-accent-color: #fb923c;
+}
+
+.swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.75 !important;
+}
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: var(--brand-accent-color) !important;
+  opacity: 1 !important;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+/* Swiper custom css */
+._slider {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+  .swiper-button-next, .swiper-button-prev {
+    color: orange !important;
+  }
