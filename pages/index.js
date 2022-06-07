@@ -18,17 +18,6 @@ export default function Home({ fetchedData }) {
   // const { state, setState } = useStore();
   const { state, setState } = useStore();
 
-  const { count } = state;
-
-  const handleClick = () => {
-    setState({
-      type: 'ADD_COUNT',
-      payload: {
-        newCount: 5,
-      },
-    });
-  };
-
   return (
     <section className="flex-col gap-8">
       {/* The Hero Section */}
@@ -45,9 +34,11 @@ export default function Home({ fetchedData }) {
             return User.posts.map((post) => (
               <Card
                 key={post.id}
+                landId={post.id}
                 user={user}
                 size={post.size}
                 location={post.location}
+                installments={post.installments}
                 price={post.price}
                 image={post.photos[0]}
               />

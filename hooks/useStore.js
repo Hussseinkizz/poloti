@@ -5,7 +5,6 @@ export const store = createContext();
 const initialState = {
   currentCategory: 'everything',
   showNav: false,
-  count: 0,
 };
 
 // The Handler
@@ -23,11 +22,6 @@ function reducer(state, action) {
   switch (type) {
     case 'SET_CURRENT_CATEGORY':
       return { ...state, currentCategory: payload.category };
-    case 'ADD_COUNT':
-      return {
-        ...state,
-        count: incrementCount(state.count),
-      };
     // Handle Nav Menu
     case 'OPEN_NAV':
       return {

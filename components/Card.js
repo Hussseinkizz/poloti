@@ -2,8 +2,9 @@ import { Zoom } from 'react-reveal';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import usePriceFormat from '../hooks/usePriceFormat';
 
-const Card = ({ user, size, location, price, image }) => {
+const Card = ({ user, landId, size, location, price, image, installments }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const { username, avatar } = user;
 
@@ -11,11 +12,11 @@ const Card = ({ user, size, location, price, image }) => {
 
   return (
     <Zoom>
-      <div className="flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden">
+      <div className="flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow">
         {/* Card Media */}
-        <Link href="#" passHref>
+        <Link href={`/land/${landId}`} passHref>
           <a>
-            <div className="w-full h-60 group relative cursor-pointer">
+            <div className="w-full h-60 group relative cursor-pointer flex grow">
               <Image
                 src={image}
                 layout="fill"
@@ -31,14 +32,14 @@ const Card = ({ user, size, location, price, image }) => {
                 onLoadingComplete={() => setImageIsLoading(false)}
               />
               {/* The overlay content */}
-              <span className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear">
-                {title}
-              </span>
+              <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear">
+                <span>{title}</span>
+              </div>
             </div>
           </a>
         </Link>
         {/* Card Content */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col justify-between gap-4 grow">
           <div className="p-2 flex items-center justify-between gap-8">
             <div className="flex justify-start gap-2 items-center">
               <span className="w-8 h-8">
@@ -50,17 +51,20 @@ const Card = ({ user, size, location, price, image }) => {
                   className="rounded-full"
                 />
               </span>
-              <span className="text-gray-800 capitalize font-bold">
+              <span className="text-gray-800 capitalize font-bold sm:text-sm md:text-base">
                 {username}
               </span>
             </div>
-            <h1 className="font-bold flex justify-between items-center">
-              <span className="text-gray-700">{price} M (Shs)</span>
+            <h1 className="font-bold flex flex-col justify-between items-center sm:text-sm md:text-base">
+              <span className="text-gray-700">{usePriceFormat(price)}</span>
+              <span className="text-green-400">
+                {installments ? 'Kibanjampola' : 'Full price'}
+              </span>
             </h1>
           </div>
-          <Link href="#" passHref>
+          <Link href={`/land/${landId}`} passHref>
             <a>
-              <button className="w-full bg-orange-400 text-orange-50 flex justify-center items-center uppercase font-semibold grow py-4 hover:bg-orange-200 hover:text-orange-400 duration-150 ease-in-out">
+              <button className="w-full bg-orange-400 text-orange-50 flex justify-center items-center uppercase font-semibold grow py-2 md:py-4 hover:bg-orange-200 hover:text-orange-400 duration-150 ease-in-out">
                 buy this land
               </button>
             </a>
