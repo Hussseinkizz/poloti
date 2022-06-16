@@ -2,7 +2,7 @@ const Modal = () => {
   return (
     <form action="">
       {/* <!-- The button to open modal --> */}
-      <label for="my-modal-6" className="btn modal-button">
+      <label hmtlFor="my-modal-6" className="btn modal-button">
         open modal
       </label>
 
@@ -18,7 +18,7 @@ const Modal = () => {
             use Wikipedia for free!
           </p>
           <div className="modal-action">
-            <label for="my-modal-6" className="btn">
+            <label hmtlFor="my-modal-6" className="btn">
               Yay!
             </label>
           </div>

@@ -24,7 +24,7 @@ export default function Dropdown({ data, handleSelection, dataType }) {
         size: selected,
       });
     }
-  }, [selected]);
+  }, [selected, dataType, setState]);
 
   return (
     // <div className="fixed top-16 w-72">

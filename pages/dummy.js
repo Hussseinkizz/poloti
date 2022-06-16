@@ -77,16 +77,16 @@ const Contact = () => {
                 <span className="font-semi-bold">+256 786234982</span>
               </h2>
               <div className="flex w-full space-x-4 place-items-center justify-end">
-                <Link href="#">
+                <Link href="#" passHref>
                   <FaIcons.FaWhatsapp className="icon" />
                 </Link>
-                <Link href="#">
+                <Link href="#" passHref>
                   <FaIcons.FaFacebook className="icon" />
                 </Link>
-                <Link href="#">
+                <Link href="#" passHref>
                   <FaIcons.FaInstagram className="icon" />
                 </Link>
-                <Link href="#">
+                <Link href="#" passHref>
                   <FaIcons.FaTwitter className="icon" />
                 </Link>
               </div>

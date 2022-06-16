@@ -26,7 +26,7 @@ export default function DynamicPage() {
         })
       );
     }
-  }, [router.query.landId, router.isReady]);
+  }, [router.query.landId, router.isReady, landId, useData]);
 
   // console.log(land, user);
 

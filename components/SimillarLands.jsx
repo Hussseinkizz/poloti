@@ -2,16 +2,33 @@ import { Zoom } from 'react-reveal';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import usePriceFormat from '../hooks/usePriceFormat';
 
 const SimillarLands = ({ simillarLands }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
+  function usePriceFormat(value) {
+    let digitCount = value.toString().length;
+    // console.log(digitCount);
+
+    if (digitCount >= 7 && digitCount <= 10) {
+      return `${value / 1000000} M`;
+    }
+    if (digitCount >= 10 && digitCount <= 12) {
+      return `${value / 1000000000} B`;
+    }
+    // if (digitCount <= 6) {
+    //   return `${value / 1000} K`;
+    // }
+    return `${value / 1000} K`;
+  }
 
   return (
     <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 py-2">
-      {simillarLands.map((land) => (
+      {simillarLands.map((land, index) => (
         <Zoom key={land.id}>
-          <div className="flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow">
+          <div
+            key={index}
+            className="flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow"
+          >
             {/* Card Media */}
             <Link href={`/land/${land.id}`} passHref>
               <a>
