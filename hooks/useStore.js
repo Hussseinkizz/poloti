@@ -4,24 +4,34 @@ import { createContext, useContext, useReducer, useMemo } from 'react';
 export const store = createContext();
 const initialState = {
   currentCategory: 'everything',
+  currentSortLocation: 'kampala',
+  currentSortPrice: 'price',
+  currentSortSize: 'size',
   showNav: false,
 };
 
 // The Handler
 function reducer(state, action) {
-  const { type, payload } = action;
+  // const { type, payload } = action;
 
   // functions / operators
-  function incrementCount(currentState) {
-    return currentState + 1;
-  }
-  function decrementCount(currentState) {
-    return currentState - 1;
-  }
+  // function incrementCount(currentState) {
+  //   return currentState + 1;
+  // }
+  // function decrementCount(currentState) {
+  //   return currentState - 1;
+  // }
 
-  switch (type) {
+  switch (action.type) {
     case 'SET_CURRENT_CATEGORY':
-      return { ...state, currentCategory: payload.category };
+      return { ...state, currentCategory: action?.category };
+    // Handle sorting and filters
+    case 'SET_CURRENT_LOCATION_SORT':
+      return { ...state, currentSortLocation: action?.location };
+    case 'SET_CURRENT_PRICE_SORT':
+      return { ...state, currentSortPrice: action?.price };
+    case 'SET_CURRENT_SIZE_SORT':
+      return { ...state, currentSortSize: action?.size };
     // Handle Nav Menu
     case 'OPEN_NAV':
       return {
@@ -39,7 +49,7 @@ function reducer(state, action) {
         showNav: !state.showNav,
       };
     default:
-      throw new Error(`No action for type ${type} in state machine!`);
+      throw new Error(`No action for type ${action?.type} in state machine!`);
   }
 }
 

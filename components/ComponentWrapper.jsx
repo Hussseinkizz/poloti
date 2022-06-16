@@ -3,7 +3,7 @@
 const ComponentWrapper = ({ children, wrap }) => {
   return (
     <section
-      className={` mx-auto py-16 sm:py-24  lg:max-w-7xl ${
+      className={`relative z-0 mx-auto lg:max-w-7xl ${
         wrap && 'px-4 sm:px-6 lg:px-8'
       }`}
     >

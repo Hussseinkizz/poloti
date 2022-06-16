@@ -1,23 +1,20 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import localData from '../../store/data';
-import Image from 'next/image';
+import LandScreen from '../../components/LandScreen';
 
-export default function LandScreen() {
+export default function DynamicPage() {
   const [land, setLand] = useState(null);
+  const [user, setUser] = useState(null);
   let useData = localData; // fetchedData;
 
   const router = useRouter();
   const { landId } = router.query;
-  // const targetLand = useData.map((User) =>
-  //   User.posts.find((targetLand) => targetLand.id === landId)
-  // );
 
   useEffect(() => {
     if (!router.isReady) {
       <h1>
-        Poloti <span className="text-green-400">{landId}</span> is loading...
+        Poloti <span className="text-orange-400">.com</span> is loading...
       </h1>;
     }
     if (router.isReady) {
@@ -25,28 +22,37 @@ export default function LandScreen() {
         User.posts.map((post) => {
           if (post.id === landId) {
             setLand(post);
+            setUser(User);
           }
         })
       );
     }
   }, [router.query.landId, router.isReady]);
 
-  console.log(land);
-
-  // const { id, size, location, price, photos, info, installments } = land;
-  // let title = `${location} - ${size?.width} ku ${size?.height}`;
-
-  // const TargetUser =
+  // console.log(land, user);
 
   if (!land) {
     return (
       <h1>
-        Poloti <span className="text-red-400">{landId}</span> was not found!
+        Poloti land <span className="text-red-400">{landId}</span> is loading...
       </h1>
     );
   }
+  // Get simillar lands
+  const simillars = [];
 
-  return <h1>clicked land's id is {land?.location}</h1>;
+  if (land) {
+    useData.map((User) => {
+      let lands = User.posts.map((anyLand) => anyLand);
+      lands.map((eachLand) => {
+        if (eachLand.location === land.location && eachLand.id !== land.id) {
+          simillars.push(eachLand);
+        }
+      });
+    });
+  }
+
+  return <LandScreen user={user} land={land} simillarLands={simillars} />;
 }
 // use query params
 // check if we have any land with the id parsed in the params

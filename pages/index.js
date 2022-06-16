@@ -1,7 +1,4 @@
 // import { createClient } from '@supabase/supabase-js';
-// import { useStore } from '../store/store';
-// import Card from '../components/Card';
-// import CardsGrid from '../components/CardsGrid';
 
 import localData from '../store/data';
 import ComponentWrapper from '../components/ComponentWrapper';
@@ -9,6 +6,7 @@ import ComponentWrapper from '../components/ComponentWrapper';
 import Hero from '../components/Hero';
 import { useStore } from '../hooks/useStore';
 import Card from '../components/Card';
+import Filters from '../components/Filters';
 import CardsGrid from '../components/CardsGrid';
 import { HiOutlineRefresh } from 'react-icons/hi';
 
@@ -19,11 +17,13 @@ export default function Home({ fetchedData }) {
   const { state, setState } = useStore();
 
   return (
-    <section className="flex-col gap-8">
+    <section className="flex-col gap-8 relative">
       {/* The Hero Section */}
       <Hero />
       {/* Main view content */}
       <ComponentWrapper wrap={true}>
+        {/* The filters and sorting stuff */}
+        <Filters />
         <CardsGrid>
           {useData.map((User) => {
             let user = {

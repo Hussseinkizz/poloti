@@ -2,14 +2,19 @@ import { createContext, useContext, useReducer } from 'react';
 
 export const store = createContext();
 const initialState = {
-  currentCategory: 'everything',
-  count: 0,
+  currentSortLocation: '',
+  currentSortPrice: '',
+  currentSortSize: '',
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'SET_CURRENT_CATEGORY':
-      return { ...state, currentCategory: action.category };
+    case 'SET_CURRENT_LOCATION_SORT':
+      return { ...state, currentSortLocation: action.location };
+    case 'SET_CURRENT_PRICE_SORT':
+      return { ...state, currentSortPrice: action.price };
+    case 'SET_CURRENT_SIZE_SORT':
+      return { ...state, currentSortSize: action.size };
     default:
       return state;
   }
