@@ -32,7 +32,7 @@ const Card = ({ user, landId, size, location, price, image, installments }) => {
                 onLoadingComplete={() => setImageIsLoading(false)}
               />
               {/* The overlay content */}
-              <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear">
+              <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-lg md:text-xl hover:text-orange-300 transition duration-150 ease-linear">
                 <span>{title}</span>
               </div>
             </div>
@@ -51,7 +51,7 @@ const Card = ({ user, landId, size, location, price, image, installments }) => {
                   className="rounded-full"
                 />
               </span>
-              <span className="text-gray-800 capitalize font-bold sm:text-sm md:text-base">
+              <span className="text-gray-800 capitalize font-bold sm:text-sm md:text-base truncate">
                 {username}
               </span>
             </div>

@@ -21,10 +21,10 @@ export default function Home({ fetchedData }) {
       {/* The Hero Section */}
       <Hero />
       {/* Main view content */}
-      <ComponentWrapper wrap={true}>
+      <section className="mx-auto py-4 sm:py-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* The filters and sorting stuff */}
         <Filters />
-        <CardsGrid>
+        <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 py-2">
           {useData.map((User) => {
             let user = {
               username: User.username,
@@ -44,7 +44,7 @@ export default function Home({ fetchedData }) {
               />
             ));
           })}
-        </CardsGrid>
+        </section>
         {/* <ComponentWrapper wrap={true}>
         <CardsGrid>
           <Card />
@@ -58,7 +58,7 @@ export default function Home({ fetchedData }) {
           <HiOutlineRefresh className="animate-spin text-gray-400 text-xl" />
         </div>
         {/* <Button>Click me</Button> */}
-      </ComponentWrapper>
+      </section>
     </section>
   );
 }
