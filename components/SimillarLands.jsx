@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const SimillarLands = ({ simillarLands }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
-  function usePriceFormat(value) {
+  const usePriceFormat = (value) => {
     let digitCount = value.toString().length;
     // console.log(digitCount);
 

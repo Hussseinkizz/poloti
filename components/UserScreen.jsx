@@ -37,9 +37,12 @@ const UserScreen = ({ user }) => {
       <section className="mx-auto lg:max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* <CardsGrid></CardsGrid> */}
         <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 px-8 sm:px-0 relative z-0">
-          {user.posts.map((post) => (
-            <Zoom>
-              <div className="w-full flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow">
+          {user.posts.map((post, index) => (
+            <Zoom key={post.id}>
+              <div
+                key={index}
+                className="w-full flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow"
+              >
                 {/* Card Media */}
                 <Link href={`/land/${post.id}`} passHref>
                   <a>

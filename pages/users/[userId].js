@@ -23,7 +23,7 @@ export default function DynamicPage() {
         }
       });
     }
-  }, [router.query.userId, router.isReady]);
+  }, [router.query.userId, router.isReady, userId, useData]);
 
   // console.log(user);
 
