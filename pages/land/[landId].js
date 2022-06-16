@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import localData from '../../store/data';
 import LandScreen from '../../components/LandScreen';
+import Loader from '../../components/Loader';
 
 export default function DynamicPage() {
   const [land, setLand] = useState(null);
@@ -13,9 +14,7 @@ export default function DynamicPage() {
 
   useEffect(() => {
     if (!router.isReady) {
-      <h1>
-        Poloti <span className="text-orange-400">.com</span> is loading...
-      </h1>;
+      <Loader type="warning" id={landId} />;
     }
     if (router.isReady) {
       useData.map((User) =>
@@ -32,11 +31,7 @@ export default function DynamicPage() {
   // console.log(land, user);
 
   if (!land) {
-    return (
-      <h1>
-        Poloti land <span className="text-red-400">{landId}</span> is loading...
-      </h1>
-    );
+    return <Loader type="land" id={landId} />;
   }
   // Get simillar lands
   const simillars = [];

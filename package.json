@@ -21,6 +21,7 @@
     "click-to-react-component": "^1.0.8",
     "daisyui": "^2.14.3",
     "dotenv": "^16.0.0",
+    "encodeurl": "^1.0.2",
     "nanoid": "^4.0.0",
     "next": "12.1.5",
     "next-seo": "^5.4.0",

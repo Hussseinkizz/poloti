@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import localData from '../../store/data';
 import UserScreen from '../../components/UserScreen';
+import Loader from '../../components/Loader';
 
 export default function DynamicPage() {
   const [user, setUser] = useState(null);
@@ -13,9 +14,7 @@ export default function DynamicPage() {
 
   useEffect(() => {
     if (!router.isReady) {
-      <h1>
-        Poloti <span className="text-orange-400">.com</span> is loading...
-      </h1>;
+      <Loader type="warning" id={userId} />;
     }
     if (router.isReady) {
       useData.map((User) => {
@@ -29,11 +28,7 @@ export default function DynamicPage() {
   // console.log(user);
 
   if (!user) {
-    return (
-      <h1>
-        User <span className="text-orange-400">{userId}</span> is loading...
-      </h1>
-    );
+    return <Loader type="user" id={userId} />;
   }
   if (user) {
     return <UserScreen user={user} />;

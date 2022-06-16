@@ -10,7 +10,7 @@ const SimillarLands = ({ simillarLands }) => {
   return (
     <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 py-2">
       {simillarLands.map((land) => (
-        <Zoom>
+        <Zoom key={land.id}>
           <div className="flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow">
             {/* Card Media */}
             <Link href={`/land/${land.id}`} passHref>

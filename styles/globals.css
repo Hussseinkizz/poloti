@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 /* my custom css */
+
+/* Add smooth scrolling */
+ html {
+  scroll-behavior: smooth;
+}
+
+/* custom min height */
+.min-h-custom {
+  min-height: 70vh;
+}
+
  /* sm devices query */
 @media (min-width: 640px) {
   .media-scroller {

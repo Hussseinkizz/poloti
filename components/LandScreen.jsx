@@ -4,18 +4,22 @@ import usePriceFormat from '../hooks/usePriceFormat';
 import Image from 'next/image';
 import Link from 'next/link';
 import { makeSlug } from '../hooks/useMakeSlug';
+import { useWhatsappLink } from '../hooks/useWhatsappLink';
 // import MediaScroller from './MediaScroller';
 import SimillarLands from './SimillarLands';
 
 const LandScreen = ({ land, simillarLands, user }) => {
-  const { size, location, price, photos, info, installments } = land;
+  const { id, size, location, price, photos, info, installments } = land;
   let title = `${location} - ${size?.width} ku ${size?.height}`;
 
   const { userId, username, avatar } = user;
 
   let { slug } = makeSlug(username);
 
-  const userLink = `/users/${userId}/${slug}`;
+  // const userLink = `/users/${userId}/${slug}`;
+  const WhatsappMessage = `Hello Poloti Admin am interested in ${id},${title}`;
+  let { whatsappLink } = useWhatsappLink(256754535493, WhatsappMessage);
+  // console.log(whatsappLink);
 
   return (
     <section>
@@ -62,16 +66,22 @@ const LandScreen = ({ land, simillarLands, user }) => {
         <p>{info}</p>
         {/* The Actions */}
         <div className="flex gap-4 justify-start sm:justify-between items-center mt-4">
-          <button className="flex space-x-2 text-orange-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center">
-            <Link href="tell:0754535493" passHref>
-              <a>Call Us</a>
-            </Link>
-          </button>
-          <button className="flex space-x-2 text-green-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-green-500 hover:bg-green-400 hover:text-green-100 active:scale-110 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center">
-            <Link href="#" passHref>
-              <a>Whatsapp</a>
-            </Link>
-          </button>
+          <Link href="tel:+256754535493" passHref>
+            <a
+              target="_blank"
+              className="flex space-x-2 text-orange-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
+            >
+              Call Us
+            </a>
+          </Link>
+          <Link href={whatsappLink} passHref>
+            <a
+              target="_blank"
+              className="flex space-x-2 text-green-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-green-500 hover:bg-green-400 hover:text-green-100 active:scale-110 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
+            >
+              Whatsapp
+            </a>
+          </Link>
         </div>
       </div>
       {/* Simillar land by location */}

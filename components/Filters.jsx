@@ -41,8 +41,8 @@ const Filters = () => {
         <div className="font-bold px-4 py-4 grow w-full lg:w-1/2">
           <input
             type="search"
-            placeholder="search land by location"
-            className="font-bold px-4 py-4 w-full text-center grow rounded-md text-gray-500 transition-colors outline-none focus:outline-none focus:ring-2 focus:ring-orange-400"
+            placeholder="type here to search land by location"
+            className="font-bold px-4 py-4 w-full text-center grow rounded-md text-gray-500 transition-colors outline-none focus:outline-none focus:ring-2 focus:ring-orange-400 truncate"
           />
         </div>
         <div className="flex items-center justify-between text-orange-400 text-center flex-wrap">
