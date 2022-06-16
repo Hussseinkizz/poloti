@@ -7,7 +7,7 @@ import CardsGrid from './CardsGrid';
 const UserScreen = ({ user }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
 
-  const usePriceFormat = (value) => {
+  const priceFormat = (value) => {
     let digitCount = value.toString().length;
     // console.log(digitCount);
 
@@ -88,7 +88,7 @@ const UserScreen = ({ user }) => {
                   <div className="p-2 flex items-center justify-between gap-8">
                     <h1 className="font-bold flex justify-between items-center sm:text-sm md:text-base w-full">
                       <span className="text-gray-700">
-                        {usePriceFormat(post.price)}
+                        {priceFormat(post.price)}
                       </span>
                       <span className="text-green-400">
                         {post.installments ? 'Kibanjampola' : 'Full price'}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const SimillarLands = ({ simillarLands }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
-  const usePriceFormat = (value) => {
+  const priceFormat = (value) => {
     let digitCount = value.toString().length;
     // console.log(digitCount);
 
@@ -19,7 +19,7 @@ const SimillarLands = ({ simillarLands }) => {
     //   return `${value / 1000} K`;
     // }
     return `${value / 1000} K`;
-  }
+  };
 
   return (
     <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 py-2">
@@ -52,7 +52,7 @@ const SimillarLands = ({ simillarLands }) => {
                     <span>{`${land.location} - ${land.size?.width} ku ${land.size?.height}`}</span>
                     <h1 className="font-bold flex flex-col justify-between items-center sm:text-sm md:text-base">
                       <span className="text-white">
-                        {usePriceFormat(land.price)}
+                        {priceFormat(land.price)}
                       </span>
                       <span className="text-green-400">
                         {land.installments ? 'Kibanjampola' : 'Full price'}
