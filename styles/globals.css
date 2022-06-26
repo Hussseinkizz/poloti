@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 /* my custom css */
+.search-results-custom::-webkit-scrollbar {
+  display: none;
+}
 
 /* Add smooth scrolling */
  html {
