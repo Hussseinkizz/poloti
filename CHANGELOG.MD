@@ -1,9 +1,8 @@
-# Project Progress: Development
+# Project Progress: Development, stage 3
 
 ## Next Steps
 
-- setup project structure and streamline dev environment,
-- Add layout and navbar
-- work on main UI or home page
+- setup project to handle backend integration
+- setup project on supabase service
 
-<!-- ### Future feature: User Generated content, users can post tools! -->
+  *Todo: Complete backend handling in land post card component*

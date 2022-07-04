@@ -3,8 +3,9 @@ import * as HiIcons from 'react-icons/hi';
 import Fade from 'react-reveal/Fade';
 import Link from 'next/link';
 import { useStore } from '../hooks/useStore';
+import { supabase } from '../supabase-client';
 
-const Menu = () => {
+const Menu = ({ session }) => {
   const { setState } = useStore();
 
   // close nav menu on item selection
@@ -67,17 +68,37 @@ const Menu = () => {
           {/* Divider */}
           {/* <div className="w-full h-1 bg-gray-50 rounded-md my-2" /> */}
           <div className="w-full border-b border-gray-50 rounded-md my-2" />
-          <Link href="/signup" passHref>
-            <a
-              className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out"
-              onClick={onSelect}
-            >
-              <span>
-                <IoIcons.IoPerson />
-              </span>
-              <span>Signup or Login</span>
-            </a>
-          </Link>
+          <div>
+            {session ? (
+              <Link href="/" passHref>
+                <a
+                  className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out"
+                  onClick={() => {
+                    supabase.auth.signOut();
+                    // router.replace('/signin');
+                    onSelect();
+                  }}
+                >
+                  <span>
+                    <IoIcons.IoPerson />
+                  </span>
+                  <span>Sign Out</span>
+                </a>
+              </Link>
+            ) : (
+              <Link href="/signup" passHref>
+                <a
+                  className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out"
+                  onClick={onSelect}
+                >
+                  <span>
+                    <IoIcons.IoPerson />
+                  </span>
+                  <span>Signup or Login</span>
+                </a>
+              </Link>
+            )}
+          </div>
         </div>
       </Fade>
     </>

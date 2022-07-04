@@ -4,17 +4,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import usePriceFormat from '../hooks/usePriceFormat';
 
-const Card = ({ user, landId, size, location, price, image, installments }) => {
-  const [imageIsLoading, setImageIsLoading] = useState(true);
-  const { username, avatar } = user;
+// import sample user avatar
+import avatar from '../public/images/me.png';
 
-  let title = `${location} - ${size.width} ku ${size.height}`;
+const Card = ({ post, image }) => {
+  const [imageIsLoading, setImageIsLoading] = useState(true);
+  // const { username, avatar } = user;
+  const { user_id, user_name: username } = post;
+  const { id, width, height, location, price, photos, installments } = post;
+
+  let title = `${location} - ${width} ku ${height}`;
 
   return (
     <Zoom>
       <div className="flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow">
         {/* Card Media */}
-        <Link href={`/land/${landId}`} passHref>
+        <Link href={`/land/${id}`} passHref>
           <a>
             <div className="w-full h-60 group relative cursor-pointer flex grow">
               <Image
@@ -32,7 +37,7 @@ const Card = ({ user, landId, size, location, price, image, installments }) => {
                 onLoadingComplete={() => setImageIsLoading(false)}
               />
               {/* The overlay content */}
-              <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-lg md:text-xl hover:text-orange-300 transition duration-150 ease-linear">
+              <div className="truncate capitalize absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-lg md:text-xl hover:text-orange-300 transition duration-150 ease-linear">
                 <span>{title}</span>
               </div>
             </div>
@@ -41,20 +46,22 @@ const Card = ({ user, landId, size, location, price, image, installments }) => {
         {/* Card Content */}
         <div className="flex flex-col justify-between gap-4 grow">
           <div className="p-2 flex items-center justify-between gap-8">
-            <div className="flex justify-start gap-2 items-center">
-              <span className="w-8 h-8">
-                <Image
-                  src={avatar}
-                  layout="responsive"
-                  objectFit="contain"
-                  alt={`${username} 's photo`}
-                  className="rounded-full"
-                />
-              </span>
-              <span className="text-gray-800 capitalize font-bold sm:text-sm md:text-base truncate">
-                {username}
-              </span>
-            </div>
+            <Link href={`/user/${user_id}`} passHref>
+              <a className="flex justify-start gap-2 items-center cursor-pointer group">
+                <span className="w-8 h-8">
+                  <Image
+                    src={avatar}
+                    layout="responsive"
+                    objectFit="contain"
+                    alt={`${username} 's photo`}
+                    className="rounded-full group-hover:opacity-85"
+                  />
+                </span>
+                <span className="text-gray-800 group-hover:text-gray-600 capitalize font-bold sm:text-sm md:text-base truncate group-hover:border-b hover:border-gray-600 transition">
+                  {username}
+                </span>
+              </a>
+            </Link>
             <h1 className="font-bold flex flex-col justify-between items-center sm:text-sm md:text-base">
               <span className="text-gray-700">{usePriceFormat(price)}</span>
               <span className="text-green-400">
@@ -62,7 +69,7 @@ const Card = ({ user, landId, size, location, price, image, installments }) => {
               </span>
             </h1>
           </div>
-          <Link href={`/land/${landId}`} passHref>
+          <Link href={`/land/${id}`} passHref>
             <a>
               <button className="w-full bg-orange-400 text-orange-50 flex justify-center items-center uppercase font-semibold grow py-2 md:py-4 hover:bg-orange-200 hover:text-orange-400 duration-150 ease-in-out">
                 buy this land

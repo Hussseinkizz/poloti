@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import * as HiIcons from 'react-icons/hi';
-import Menu from '../components/Menu';
+import Menu from './Menu';
 import { useStore } from '../hooks/useStore';
 
-const Appbar = () => {
+const Appbar = ({ session }) => {
   // const darkModeChangeHandler = () => {
   //   dispatch({
   //     type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON',
@@ -55,16 +55,23 @@ const Appbar = () => {
           </a>
         </Link>
         {/* Nav Action Right */}
-        <Link href="/signup" passHref>
-          <a
-            className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out"
-            target="_blank"
-          >
-            <span>Sell Land</span>
-          </a>
-        </Link>
+        <div>
+          {session ? (
+            <Link href={`/${session.user?.id}/dashboard`} passHref>
+              <a className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out">
+                <span>Post Land</span>
+              </a>
+            </Link>
+          ) : (
+            <Link href="/signup" passHref>
+              <a className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out">
+                <span>Sell Land</span>
+              </a>
+            </Link>
+          )}
+        </div>
       </nav>
-      {showNav && <Menu />}
+      {showNav && <Menu session={session} />}
     </header>
   );
 };

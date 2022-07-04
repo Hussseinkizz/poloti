@@ -2,19 +2,20 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './screens/**/*.{js,ts,jsx,tsx}',
   ],
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
-    require('daisyui'),
+    // require('daisyui'),
   ],
   theme: {
     extend: {},
   },
-  daisyui: {
-    // themes: ['light', 'dark'],
-    themes: false,
-  },
+  // daisyui: {
+  //   // themes: ['light', 'dark'],
+  //   themes: false,
+  // },
 };

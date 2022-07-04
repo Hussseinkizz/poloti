@@ -3,9 +3,12 @@ import DesktopMenu from './DesktopMenu';
 // import Meta from './Meta';
 import { useStore } from '../hooks/useStore';
 import * as HiIcons from 'react-icons/hi';
+import { useSession } from '../utils/user-context';
 
 const Layout = ({ children }) => {
   // const { darkMode } = state;
+
+  const { session } = useSession();
 
   const { state, setState } = useStore();
 
@@ -23,8 +26,8 @@ const Layout = ({ children }) => {
     <>
       {/* <Meta /> */}
       {/* The Header, mobile & desktop */}
-      <Appbar />
-      <DesktopMenu />
+      <Appbar session={session} />
+      <DesktopMenu session={session} />
       <div id="#top" />
       {/* The Main View */}
       <main onClick={closeNav} className="bg-gray-100 pb-8">

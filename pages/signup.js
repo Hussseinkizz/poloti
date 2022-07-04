@@ -1,5 +1,6 @@
 import ComponentWrapper from '../components/ComponentWrapper';
 import SearchBox from '../components/SearchBox';
+// import Loader from '../components/Loader';
 
 const signup = () => {
   return (
@@ -8,6 +9,7 @@ const signup = () => {
       {/* <SearchBox placeholder="type to search land by location" /> */}
       <SearchBox />
     </ComponentWrapper>
+    // <Loader type="main-loader" />
   );
 };
 

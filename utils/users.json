@@ -1,0 +1,47 @@
+[
+  {
+    "id": "u12",
+    "created_at": "2021-03-09T12: 08: 46.611304Z",
+    "updated_at": "2021-03-09T12: 35: 03.466491Z",
+    "username": "hussein kizz",
+    "contact": "0786234982",
+    "password": "en34jh4",
+    "avatar": "image"
+  },
+  {
+    "id": "u14",
+    "created_at": "2021-03-09T12: 08: 46.611304Z",
+    "updated_at": "2021-03-09T12: 35: 03.466491Z",
+    "username": "jk properties",
+    "contact": "0704353301",
+    "password": "some323",
+    "avatar": "image"
+  },
+  {
+    "id": "u16",
+    "created_at": "2021-03-09T12: 08: 46.611304Z",
+    "updated_at": "2021-03-09T12: 35: 03.466491Z",
+    "username": "ssenoga isaac",
+    "contact": "0786234945",
+    "password": "senoga2",
+    "avatar": "image"
+  },
+  {
+    "id": "u18",
+    "created_at": "2021-03-09T12: 08: 46.611304Z",
+    "updated_at": "2021-03-09T12: 35: 03.466491Z",
+    "username": "mivule properties",
+    "contact": "078623445",
+    "password": "r4489",
+    "avatar": "image"
+  },
+  {
+    "id": "u20",
+    "created_at": "2021-03-09T12: 08: 46.611304Z",
+    "updated_at": "2021-03-09T12: 35: 03.466491Z",
+    "username": "wilken properties",
+    "contact": "0786234982",
+    "password": "wilken29",
+    "avatar": "image"
+  }
+]
