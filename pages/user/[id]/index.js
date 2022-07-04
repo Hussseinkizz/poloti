@@ -20,7 +20,7 @@ export default function DynamicPage({ posts }) {
     if (router.isReady) {
       setIsLoading(false);
     }
-  }, [router.isReady, id, data]);
+  }, [router.isReady, id]);
 
   if (isLoading) {
     return <Loader type="user" id={id} />;

@@ -40,8 +40,8 @@ const SearchBox = ({ placeholder, data }) => {
       {/* The Results */}
       {filiteredData.length !== 0 && (
         <div className="abosolute z-10 bg-white shadow-lg rounded-md mt-3 p-2 flex flex-col items-center justify-center gap-2 overflow-hidden overflow-y-auto search-results-custom">
-          {filiteredData.map((item) => (
-            <span>{item.title}</span>
+          {filiteredData.map((item, index) => (
+            <span key={index}>{item.title}</span>
           ))}
         </div>
       )}

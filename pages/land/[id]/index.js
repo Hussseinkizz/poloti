@@ -24,7 +24,7 @@ export default function DynamicPage({ posts }) {
         }
       });
     }
-  }, [router.isReady, id, data]);
+  }, [router.isReady, id]);
 
   // console.log(land, user);
 
