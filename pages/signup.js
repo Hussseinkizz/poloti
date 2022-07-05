@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 // TODO: also create a unique nanoid for each new post or it's auto by the db!
 
-export default function signup() {
+export default function Signup() {
   const [userName, setUserName] = useState('');
   const [userContact, setUserContact] = useState('');
   const [userEmail, setUserEmail] = useState('');

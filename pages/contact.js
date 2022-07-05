@@ -3,7 +3,7 @@ import * as HiIcons from 'react-icons/hi';
 import ComponentWrapper from '../components/ComponentWrapper';
 // import Loader from '../components/Loader';
 
-export default function contact() {
+export default function Contact() {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userFeedback, setUserFeedback] = useState('');
