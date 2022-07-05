@@ -100,7 +100,7 @@
     "height": 50,
     "location": "Kitooro",
     "installments": true,
-    "is_sold": true,
+    "is_sold": false,
     "price": 45000000,
     "photos": "image",
     "info": "Like this is really a good land on sale!",
