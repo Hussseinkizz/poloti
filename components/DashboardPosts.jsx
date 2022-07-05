@@ -63,7 +63,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
           >
             {/* Card Media */}
             <Link href={`/land/${post.id}`} passHref>
-              <a>
+              <a data-mdb-ripple="true">
                 <div className="w-full h-60 group relative cursor-pointer flex grow">
                   <Image
                     src={sampleImage}
@@ -81,7 +81,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                   />
                   {/* The overlay content */}
                   <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear capitalize">
-                    <span>{`${post.location} - ${post.width} ku ${post.height}`}</span>
+                    <span className="rounded-md bg-black bg-opacity-20 px-4 py-2">{`${post.location} - ${post.width} ku ${post.height}`}</span>
                   </div>
                 </div>
               </a>

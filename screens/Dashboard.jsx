@@ -7,11 +7,14 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import * as HiIcons from 'react-icons/hi';
 import Loader from '../components/Loader';
+import EditPostModal from '../components/EditPostModal';
 // import { supabase } from '../supabase-client';
 
 // ? import sample images
 import sampleAvatar from '../public/images/me.png';
 import DashboardPosts from '../components/DashboardPosts';
+import SearchBox from '../components/SearchBox';
+import CreatePostModal from '../components/CreatePostModal';
 
 const UserDashboard = ({ userposts }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,6 +22,9 @@ const UserDashboard = ({ userposts }) => {
   const [newEmail, setNewEmail] = useState('');
   const [newName, setNewName] = useState('');
   const [posts, setPosts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [editPost, setEditPost] = useState({});
+  const [showCreateModal, setShowCreateModal] = useState(false);
   // const [user, setUser] = useState({});
 
   // * destructure user profile details...
@@ -67,8 +73,13 @@ const UserDashboard = ({ userposts }) => {
   // handle post editing
   const handlePostEdit = (id) => {
     // console.log(id);
+    const targetPost = posts.filter((post) => post.id === id);
+    setEditPost(targetPost[0]);
+    // console.log(editPost);
     // show edit post modal
+    setShowModal(true);
   };
+
   // handle post delete
   const handlePostDelete = (id) => {
     // console.log(id);
@@ -80,7 +91,7 @@ const UserDashboard = ({ userposts }) => {
   };
 
   return (
-    <section className="w-full">
+    <section className="w-full relative">
       <div className="w-full flex flex-col justify-center gap-2 items-center pt-14 sm:pt-4 border-b bg-gray-50 pb-2 mb-4 rounded-b-md ">
         <div className="flex flex-col justify-center gap-2 items-center py-8 sm:py-4 text-center">
           <h1 className="text-gray-800 capitalize font-bold text-xl sm:text-2xl md:text-3xl">
@@ -201,7 +212,31 @@ const UserDashboard = ({ userposts }) => {
           </div>
         </section>
       </div>
-      {/* User Posts and post actions */}
+      {/* User Posts Title bar */}
+      <section className="mx-auto lg:max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-2 md:flex-row justify-between items-center shadow-md bg-gray-50 rounded-md p-2 mb-4">
+          <h1 className="flex justify-center md:justify-start items-center gap-2 grow">
+            <HiIcons.HiFolder className="text-2xl md:text-3xl text-gray-400" />
+            <span className="text-sm sm:text-base">Your Posts Here:</span>
+          </h1>
+          {/* Titile bar actions */}
+          <div className="w-full flex justify-evenly items-center gap-4 grow md:grow-0 md:w-fit">
+            <div className="flex grow md:w-2/6 relative">
+              <SearchBox placeholder="search location..." />
+            </div>
+            <div className="w-2/6 md:w-fit">
+              <button
+                className="w-full grow bg-orange-400 text-orange-50 flex justify-center items-center capitalize p-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                onClick={() => setShowCreateModal(true)}
+              >
+                <HiIcons.HiPlus />
+                <span>create post</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* User Posts */}
       <section className="mx-auto lg:max-w-7xl px-4 sm:px-6 lg:px-8">
         {posts.length ? (
           <DashboardPosts
@@ -213,6 +248,21 @@ const UserDashboard = ({ userposts }) => {
           <Loader type="loader" />
         )}
       </section>
+      {/* Post Edit Modal Form */}
+      {editPost && showModal && (
+        <EditPostModal
+          post={editPost}
+          isOpen={showModal}
+          closeModal={() => setShowModal(false)}
+        />
+      )}
+      {/* Post Creation Modal Form */}
+      {showCreateModal && (
+        <CreatePostModal
+          isOpen={showCreateModal}
+          closeModal={() => setShowCreateModal(false)}
+        />
+      )}
     </section>
   );
 };

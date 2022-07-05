@@ -38,7 +38,7 @@ const Card = ({ post, image }) => {
               />
               {/* The overlay content */}
               <div className="truncate capitalize absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-lg md:text-xl hover:text-orange-300 transition duration-150 ease-linear">
-                <span>{title}</span>
+                <span className='rounded-md bg-black bg-opacity-20 px-4 py-2'>{title}</span>
               </div>
             </div>
           </a>

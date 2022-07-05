@@ -23,14 +23,14 @@ const SearchBox = ({ placeholder, data }) => {
   };
 
   return (
-    <section className="w-full relative">
-      <div className="flex grow items-center justify-between rounded-md realtive">
+    <section className="w-full flex grow relative">
+      <div className="flex grow items-center justify-between rounded-md relative">
         {/* The Input */}
         <input
           type="text"
           placeholder={placeholder ? placeholder : 'Search...'}
           onChange={filterData}
-          className="grow outline-none border-transparent relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
+          className="grow outline-none border-transparent relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate pr-12"
         />
         {/* The Search Icon */}
         <div className="absolute right-4 text-gray-400">
@@ -39,7 +39,7 @@ const SearchBox = ({ placeholder, data }) => {
       </div>
       {/* The Results */}
       {filiteredData.length !== 0 && (
-        <div className="abosolute z-10 bg-white shadow-lg rounded-md mt-3 p-2 flex flex-col items-center justify-center gap-2 overflow-hidden overflow-y-auto search-results-custom">
+        <div className="absolute z-10 top-full bg-white shadow-lg rounded-md mt-4 p-2 flex flex-col items-center justify-center gap-2 overflow-hidden overflow-y-auto search-results-custom">
           {filiteredData.map((item, index) => (
             <span key={index}>{item.title}</span>
           ))}

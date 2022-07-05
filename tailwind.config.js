@@ -10,6 +10,7 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     // require('daisyui'),
+    // require('tw-elements/dist/plugin'),
   ],
   theme: {
     extend: {},

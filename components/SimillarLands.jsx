@@ -57,7 +57,7 @@ const SimillarLands = ({ simillarLands }) => {
                           <span className="text-white">
                             {priceFormat(land.price)}
                           </span>
-                          <span className="text-green-400">
+                          <span className="text-green-400 rounded-md bg-black bg-opacity-20 px-4 py-2">
                             {land.installments ? 'Kibanjampola' : 'Full price'}
                           </span>
                         </h1>
