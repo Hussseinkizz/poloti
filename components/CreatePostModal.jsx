@@ -1,8 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import Image from 'next/image';
-import { Zoom, Fade } from 'react-reveal';
-import Link from 'next/link';
+
 import * as HiIcons from 'react-icons/hi';
 import { BiImageAdd } from 'react-icons/bi';
 
