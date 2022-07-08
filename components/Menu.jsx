@@ -19,7 +19,7 @@ const Menu = ({ session }) => {
     <>
       <Fade left>
         {/* <div className="fixed z-50 px-2 py-4 bg-orange-500 text-white rounded left-2 top-14 text-base shadow-lg"> */}
-        <div className="fixed z-50 px-2 py-4 bg-gray-700 text-white rounded left-2 top-14 text-base shadow-lg">
+        <div className="fixed z-50 px-2 py-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-700 text-white rounded left-2 top-14 text-base shadow-lg">
           <Link href="/" passHref>
             <a
               className="flex space-x-2 place-items-center hover:bg-gray-400 hover:text-gray-50 transition-colors p-1 rounded-md"

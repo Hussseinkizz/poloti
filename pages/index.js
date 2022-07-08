@@ -33,7 +33,7 @@ export default function Home({ posts }) {
             }
           })}
         </section>
-        <div className="flex items-center justify-center mt-8">
+        <div className="flex items-center justify-center my-8">
           <HiOutlineRefresh className="animate-spin text-gray-400 text-xl" />
         </div>
       </section>

@@ -18,7 +18,7 @@ const DesktopMenu = ({ session }) => {
   };
 
   return (
-    <header className="bg-gray-800 text-white shadow-md w-full hidden _show-on-md">
+    <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white shadow-md w-full hidden _show-on-md">
       <nav className="flex items-center justify-between px-4 py-2 w-full">
         {/* Nav Right, for menu & brand */}
         <div className="relative flex items-center justify-evenly px-4 gap-4">

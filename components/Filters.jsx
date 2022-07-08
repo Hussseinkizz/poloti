@@ -36,7 +36,7 @@ const sizeOptions = [
 
 const Filters = () => {
   return (
-    <section className="mx-auto my-8 bg-gray-900 rounded-md relative">
+    <section className="mx-auto my-8 bg-gradient-to-t from-gray-900 via-gray-800 to-gray-700 rounded-md relative">
       <div className="flex flex-col lg:flex-row items-center justify-between text-center">
         <div className="font-bold px-4 py-4 grow w-full lg:w-1/2">
           <input

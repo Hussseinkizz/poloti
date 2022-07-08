@@ -27,7 +27,7 @@ const Appbar = ({ session }) => {
   };
 
   return (
-    <header className="bg-gray-800 text-white shadow-md w-full _fixed-on-mobile md:hidden">
+    <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white shadow-md w-full _fixed-on-mobile md:hidden">
       <nav className="flex items-center justify-between px-4 py-2 ">
         {/* Nav Right, for menu */}
         <div className="relative">

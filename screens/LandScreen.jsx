@@ -46,7 +46,7 @@ const LandScreen = ({ land, simillarLands }) => {
         name={title}
       />
       <div className="mx-auto py-4 sm:py-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:justify-between sm:items-center font-bold border-b border-gray-400 pb-2">
+        <div className="sm:flex sm:justify-between sm:items-center font-bold border-b border-gray-200 pb-2">
           <h1 className="flex justify-start items-center font-bold text-xl capitalize">
             <span>
               <HiLocationMarker />

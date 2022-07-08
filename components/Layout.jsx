@@ -25,30 +25,31 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <>
+    <section className="bg-gray-100 w-full min-h-screen flex flex-col">
       {/* <Meta /> */}
       {/* The Header, mobile & desktop */}
       <Appbar session={session} />
       <DesktopMenu session={session} />
       <div id="#top" />
       {/* The Main View */}
-      <main onClick={closeNav} className="bg-gray-100  pb-8">
+      <main onClick={closeNav} className="w-full">
         {children}
       </main>
-
+      {/* Layout Spacer */}
+      <div className="vertical-spacer" />
       {/* The Footer */}
-      <footer className="relative w-full flex-col items-center justify-center text-center border-gray-200 border-t bg-gray-800 py-6 md:py-8">
+      <footer className="relative w-full flex-col items-center justify-center text-center border-gray-200 border-t bg-gradient-to-t from-gray-900 via-gray-800 to-gray-700 py-4">
         {/* Navigate up button link */}
         <a
           href="#top"
           className="absolute -top-3 md:-top-4 w-full flex items-center justify-center"
         >
           <HiIcons.HiArrowNarrowUp
-            className="h-6 w-6 md:h-8 md:w-8 p-1 text-gray-200 hover:shadow-md rounded-md border border-gray-600 bg-gray-700 hover:bg-gray-600 duration-150 ease-linear"
+            className="h-6 w-6 md:h-8 md:w-8 p-1 text-gray-200 hover:shadow-md rounded-md border border-gray-600 bg-gray-700 bg-opacity-80 hover:bg-gray-600 duration-150 ease-linear"
             aria-hidden="true"
           />
         </a>
-        <section className="w-3/4 md:w-1/2 mx-auto grow flex justify-between md:justify-center items-center gap-2 py-2 pb-12 border-b border-gray-700 md:gap-10">
+        <section className="w-4/5 md:w-1/2 mx-auto grow flex justify-between md:justify-center items-start gap-2 py-2 pb-4 md:gap-10">
           <div className="flex flex-col justify-center items-center gap-2">
             <h1 className="text-xl text-orange-400 font-bold tracking-wide uppercase font-mono">
               Poloti.com
@@ -74,11 +75,11 @@ const Layout = ({ children }) => {
               </a>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-start gap-1">
+          <div className="flex flex-col justify-start items-start md:mt-0">
             <h2 className="text-xl text-gray-400 font-bold tracking-wide capitalize font-mono">
               Useful Links
             </h2>
-            <div className="flex flex-col md:flex-row justify-center items-start gap-1 md:gap-4">
+            <div className="flex flex-col md:flex-row justify-center items-start md:gap-4">
               <Link href="/about" passHref>
                 <a className="text-gray-500 hover:text-orange-400">About Us</a>
               </Link>
@@ -88,7 +89,7 @@ const Layout = ({ children }) => {
                 </a>
               </Link>
             </div>
-            <div className="flex flex-col md:flex-row justify-center items-start gap-1 md:gap-4">
+            <div className="flex flex-col md:flex-row justify-center items-start md:gap-4">
               <Link href="/privacy-pollicy" passHref>
                 <a className="text-gray-500 hover:text-orange-400">
                   Privacy Pollicy
@@ -118,7 +119,7 @@ const Layout = ({ children }) => {
           </h3>
         </section>
       </footer>
-    </>
+    </section>
   );
 };
 

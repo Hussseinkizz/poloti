@@ -17,7 +17,7 @@ const Card = ({ post, image }) => {
 
   return (
     <Zoom>
-      <div className="flex flex-col shadow-lg bg-gray-50 rounded-t-md overflow-hidden justify-between items-stretch grow">
+      <div className="flex flex-col shadow-lg bg-gray-50 rounded-sm overflow-hidden justify-between items-stretch grow">
         {/* Card Media */}
         <Link href={`/land/${id}`} passHref>
           <a>
@@ -38,7 +38,9 @@ const Card = ({ post, image }) => {
               />
               {/* The overlay content */}
               <div className="truncate capitalize absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-lg md:text-xl hover:text-orange-300 transition duration-150 ease-linear">
-                <span className='rounded-md bg-black bg-opacity-20 px-4 py-2'>{title}</span>
+                <span className="rounded-md bg-black bg-opacity-20 px-4 py-2">
+                  {title}
+                </span>
               </div>
             </div>
           </a>

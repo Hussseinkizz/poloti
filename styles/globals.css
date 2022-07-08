@@ -7,6 +7,21 @@
   display: none;
 }
 
+/* custom spacer */
+.vertical-spacer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+}
+.horizontal-spacer {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex: 1 1 100%;
+}
+
 /* Add smooth scrolling */
  html {
   scroll-behavior: smooth;
@@ -152,3 +167,28 @@
 .snaps-inline > * {
   scroll-snap-align: start;
 }
+
+
+/*========== CUSTOM SCROLL BAR ==========*/
+html {
+      --text-color-light: hsl(var(--hue-color), 8%, 65%);
+    --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
+    --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+    --hue-color: 250; /*Purple 250 - Green 142 - Blue 230 - Pink 340*/
+        /* Change favorite color */
+}
+::-webkit-scrollbar {
+    width: .60rem;
+    background-color: var(--scroll-bar-color);
+    border-radius: .5rem;
+    /* Add smooth scrolling */
+      scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb-color);
+    border-radius: .5rem;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-color-light);
+    }

@@ -91,7 +91,7 @@ const UserDashboard = ({ userposts }) => {
   };
 
   return (
-    <section className="w-full relative">
+    <section className="w-full relative pb-10">
       <div className="w-full flex flex-col justify-center gap-2 items-center pt-14 sm:pt-4 border-b bg-gray-50 pb-2 mb-4 rounded-b-md ">
         <div className="flex flex-col justify-center gap-2 items-center py-8 sm:py-4 text-center">
           <h1 className="text-gray-800 capitalize font-bold text-xl sm:text-2xl md:text-3xl">
@@ -103,16 +103,16 @@ const UserDashboard = ({ userposts }) => {
           </h2>
         </div>
         {/* User Profile section */}
-        <section className="w-full mx-auto px-4 sm:px-6 sm:w-3/4 md:w-1/2 flex justify-between ssm:justify-center gap-4 items-center">
+        <section className="w-full mx-auto px-4 sm:px-6 sm:w-3/4 md:w-1/2 flex flex-col-reverse md:flex-row justify-between sm:justify-center gap-4 items-center">
           {/* User Info */}
           <div
-            className={`flex flex-col justify-center items-start ${
-              isEditing ? 'gap-6' : 'gap-3'
+            className={`flex flex-col justify-center items-center md:items-start ${
+              isEditing ? 'gap-3' : 'gap-2'
             }`}
           >
             <div className="flex justify-center items-center gap-2">
               {isEditing ? (
-                <div className="font-semibold w-full flex justify-between items-center gap-2">
+                <div className="font-semibold w-full flex flex-col md:flex-row justify-between items-center gap-2">
                   <span>User Name:</span>
                   <span className="text-gray-500">
                     <input
@@ -132,12 +132,20 @@ const UserDashboard = ({ userposts }) => {
               )}
             </div>
             {!isEditing && (
-              <h1 className="font-semibold w-full flex justify-between items-center gap-2">
+              <h1
+                className={`font-semibold w-full flex justify-between items-center gap-2 ${
+                  isEditing && 'flex-col md:flex-row'
+                }`}
+              >
                 <span>Land Posts:</span>
                 <span className="text-gray-500">{userPostCount}</span>
               </h1>
             )}
-            <h1 className="font-semibold w-full flex justify-between items-center gap-2">
+            <h1
+              className={`font-semibold w-full flex justify-between items-center gap-2 ${
+                isEditing && 'flex-col md:flex-row'
+              }`}
+            >
               <span>Contact:</span>
               {!isEditing ? (
                 <span className="text-gray-500">{user_contact}</span>
@@ -154,10 +162,14 @@ const UserDashboard = ({ userposts }) => {
                 </span>
               )}
             </h1>
-            <h1 className="font-semibold w-full flex justify-between items-center gap-2">
+            <h1
+              className={`font-semibold w-full flex justify-between items-center gap-2 ${
+                isEditing && 'flex-col md:flex-row'
+              }`}
+            >
               <span>Email:</span>
               {!isEditing ? (
-                <span className="text-gray-500">{user_email}</span>
+                <span className="text-gray-500 truncate">{user_email}</span>
               ) : (
                 <span className="text-gray-500">
                   <input
@@ -220,13 +232,13 @@ const UserDashboard = ({ userposts }) => {
             <span className="text-sm sm:text-base">Your Posts Here:</span>
           </h1>
           {/* Titile bar actions */}
-          <div className="w-full flex justify-evenly items-center gap-4 grow md:grow-0 md:w-fit">
-            <div className="flex grow md:w-2/6 relative">
+          <div className="w-full flex flex-col md:flex-row justify-evenly items-center gap-4 grow md:grow-0 md:w-fit">
+            <div className="flex grow w-full md:w-2/6 relative">
               <SearchBox placeholder="search location..." />
             </div>
-            <div className="w-2/6 md:w-fit">
+            <div className="w-full md:w-fit">
               <button
-                className="w-full grow bg-orange-400 text-orange-50 flex justify-center items-center capitalize p-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                className="w-full grow bg-orange-400 text-orange-50 flex justify-center items-center capitalize p-2 py-3 md:py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
                 onClick={() => setShowCreateModal(true)}
               >
                 <HiIcons.HiPlus />
