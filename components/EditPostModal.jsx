@@ -30,6 +30,23 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
   const handlePostSave = (e) => {
     e.preventDefault();
     // ? send data to server
+    // update post in supabase
+    const updatePost = async () =>
+      await supabase
+        .from('posts')
+        .update({
+          width: newWidth,
+          height: newHeight,
+          location: newLocation,
+          installments: newInstallments,
+          price: newPrice,
+          photos: newImages,
+          info: newInfo,
+        })
+        .match({
+          id: post.id,
+        });
+    updatePost();
     // ? close modal
     closeModal();
   };
@@ -256,3 +273,25 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
     </>
   );
 }
+
+// fetch target post data
+export const getServerSideProps = async (context) => {
+  // Query the post by id
+  const { data: post, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('id', context.query.id)
+    .single();
+
+  if (error) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      post,
+    },
+  };
+};

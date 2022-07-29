@@ -1,40 +1,115 @@
-// {
-//   "id": "l5",
-//   "user_id": "uu12",
-//   "user_email": "hssnkizz@gmail.com",
-//   "user_name": "hussein kizz",
-//   "user_contact": "0786234982",
-//   "user_avatar": "image",
-//   "width": 60,
-//   "height": 100,
-//   "location": "masuulita",
-//   "installments": true,
-//   "is_sold": true,
-//   "price": 25000000,
-//   "photos": "image",
-//   "info": "Like this is really a good land sold!",
-//   "created_at": "18:11 PM, 26-06-2022",
-//   "updated_at": "18:41 PM, 26-06-2022"
-// }
-import Image from 'next/image';
-import { Zoom, Fade } from 'react-reveal';
-import { useState } from 'react';
-import Link from 'next/link';
-import * as HiIcons from 'react-icons/hi';
+// sample snippets
 
-// ? import sample images
-import sampleImage from '../public/images/img4.jpg';
+// fetch all posts @index.js
+export async function getStaticProps() {
+  const { data: posts, error } = await supabase.from("posts").select("*");
 
-const EditPostModal = ({ post, handleClose }) => {
-  const [imageIsLoading, setImageIsLoading] = useState(true);
+  if (error) {
+    throw new error(error.message);
+  }
 
-  return (
-    <section className="absolute z-50 w-full min-h-screen bg-gray-900 opactiy-60 overflow-hidden top-full bottom-full mx-auto">
-      <form>
-        <h1>Edit modal</h1>
-      </form>
-    </section>
-  );
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+
+// fetch specific post according to id @[id].js, also get user profile
+export async function getServerSideProps({ params }) {
+  const { data: post, error } = await supabase
+    .from("posts")
+    .select("*, profiles(*)")
+    .eq("id", params.id)
+    .single();
+
+  if (error) {
+    throw new error(error.message);
+  }
+
+  return {
+    props: {
+      post,
+    },
+  };
+}
+
+// login , handle login form submission
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const email = event.target.email.value;
+  const password = event.target.password.value;
+  await supabase.auth.signIn({
+    email,
+    password,
+  });
 };
 
-export default EditPostModal;
+// realtime subscriptions
+// inside a function component, set current state to new updates or payload with use Efffect
+// enable subscriptions on given table in supabase dashboard --> replication
+// sub to posts table only!
+
+useEffect(() => {
+  const subscription = supabase
+    .from("profiles")
+    .on("INSERT", (payload) => {
+      setUpdates(payload);
+    })
+    .subscribe();
+
+  return () => supabase.removeSubscription(subscription);
+}, []);
+
+// upload image
+const FileInput = (
+  <input
+    type="file"
+    accept={"image/jpeg image/png"}
+    onChange={(e) => setUserAvatar(e.target.files[0])}
+  />
+);
+
+const handleUpload = async () => {
+  if (userAvatar) {
+    const { data, error } = await supabase.storage
+      .from("avatars")
+      .upload(`${Date.now()}_${userAvatar.name}`, userAvatar);
+
+    if (error) {
+      throw new error(error.message);
+    }
+
+    if (data) {
+      setUserAvatarUrl(data.key);
+    }
+
+    // update user profile to use new avatar
+    const { data: profiles, error: profilesError } = await supabase
+      .from("profiles")
+      .upsert({
+        id: auth.user.id,
+        avatar: setUserAvatarUrl,
+        /* .... */
+      });
+    if (profilesError) {
+      throw new error(profilesError.message);
+    }
+
+    if (profiles) {
+      setUsers(profiles);
+    }
+  }
+};
+
+// const { data: profileData, profileError } = await supabase
+//         .from("profiles")
+//         .insert({
+//           user_name: userName,
+//           user_email: userEmail,
+//           user_contact: userContact,
+//           avatar_url: userAvatarUrl,
+//         });
+//       console.log(profileData, profileError);
+
+// array.reduce((currentItration, item) => { return item.number + currentItration}, startIndex)

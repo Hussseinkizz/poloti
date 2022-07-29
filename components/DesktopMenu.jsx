@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import * as HiIcons from 'react-icons/hi';
-import Menu from '../components/Menu';
-import { useStore } from '../hooks/useStore';
+import Link from "next/link";
+import * as HiIcons from "react-icons/hi";
+import Menu from "../components/Menu";
+import { useStore } from "../hooks/useStore";
 
 const DesktopMenu = ({ session }) => {
   // const { darkMode } = state;
@@ -13,7 +13,7 @@ const DesktopMenu = ({ session }) => {
   // toggle nav menu
   const toggleNav = () => {
     setState({
-      type: 'TOGGLE_NAV',
+      type: "TOGGLE_NAV",
     });
   };
 
@@ -56,10 +56,7 @@ const DesktopMenu = ({ session }) => {
             </Link>
           ) : (
             <Link href="/signup" passHref>
-              <a
-                className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out"
-                target="_blank"
-              >
+              <a className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out">
                 <span>Sell Your Land Now</span>
               </a>
             </Link>

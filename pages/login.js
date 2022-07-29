@@ -4,26 +4,38 @@ import * as HiIcons from 'react-icons/hi';
 import ComponentWrapper from '../components/ComponentWrapper';
 // import Loader from '../components/Loader';
 import { useRouter } from 'next/router';
-
-// TODO: also create a unique nanoid for each new post or it's auto by the db!
+import { supabase } from '../supabase-client';
 
 export default function Login() {
   // const [userContact, setUserContact] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   // handle form submission
-  const LoginUser = (user) => {
-    console.log(user);
-    // ?Login user in supabase
+  // * handle edge case where no user account found!
+  const LoginUser = async () => {
+    setIsLoading(true);
+    // auth in this user
+    const { data, error } = await supabase.auth.signIn({
+      email: userEmail,
+      password: userPassword,
+    });
+    if (data) {
+      // redirect user to home
+      router.push('/');
+    }
+    if (error) {
+      console.log(error);
+    }
   };
 
   // handle form actions
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // ? send data to server
-    LoginUser('user');
+  const handleLogin = (event) => {
+    event.preventDefault();
+    LoginUser();
   };
   // handle form actions
   const handleSignup = () => {
@@ -34,7 +46,10 @@ export default function Login() {
   return (
     <ComponentWrapper wrap={true}>
       <section className="w-full grid place-items-center p-4 py-24 md:py-16">
-        <form className="w-full md:w-1/2 p-2 pb-4 flex flex-col justify-center items-center gap-2 bg-gray-50 border rounded-md shadow-md mx-auto">
+        <form
+          onSubmit={handleLogin}
+          className="w-full md:w-1/2 p-2 pb-4 flex flex-col justify-center items-center gap-2 bg-gray-50 border rounded-md shadow-md mx-auto"
+        >
           {/* form header */}
           <h1 className="text-gray-800 text-center text-3xl font-bold mb-4">
             Welcome Back!
@@ -63,6 +78,7 @@ export default function Login() {
                 placeholder="Enter your email address"
                 onChange={(e) => setUserEmail(e.target.value)}
                 className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate pr-12"
+                required
               />
               <div className="absolute top-3 right-2 text-gray-400 grid place-items-center">
                 <HiIcons.HiMail className="h-4 w-4 md:h-6 md:w-6 cursor-pointer transition group-hover:text-orange-400" />
@@ -71,14 +87,24 @@ export default function Login() {
             {/* userPassword */}
             <div className="w-full flex grow group relative">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={userPassword}
                 placeholder="Enter your password"
                 onChange={(e) => setUserPassword(e.target.value)}
                 className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate pr-12"
               />
               <div className="absolute top-3 right-2 text-gray-400 grid place-items-center">
-                <HiIcons.HiEyeOff className="h-4 w-4 md:h-6 md:w-6 cursor-pointer transition group-hover:text-orange-400" />
+                {showPassword ? (
+                  <HiIcons.HiEye
+                    className="h-4 w-4 md:h-6 md:w-6 cursor-pointer transition group-hover:text-orange-400"
+                    onClick={() => setShowPassword(false)}
+                  />
+                ) : (
+                  <HiIcons.HiEyeOff
+                    className="h-4 w-4 md:h-6 md:w-6 cursor-pointer transition group-hover:text-orange-400"
+                    onClick={() => setShowPassword(true)}
+                  />
+                )}
               </div>
             </div>
           </section>
@@ -87,11 +113,10 @@ export default function Login() {
             <button
               type="submit"
               className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
-              onClick={handleLogin}
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
             >
-              Login
+              {isLoading ? 'please wait...' : 'Login'}
             </button>
             <button
               type="button"

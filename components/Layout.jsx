@@ -1,16 +1,17 @@
-import Appbar from './Appbar';
-import DesktopMenu from './DesktopMenu';
+import Appbar from "./Appbar";
+import DesktopMenu from "./DesktopMenu";
 // import Meta from './Meta';
-import { useStore } from '../hooks/useStore';
-import * as HiIcons from 'react-icons/hi';
-import * as FaIcons from 'react-icons/fa';
-import { useSession } from '../utils/user-context';
-import Link from 'next/link';
+import { useStore } from "../hooks/useStore";
+import * as HiIcons from "react-icons/hi";
+import * as FaIcons from "react-icons/fa";
+import { useSession } from "../utils/user-context";
+import Link from "next/link";
 
 const Layout = ({ children }) => {
   // const { darkMode } = state;
 
   const { session } = useSession();
+  // console.log(session);
 
   const { state, setState } = useStore();
 
@@ -20,7 +21,7 @@ const Layout = ({ children }) => {
   const closeNav = () => {
     showNav &&
       setState({
-        type: 'CLOSE_NAV',
+        type: "CLOSE_NAV",
       });
   };
 

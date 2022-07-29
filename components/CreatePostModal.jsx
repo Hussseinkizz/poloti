@@ -1,39 +1,51 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import Image from 'next/image';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState, useRef } from "react";
+import Image from "next/image";
 
-import * as HiIcons from 'react-icons/hi';
-import { BiImageAdd } from 'react-icons/bi';
+import * as HiIcons from "react-icons/hi";
+import { BiImageAdd } from "react-icons/bi";
 
 // ? import sample images
-import sampleImage from '../public/images/img4.jpg';
+import sampleImage from "../public/images/img4.jpg";
 // TODO: also create a unique nanoid for each new post or it's auto by the db!
+// complete image upload configuration, handle multiple images scenario
+// fix state and how multiple images will be handled in db!
 
 export default function CreatePostModal({ isOpen, closeModal }) {
   const [imageIsLoading, setImageIsLoading] = useState(true);
-  const [newLocation, setNewLocation] = useState('');
-  const [newInfo, setNewInfo] = useState('');
-  const [newPrice, setNewPrice] = useState('');
-  const [newWidth, setNewWidth] = useState('');
-  const [newHeight, setNewHeight] = useState('');
+  const [newLocation, setNewLocation] = useState("");
+  const [newInfo, setNewInfo] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+  const [newWidth, setNewWidth] = useState("");
+  const [newHeight, setNewHeight] = useState("");
   const [newInstallments, setNewInstallments] = useState(true);
   const [newImage, setNewImage] = useState(null);
   const [newPost, setNewPost] = useState({});
 
   // handle image uploading
-  const handleImageUpload = (e) => {
-    const image = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
-    reader.onload = () => {
-      setImageIsLoading(false);
-    };
+  // TODO: preview image?
+  const uploadInputRef = useRef();
+
+  const handleImageUpload = () => {
+    uploadInputRef.current.click();
   };
 
   // handle form submission
   const handlePostCreate = (e) => {
     e.preventDefault();
     // ? send data to server
+    // create post in supabase
+    const createPost = async () =>
+      await supabase.from("posts").insert({
+        width: newWidth,
+        height: newHeight,
+        location: newLocation,
+        installments: newInstallments,
+        price: newPrice,
+        photos: newImages,
+        info: newInfo,
+      });
+    createPost();
     // ? close modal
     closeModal();
   };
@@ -81,8 +93,8 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                             // title={title}
                             className={`w-full rounded-t-md hover:opacity-60 hover:scale-105 group-hover:scale-110 group-hover:opacity-75 transition duration-150 ease-linear ${
                               imageIsLoading
-                                ? 'grayscale blur-3xl'
-                                : 'grayscale-0 blur-0 transition-all duration-300 ease-in-out'
+                                ? "grayscale blur-3xl"
+                                : "grayscale-0 blur-0 transition-all duration-300 ease-in-out"
                             }`}
                             onLoadingComplete={() => setImageIsLoading(false)}
                             onClick={handleImageUpload}
@@ -96,6 +108,17 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                               <HiIcons.HiCloudUpload className="text-xl md:text-2xl" />
                               <span>Tap to upload photo</span>
                             </button>
+                            {/* Image upload ref actual input */}
+                            <input
+                              type="file"
+                              multiple={true}
+                              accept={"image/jpeg image/png"}
+                              onChange={(event) =>
+                                setNewImage(event.target.files[0])
+                              }
+                              ref={uploadInputRef}
+                              className="hidden"
+                            />
                           </div>
                         </div>
                       </div>

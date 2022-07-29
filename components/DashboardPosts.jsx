@@ -1,24 +1,38 @@
-import Image from 'next/image';
-import { Zoom, Fade } from 'react-reveal';
-import { useState } from 'react';
-import Link from 'next/link';
-import * as HiIcons from 'react-icons/hi';
+import Image from "next/image";
+import { Zoom, Fade } from "react-reveal";
+import { useState } from "react";
+import Link from "next/link";
+import * as HiIcons from "react-icons/hi";
 
 // ? import sample images
-import sampleImage from '../public/images/img4.jpg';
+import sampleImage from "../public/images/img4.jpg";
 
 const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [isSold, setIsSold] = useState(null);
 
-  const handlePostSoldYes = (id) => {
+  const handlePostSoldYes = async (targetID) => {
+    await supabase
+      .from("posts")
+      .update({
+        is_sold: true,
+      })
+      .match({
+        id: targetID,
+      });
     // change post sale status to true!
     // do nothing if already true
     // do this server side, or client side firstly if possible!
   };
-  const handlePostSoldNo = (id) => {
-    // change post sale status to false!
-    // do nothing if already false
+  const handlePostSoldNo = async (targetID) => {
+    await supabase
+      .from("posts")
+      .update({
+        is_sold: false,
+      })
+      .match({
+        id: targetID,
+      });
   };
 
   // Prices formatting function
@@ -74,8 +88,8 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                     // title={title}
                     className={`w-full rounded-t-md hover:opacity-60 hover:scale-105 group-hover:scale-110 group-hover:opacity-75 transition duration-150 ease-linear ${
                       imageIsLoading
-                        ? 'grayscale blur-3xl'
-                        : 'grayscale-0 blur-0 transition-all duration-300 ease-in-out'
+                        ? "grayscale blur-3xl"
+                        : "grayscale-0 blur-0 transition-all duration-300 ease-in-out"
                     }`}
                     onLoadingComplete={() => setImageIsLoading(false)}
                   />
@@ -94,7 +108,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                     Price: {priceFormat(post.price)}
                   </span>
                   <span className="text-gray-600">
-                    {post.installments ? 'Kibanjampola' : 'Full price'}
+                    {post.installments ? "Kibanjampola" : "Full price"}
                   </span>
                 </h1>
               </div>
@@ -109,8 +123,8 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                       <button
                         className={` flex justify-center items-center capitalize  active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md px-2 ${
                           !post.is_sold
-                            ? 'bg-gray-800 text-gray-100 hover:bg-gray-600 hover:text-gray-400'
-                            : 'bg-gray-200 text-gray-400 hover:bg-gray-300 hover:text-gray-500'
+                            ? "bg-gray-800 text-gray-100 hover:bg-gray-600 hover:text-gray-400"
+                            : "bg-gray-200 text-gray-400 hover:bg-gray-300 hover:text-gray-500"
                         }`}
                         onClick={() => handlePostSoldYes(post.id)}
                       >
@@ -120,8 +134,8 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                       <button
                         className={` flex justify-center items-center capitalize  active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md px-2 ${
                           post.is_sold
-                            ? 'bg-gray-800 text-gray-100 hover:bg-gray-600 hover:text-gray-400'
-                            : 'bg-gray-200 text-gray-400 hover:bg-gray-300 hover:text-gray-500'
+                            ? "bg-gray-800 text-gray-100 hover:bg-gray-600 hover:text-gray-400"
+                            : "bg-gray-200 text-gray-400 hover:bg-gray-300 hover:text-gray-500"
                         }`}
                         onClick={() => handlePostSoldNo(post.id)}
                       >

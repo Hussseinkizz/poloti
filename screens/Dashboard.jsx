@@ -85,6 +85,10 @@ const UserDashboard = ({ userposts }) => {
     // console.log(id);
     // console.log(posts);
     // TODO: Also do delete ops on backend!
+    // delete post
+    // const handlePostDelete = async (targetID) => {
+    //   await supabase.from('posts').delete().match({ id: targetID });
+    // };
     const filteredPosts = posts.filter((post) => post.id !== id);
     // console.log('filtered', filteredPosts);
     setPosts(filteredPosts);
@@ -280,3 +284,26 @@ const UserDashboard = ({ userposts }) => {
 };
 
 export default UserDashboard;
+
+export const getServerSideProps = async (context) => {
+  // Query all land posts
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('created_at');
+
+  if (error) {
+    console.log(error);
+    // Return 404 response.
+    // No land posts found or something went wrong with the query
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};
