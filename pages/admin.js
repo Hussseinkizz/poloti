@@ -1,12 +1,17 @@
 // admin can view and do crud ops on all users and their posts
 // this is a protected route, admin has to login first here to view anything
 // admin logins first then we set admin
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ComponentWrapper from '../components/ComponentWrapper';
 import SearchBox from '../components/SearchBox';
 
-const admin = () => {
-  const [admin, setAdmin] = useState(true);
+export default function Admin() {
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    // Get admin auth status and set admin to true if auth status is true or admin logins in successfully!
+    setAdmin(true);
+  }, []);
 
   if (admin) {
     return (
@@ -32,6 +37,4 @@ const admin = () => {
       </section>
     </ComponentWrapper>
   );
-};
-
-export default admin;
+}

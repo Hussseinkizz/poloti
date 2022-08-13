@@ -2,7 +2,7 @@
 
 // fetch all posts @index.js
 export async function getStaticProps() {
-  const { data: posts, error } = await supabase.from("posts").select("*");
+  const { data: posts, error } = await supabase.from('posts').select('*');
 
   if (error) {
     throw new error(error.message);
@@ -18,9 +18,9 @@ export async function getStaticProps() {
 // fetch specific post according to id @[id].js, also get user profile
 export async function getServerSideProps({ params }) {
   const { data: post, error } = await supabase
-    .from("posts")
-    .select("*, profiles(*)")
-    .eq("id", params.id)
+    .from('posts')
+    .select('*, profiles(*)')
+    .eq('id', params.id)
     .single();
 
   if (error) {
@@ -50,22 +50,22 @@ const handleSubmit = async (event) => {
 // enable subscriptions on given table in supabase dashboard --> replication
 // sub to posts table only!
 
-useEffect(() => {
-  const subscription = supabase
-    .from("profiles")
-    .on("INSERT", (payload) => {
-      setUpdates(payload);
-    })
-    .subscribe();
+// useEffect(() => {
+//   const subscription = supabase
+//     .from("profiles")
+//     .on("INSERT", (payload) => {
+//       setUpdates(payload);
+//     })
+//     .subscribe();
 
-  return () => supabase.removeSubscription(subscription);
-}, []);
+//   return () => supabase.removeSubscription(subscription);
+// }, []);
 
 // upload image
 const FileInput = (
   <input
     type="file"
-    accept={"image/jpeg image/png"}
+    accept={'image/jpeg image/png'}
     onChange={(e) => setUserAvatar(e.target.files[0])}
   />
 );
@@ -73,7 +73,7 @@ const FileInput = (
 const handleUpload = async () => {
   if (userAvatar) {
     const { data, error } = await supabase.storage
-      .from("avatars")
+      .from('avatars')
       .upload(`${Date.now()}_${userAvatar.name}`, userAvatar);
 
     if (error) {
@@ -86,7 +86,7 @@ const handleUpload = async () => {
 
     // update user profile to use new avatar
     const { data: profiles, error: profilesError } = await supabase
-      .from("profiles")
+      .from('profiles')
       .upsert({
         id: auth.user.id,
         avatar: setUserAvatarUrl,
