@@ -23,3 +23,9 @@ export const updateUserAvatar = async (user, avatarUrl) => {
     avatar_url: avatarUrl,
   });
 };
+
+// get public bucket file url for browser view
+// https://projectRef.supabase.in/storage/v1/object/filePath/fileName.png
+// projectUrl/storage/v1/public/filepathUrl
+export const getPublicUrl = (fileUrl) =>
+  `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${fileUrl}`;

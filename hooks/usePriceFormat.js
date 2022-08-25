@@ -1,4 +1,4 @@
-export default function usePriceFormat(value) {
+export function usePriceFormat(value) {
   let digitCount = value.toString().length;
   // console.log(digitCount);
 

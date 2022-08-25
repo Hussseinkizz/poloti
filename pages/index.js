@@ -8,18 +8,21 @@ import Card from '../components/Card';
 import Filters from '../components/Filters';
 import CustomSearchModal from '../components/CustomSearchModal';
 import { HiOutlineRefresh } from 'react-icons/hi';
-// import { supabase } from '../supabase-client';
+import { supabase } from '../supabase-client';
 
 // TODO: data structure changed, redo the rendering logic!
 
 // local sample data import
-import data from '../utils/data.json';
+// import data from '../utils/data.json';
 import sampleImage from '../public/images/img4.jpg';
 
 export default function Home({ posts }) {
+  // console.log(posts);
   // const { state, setState } = useStore();
   const { state, setState } = useStore();
   const [showModal, setShowModal] = useState(false);
+
+  const data = posts; // supabase data
 
   return (
     <section className="flex-col gap-8 relative">
@@ -51,25 +54,25 @@ export default function Home({ posts }) {
 // 1. fetch all land posts data
 // 2. sort them by creation time stamps using query
 // 3. use that data on page!
-// export const getServerSideProps = async (context) => {
-//   // Query all land posts
-//   const { data: posts, error } = await supabase
-//     .from('posts')
-//     .select('*')
-//     .order('created_at');
+export const getServerSideProps = async (context) => {
+  // Query all land posts
+  const { data: posts, error } = await supabase
+    .from('posts')
+    .select('*')
+    .order('created_at');
 
-//   if (error) {
-//     console.log(error);
-//     // Return 404 response.
-//     // No land posts found or something went wrong with the query
-//     return {
-//       notFound: true,
-//     };
-//   }
+  if (error) {
+    console.log(error);
+    // Return 404 response.
+    // No land posts found or something went wrong with the query
+    return {
+      notFound: true,
+    };
+  }
 
-//   return {
-//     props: {
-//       posts,
-//     },
-//   };
-// };
+  return {
+    props: {
+      posts,
+    },
+  };
+};

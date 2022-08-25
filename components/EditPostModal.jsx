@@ -16,6 +16,12 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
   const [newInstallments, setNewInstallments] = useState(post.installments);
   // const [newSaleStatus, setNewSaleStatus] = useState(post.is_sold);
 
+  // * handle image upload and old image preview
+  // download image_1 from supabase
+  // preview the downloaded image as src
+  // handle upload of new images
+  // update old ones in database and update preview!
+
   // handle image uploading
   const handleImageUpload = (e) => {
     const image = e.target.files[0];

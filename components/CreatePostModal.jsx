@@ -1,53 +1,154 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState, useRef } from "react";
-import Image from "next/image";
-
-import * as HiIcons from "react-icons/hi";
-import { BiImageAdd } from "react-icons/bi";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useState, useRef, useEffect } from 'react';
+import { useSession } from '../utils/user-context';
+import { supabase } from '../supabase-client';
+import { useRouter } from 'next/router';
+import * as HiIcons from 'react-icons/hi';
 
 // ? import sample images
-import sampleImage from "../public/images/img4.jpg";
-// TODO: also create a unique nanoid for each new post or it's auto by the db!
-// complete image upload configuration, handle multiple images scenario
-// fix state and how multiple images will be handled in db!
+import sampleImage from '../public/images/img4.jpg';
+import ModalHeader from './ModalHeader';
+// import { useImagePreview } from '../hooks/useImagePreview';
 
 export default function CreatePostModal({ isOpen, closeModal }) {
-  const [imageIsLoading, setImageIsLoading] = useState(true);
-  const [newLocation, setNewLocation] = useState("");
-  const [newInfo, setNewInfo] = useState("");
-  const [newPrice, setNewPrice] = useState("");
-  const [newWidth, setNewWidth] = useState("");
-  const [newHeight, setNewHeight] = useState("");
+  const [newLocation, setNewLocation] = useState('');
+  const [newInfo, setNewInfo] = useState('');
+  const [newPrice, setNewPrice] = useState('');
+  const [newWidth, setNewWidth] = useState('');
+  const [newHeight, setNewHeight] = useState('');
   const [newInstallments, setNewInstallments] = useState(true);
-  const [newImage, setNewImage] = useState(null);
-  const [newPost, setNewPost] = useState({});
+
+  // * Logic state
+  const [formError, setFormError] = useState('clear');
+  const [uploadPercent, setUploadPercent] = useState(0);
+  const [progressWidth, setProgressWidth] = useState('w-fit');
+  const [imageSelected, setImageSelected] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // get current user
+  const { user } = useSession().session;
+  // let user = {
+  //   id: 1,
+  // };
+
+  // next router
+  // const router = useRouter();
 
   // handle image uploading
   // TODO: preview image?
-  const uploadInputRef = useRef();
+  const imagesRef = useRef([]);
+  let images = imagesRef.current;
+  let targetImage = useRef(null);
+  let previewUrlRef = useRef(null);
+  const uploadImagesRef = useRef();
 
-  const handleImageUpload = () => {
-    uploadInputRef.current.click();
+  const handleImagesUpload = () => {
+    uploadImagesRef.current.click();
   };
 
+  const handleImageChange = (event) => {
+    let selectedImages = event.target.files;
+    if (selectedImages.length !== 0 && selectedImages.length >= 4) {
+      imagesRef.current = [...selectedImages];
+      targetImage.current = selectedImages[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const value = reader.result;
+        previewUrlRef.current = value;
+      };
+      reader.readAsDataURL(targetImage.current);
+      setImageSelected(true);
+      setFormError('clear');
+    } else {
+      // Todo: this should be a toast!
+      alert('Please provide atleast 4 images maximum!');
+    }
+  };
+  console.log(previewUrlRef.current);
   // handle form submission
-  const handlePostCreate = (e) => {
-    e.preventDefault();
-    // ? send data to server
-    // create post in supabase
-    const createPost = async () =>
-      await supabase.from("posts").insert({
-        width: newWidth,
-        height: newHeight,
-        location: newLocation,
-        installments: newInstallments,
-        price: newPrice,
-        photos: newImages,
-        info: newInfo,
-      });
-    createPost();
-    // ? close modal
-    closeModal();
+  const handleForm = async (event) => {
+    event.preventDefault();
+    if (imageSelected) {
+      setLoading(true);
+      // upload post photos to storage...
+      // * upload image 1
+      let image1 = images[0];
+      const { data: image1Data, error: image1Error } = await supabase.storage
+        .from('post_images')
+        .upload(`${Date.now()}_${image1.name}`, image1);
+      const image1Url = image1Data.Key;
+
+      // update image upload UI progress indicator
+      if (image1Data) {
+        console.log('Image1data', image1Data);
+        setProgressWidth('w-2/5');
+        setUploadPercent(25);
+      } else {
+        throw new error(image1Error.message);
+      }
+      // * upload image 2
+      let image2 = images[1];
+      const { data: image2Data, error: image2Error } = await supabase.storage
+        .from('post_images')
+        .upload(`${Date.now()}_${image2.name}`, image2);
+      const image2Url = image2Data.Key;
+
+      // update image upload UI progress indicator
+      if (image2Data) {
+        setProgressWidth('w-1/2');
+        setUploadPercent(50);
+      } else {
+        throw new error(image2Error.message);
+      }
+      // * upload image 3
+      let image3 = images[2];
+      const { data: image3Data, error: image3Error } = await supabase.storage
+        .from('post_images')
+        .upload(`${Date.now()}_${image3.name}`, image3);
+      const image3Url = image3Data.Key;
+
+      // update image upload UI progress indicator
+      if (image3Data) {
+        setProgressWidth('w-3/4');
+        setUploadPercent(75);
+      } else {
+        throw new error(image3Error.message);
+      }
+      // * upload image 4
+      let image4 = images[3];
+      const { data: image4Data, error: image4Error } = await supabase.storage
+        .from('post_images')
+        .upload(`${Date.now()}_${image4.name}`, image4);
+      const image4Url = image4Data.Key;
+
+      // * Then finally create post in supabase db...
+      if (image4Data) {
+        const { data, error } = await supabase.from('posts').insert({
+          user_id: user.id,
+          width: newWidth,
+          height: newHeight,
+          location: newLocation,
+          installments: newInstallments,
+          price: newPrice,
+          info: newInfo,
+          image1_url: image1Url,
+          image2_url: image2Url,
+          image3_url: image3Url,
+          image4_url: image4Url,
+        });
+        if (data) {
+          setProgressWidth('w-full');
+          setUploadPercent(100);
+          closeModal();
+        } else {
+          throw new error(error.message);
+        }
+      } else {
+        throw new error(image4Error.message);
+      }
+    } else {
+      setFormError('image-error');
+    }
   };
 
   return (
@@ -80,64 +181,20 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
                   {/* Modal Content */}
                   <section className="w-full">
-                    {/* Modal Header */}
-                    {newImage ? (
-                      <div className="w-full">
-                        <div className="w-full h-60 group relative cursor-pointer flex grow">
-                          <Image
-                            src={newImage}
-                            layout="fill"
-                            loading="lazy"
-                            objectFit="fill"
-                            alt={`Image of ${newLocation}`}
-                            // title={title}
-                            className={`w-full rounded-t-md hover:opacity-60 hover:scale-105 group-hover:scale-110 group-hover:opacity-75 transition duration-150 ease-linear ${
-                              imageIsLoading
-                                ? "grayscale blur-3xl"
-                                : "grayscale-0 blur-0 transition-all duration-300 ease-in-out"
-                            }`}
-                            onLoadingComplete={() => setImageIsLoading(false)}
-                            onClick={handleImageUpload}
-                          />
-                          {/* The overlay content */}
-                          <div className="truncate absolute z-10 font-bold flex justify-center items-end pb-2 w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear capitalize">
-                            <button
-                              className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-110 transition duration-150 ease-in-out"
-                              onClick={handleImageUpload}
-                            >
-                              <HiIcons.HiCloudUpload className="text-xl md:text-2xl" />
-                              <span>Tap to upload photo</span>
-                            </button>
-                            {/* Image upload ref actual input */}
-                            <input
-                              type="file"
-                              multiple={true}
-                              accept={"image/jpeg image/png"}
-                              onChange={(event) =>
-                                setNewImage(event.target.files[0])
-                              }
-                              ref={uploadInputRef}
-                              className="hidden"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-full h-60 relative cursor-pointer flex flex-col justify-center  items-center gap-2 grow bg-gray-400 bg-opacity-25">
-                        <BiImageAdd
-                          className="text-5xl text-gray-500"
-                          onClick={handleImageUpload}
-                        />
-                        <button
-                          className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-800 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-110 transition duration-150 ease-in-out"
-                          onClick={handleImageUpload}
-                        >
-                          Tap to upload photos
-                        </button>
-                      </div>
-                    )}
+                    <ModalHeader
+                      imageSelected={imageSelected}
+                      // imageUrl={imageUrlRef.current}
+                      imageUrl={sampleImage}
+                      handleImageChange={handleImageChange}
+                      handleImagesUpload={handleImagesUpload}
+                      formError={formError}
+                      uploadImagesRef={uploadImagesRef}
+                    />
                     {/* Modal Body */}
-                    <section className="w-full flex flex-col justify-center items-center gap-2 px-2">
+                    <form
+                      className="w-full flex flex-col justify-center items-center gap-2 px-2"
+                      onSubmit={handleForm}
+                    >
                       {/* Post Location */}
                       <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
                         <label
@@ -272,28 +329,37 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                           them as you explain why they should buy that land!
                         </span>
                       </h2>
-                    </section>
+                      {/* Modal Actions */}
+                      <div className="w-full flex justify-between gap-4 items-center mt-4 p-6">
+                        <button
+                          type="submit"
+                          className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                        >
+                          {!loading && <HiIcons.HiOutlineCheck />}
+                          <span>
+                            {loading ? 'please wait...' : 'post land'}
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          onClick={closeModal}
+                        >
+                          cancel
+                        </button>
+                      </div>
+                    </form>
+                    {/* Image upload progress bar,w-fit, w-2/5, w-1/2,w-3/4, w-full */}
+                    {uploadPercent !== 0 && (
+                      <div className="w-full bg-green-50">
+                        <div
+                          className={`bg-green-100 text-green-400 rounded-r-lg text-sm text-center px-4 animate-pulse ${progressWidth}`}
+                        >
+                          uploading images {uploadPercent}%
+                        </div>
+                      </div>
+                    )}
                   </section>
-                  {/* Modal Actions */}
-                  <div className="flex justify-between gap-4 items-center mt-4 p-6">
-                    <button
-                      type="submit"
-                      className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
-                      onClick={handlePostCreate}
-                      data-mdb-ripple="true"
-                      data-mdb-ripple-color="light"
-                    >
-                      <HiIcons.HiOutlineCheck />
-                      <span>post land</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      cancel
-                    </button>
-                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

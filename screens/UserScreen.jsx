@@ -37,7 +37,7 @@ const UserScreen = ({ userposts }) => {
   return (
     <section className="mx-auto pb-10">
       {/* User Profile */}
-      <div className="flex flex-col justify-center gap-2 items-center sm:pt-4 border-b bg-gray-50 pb-2 mb-4 rounded-b-md pt-16 sm:pt-18">
+      <div className="bg-svg-pattern flex flex-col justify-center gap-2 items-center sm:pt-4 border-b bg-gray-50 pb-2 mb-4 rounded-b-md pt-16 sm:pt-18">
         <span className="w-24 sm:32 h-24 sm:32">
           <Image
             src={sampleAvatar}

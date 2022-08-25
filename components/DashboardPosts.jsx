@@ -4,14 +4,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import * as HiIcons from 'react-icons/hi';
 import { supabase } from '../supabase-client';
+import { usePriceFormat } from '../hooks/usePriceFormat';
 
 // ? import sample images
 import sampleImage from '../public/images/img4.jpg';
 
 const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
-  const [isSold, setIsSold] = useState(null);
-
+  const [isSold, setIsSold] = useState(true);
   const handlePostSoldYes = async (targetID) => {
     await supabase
       .from('posts')
@@ -34,23 +34,6 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
       .match({
         id: targetID,
       });
-  };
-
-  // Prices formatting function
-  const priceFormat = (value) => {
-    let digitCount = value.toString().length;
-    // console.log(digitCount);
-
-    if (digitCount >= 7 && digitCount <= 10) {
-      return `${value / 1000000} M`;
-    }
-    if (digitCount >= 10 && digitCount <= 12) {
-      return `${value / 1000000000} B`;
-    }
-    // if (digitCount <= 6) {
-    //   return `${value / 1000} K`;
-    // }
-    return `${value / 1000} K`;
   };
 
   if (posts.length === 0) {
@@ -106,7 +89,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
               <div className="p-2 flex items-center justify-between gap-8">
                 <h1 className="font-bold flex justify-between items-center sm:text-sm md:text-base w-full">
                   <span className="text-gray-700">
-                    Price: {priceFormat(post.price)}
+                    Price: {usePriceFormat(post.price)}
                   </span>
                   <span className="text-gray-600">
                     {post.installments ? 'Kibanjampola' : 'Full price'}
@@ -121,28 +104,28 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                       <span>Land still available?</span>
                     </h2>
                     <div className="flex justify-center items-center gap-2">
-                      <button
-                        className={` flex justify-center items-center capitalize  active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md px-2 ${
-                          !post.is_sold
-                            ? 'bg-gray-800 text-gray-100 hover:bg-gray-600 hover:text-gray-400'
-                            : 'bg-gray-200 text-gray-400 hover:bg-gray-300 hover:text-gray-500'
-                        }`}
-                        onClick={() => handlePostSoldYes(post.id)}
-                      >
-                        <HiIcons.HiCheck />
+                      <div className="flex justify-center items-center gap-2">
+                        <input
+                          type="checkbox"
+                          name="land-sale-status"
+                          id="land-sale-status"
+                          checked={isSold}
+                          onChange={() => setIsSold(true)}
+                          className="outline-none border-gray-300 text-gray-600 rounded-md  hover:border-gray-100 focus:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 appearance-none border  bg-white checked:text-gray-800 checked:border-gray-700 transition cursor-pointer h-6 w-6"
+                        />
                         <span>Yes</span>
-                      </button>
-                      <button
-                        className={` flex justify-center items-center capitalize  active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md px-2 ${
-                          post.is_sold
-                            ? 'bg-gray-800 text-gray-100 hover:bg-gray-600 hover:text-gray-400'
-                            : 'bg-gray-200 text-gray-400 hover:bg-gray-300 hover:text-gray-500'
-                        }`}
-                        onClick={() => handlePostSoldNo(post.id)}
-                      >
-                        <HiIcons.HiX />
+                      </div>
+                      <div className="flex justify-center items-center gap-2">
+                        <input
+                          type="checkbox"
+                          name="land-sale-status"
+                          id="land-sale-status"
+                          checked={!isSold}
+                          onChange={() => setIsSold(false)}
+                          className="outline-none border-gray-300 text-gray-600 rounded-md  hover:border-gray-100 focus:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 appearance-none border  bg-white checked:text-gray-800 checked:border-gray-700 transition cursor-pointer h-6 w-6"
+                        />
                         <span>No</span>
-                      </button>
+                      </div>
                     </div>
                   </div>
                   {/* Card Buttons */}
