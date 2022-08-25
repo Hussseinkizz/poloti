@@ -52,7 +52,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
   }
 
   // ! fix this code to run as  a hook!
-  const usePriceFormat = (value) => {
+  const PriceFormat = (value) => {
     let digitCount = value.toString().length;
     // console.log(digitCount);
 
@@ -106,7 +106,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
               <div className="p-2 flex items-center justify-between gap-8">
                 <h1 className="font-bold flex justify-between items-center sm:text-sm md:text-base w-full">
                   <span className="text-gray-700">
-                    Price: {usePriceFormat(post.price)}
+                    Price: {PriceFormat(post.price)}
                   </span>
                   <span className="text-gray-600">
                     {post.installments ? 'Kibanjampola' : 'Full price'}

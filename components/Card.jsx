@@ -39,7 +39,7 @@ const Card = ({ post }) => {
     if (user_id) {
       getPostOwner();
     }
-  }, []);
+  });
 
   const getPostOwner = async () => {
     const { data: user, error } = await supabase
