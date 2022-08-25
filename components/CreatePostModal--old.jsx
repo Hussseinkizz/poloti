@@ -5,10 +5,6 @@ import { supabase } from '../supabase-client';
 import { useRouter } from 'next/router';
 import * as HiIcons from 'react-icons/hi';
 
-// * outline
-// - recreate component
-// - upload photos, get first one and preview it, however delete from db on cancel
-
 // ? import sample images
 import sampleImage from '../public/images/img4.jpg';
 import ModalHeader from './ModalHeader';
@@ -43,7 +39,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
   const imagesRef = useRef([]);
   let images = imagesRef.current;
   let targetImage = useRef(null);
-  // let previewUrlRef = useRef(null);
+  let previewUrlRef = useRef(null);
   const uploadImagesRef = useRef();
 
   const handleImagesUpload = () => {
@@ -55,12 +51,12 @@ export default function CreatePostModal({ isOpen, closeModal }) {
     if (selectedImages.length !== 0 && selectedImages.length >= 4) {
       imagesRef.current = [...selectedImages];
       targetImage.current = selectedImages[0];
-      // const reader = new FileReader();
-      // reader.onloadend = () => {
-      //   const value = reader.result;
-      //   previewUrlRef.current = value;
-      // };
-      // reader.readAsDataURL(targetImage.current);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const value = reader.result;
+        previewUrlRef.current = value;
+      };
+      reader.readAsDataURL(targetImage.current);
       setImageSelected(true);
       setFormError('clear');
     } else {
