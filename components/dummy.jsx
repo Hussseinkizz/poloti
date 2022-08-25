@@ -1,38 +1,38 @@
-import { useEffect } from 'react';
-/**
- * It takes a file, reads it as a data URL, and returns the data URL.
- * @param file - The file to be read.
- * @returns A promise.
- */
+// import { useEffect } from 'react';
+// /**
+//  * It takes a file, reads it as a data URL, and returns the data URL.
+//  * @param file - The file to be read.
+//  * @returns A promise.
+//  */
 
-// * method 1
-export async function useImagePreview(file) {
-  let result = '';
+// // * method 1
+// export async function useImagePreview(file) {
+//   let result = '';
 
-  const reader = new FileReader();
-  reader.addEventListener('load', (e) => {
-    result = e.target.result;
-  });
-  reader.readAsDataURL(file);
-  return { previewUrl: result };
-}
+//   const reader = new FileReader();
+//   reader.addEventListener('load', (e) => {
+//     result = e.target.result;
+//   });
+//   reader.readAsDataURL(file);
+//   return { previewUrl: result };
+// }
 
-// * method 2
-export async function useImagePreviewUrl(file) {
-  let result = '';
+// // * method 2
+// export async function useImagePreviewUrl(file) {
+//   let result = '';
 
-  useEffect(() => {
-    const objectUrl = URL.createObjectURL(file);
-    result = objectUrl;
-    // console.log('url', result);
+//   useEffect(() => {
+//     const objectUrl = URL.createObjectURL(file);
+//     result = objectUrl;
+//     // console.log('url', result);
 
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [file]);
-  return { previewUrl: result };
-}
+//     // free memory when ever this component is unmounted
+//     return () => URL.revokeObjectURL(objectUrl);
+//   }, [file]);
+//   return { previewUrl: result };
+// }
 
-// * this works...
+// // * this works...
 // generate images to upload preview
 // useEffect(() => {
 //   if (images && images.length > 0) {

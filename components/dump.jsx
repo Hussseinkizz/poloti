@@ -223,7 +223,7 @@ export default function App() {
           uploader(e);
         }}
       />
-      {result && <img ref={imageRef} src={result} alt="" />}
+      {/* {result && <img ref={imageRef} src={result} alt="" />} */}
     </div>
   );
 }
