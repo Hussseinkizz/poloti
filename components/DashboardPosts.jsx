@@ -52,7 +52,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
   }
 
   // ! fix this code to run as  a hook!
-  function usePriceFormat(value) {
+  const usePriceFormat = (value) => {
     let digitCount = value.toString().length;
     // console.log(digitCount);
 
@@ -66,7 +66,7 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
     //   return `${value / 1000} K`;
     // }
     return `${value / 1000} K`;
-  }
+  };
 
   return (
     <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 relative z-0">
