@@ -68,7 +68,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
       alert('Please provide atleast 4 images maximum!');
     }
   };
-  console.log(previewUrlRef.current);
+  // console.log(previewUrlRef.current);
   // handle form submission
   const handleForm = async (event) => {
     event.preventDefault();
