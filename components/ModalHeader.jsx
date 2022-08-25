@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 const ModalHeader = ({
   imageSelected,
+  imageSelectedCount,
   handleImagesUpload,
   handleImageChange,
   formError,
@@ -71,7 +72,11 @@ const ModalHeader = ({
         }`}
         onClick={handleImagesUpload}
       >
-        {imageSelected ? 'Change uploaded photos' : 'Tap to upload photos'}
+        {imageSelected ? (
+          <span>Change {imageSelectedCount} uploaded photos</span>
+        ) : (
+          <span>Tap to upload photos</span>
+        )}
       </button>
       {/* Image upload ref actual input */}
       <input

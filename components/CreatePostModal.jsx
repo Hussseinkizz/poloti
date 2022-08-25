@@ -41,7 +41,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
   // handle image uploading
   // TODO: preview image?
   const imagesRef = useRef([]);
-  let images = imagesRef.current;
+  const images = imagesRef.current;
   let targetImage = useRef(null);
   // let previewUrlRef = useRef(null);
   const uploadImagesRef = useRef();
@@ -50,108 +50,155 @@ export default function CreatePostModal({ isOpen, closeModal }) {
     uploadImagesRef.current.click();
   };
 
+  // * select images from device 1 by 1
+  // add image to selected images array
+  // check if file name already exists and alert else still add to array
+  // check if array length is already 4 and alert if max limit else  add to array
+  // show selection count in UI
+  // should not submit form if images are less than 4
+
   const handleImageChange = (event) => {
-    let selectedImages = event.target.files;
-    if (selectedImages.length !== 0 && selectedImages.length >= 4) {
-      imagesRef.current = [...selectedImages];
-      targetImage.current = selectedImages[0];
-      // const reader = new FileReader();
-      // reader.onloadend = () => {
-      //   const value = reader.result;
-      //   previewUrlRef.current = value;
-      // };
-      // reader.readAsDataURL(targetImage.current);
-      setImageSelected(true);
-      setFormError('clear');
+    const fileList = event.target.files;
+    const selectedFiles = [...fileList];
+    const selectedImage = event.target.files[0];
+    const selectedImages = imagesRef.current;
+
+    function findDuplicates(arr) {
+      const seen = new Set();
+      const duplicates = arr.filter((n) => seen.size === seen.add(n).size);
+      return duplicates;
+    }
+
+    if (selectedFiles && selectedFiles.length > 1) {
+      // * use multiple selection
+      const selectedImagesNames = selectedFiles.map((file) => file.name);
+      const duplicates = findDuplicates(selectedImagesNames);
+      console.log('duplicates:', duplicates);
+      if (duplicates.length === 0) {
+        // add selection to imagesRef
+        selectedImages.push(selectedImage);
+        setImageSelected(true);
+        setFormError('clear');
+        // show selection count in UI
+      } else {
+        alert(
+          `There ${duplicates.length} selected, please select unique Images!`
+        );
+      }
+    } else if (selectedFiles && selectedFiles.length <= 1) {
+      // * use single selection handler
+      if (selectedImages && selectedImages.length < 4) {
+        // check if image already exists
+        const selectedImagesNames = selectedImages.map((file) => file.name);
+        const alreadyAdded = selectedImagesNames.includes(selectedImage.name);
+        if (!alreadyAdded) {
+          selectedImages.push(selectedImage);
+          console.log('Images:', selectedImages);
+          setImageSelected(true);
+          setFormError('clear');
+          // show selection count in UI
+        }
+        if (alreadyAdded) {
+          alert('alert already added');
+        }
+      } else {
+        alert('Please provide atleast 4 images maximum!');
+      }
     } else {
-      // Todo: this should be a toast!
+      // * alert 4 max limit
       alert('Please provide atleast 4 images maximum!');
     }
   };
-  // console.log(previewUrlRef.current);
+  console.log('ImagesRef:', imagesRef.current);
+
   // handle form submission
   const handleForm = async (event) => {
     event.preventDefault();
-    if (imageSelected) {
-      setLoading(true);
-      // upload post photos to storage...
-      // * upload image 1
-      let image1 = images[0];
-      const { data: image1Data, error: image1Error } = await supabase.storage
-        .from('post_images')
-        .upload(`${Date.now()}_${image1.name}`, image1);
-      const image1Url = image1Data.Key;
+    if (images && images.length === 4) {
+      // * handle form...
+      if (imageSelected) {
+        setLoading(true);
+        // upload post photos to storage...
+        // * upload image 1
+        let image1 = images[0];
+        const { data: image1Data, error: image1Error } = await supabase.storage
+          .from('post_images')
+          .upload(`${Date.now()}_${image1.name}`, image1);
+        const image1Url = image1Data.Key;
 
-      // update image upload UI progress indicator
-      if (image1Data) {
-        console.log('Image1data', image1Data);
-        setProgressWidth('w-2/5');
-        setUploadPercent(25);
-      } else {
-        throw new error(image1Error.message);
-      }
-      // * upload image 2
-      let image2 = images[1];
-      const { data: image2Data, error: image2Error } = await supabase.storage
-        .from('post_images')
-        .upload(`${Date.now()}_${image2.name}`, image2);
-      const image2Url = image2Data.Key;
-
-      // update image upload UI progress indicator
-      if (image2Data) {
-        setProgressWidth('w-1/2');
-        setUploadPercent(50);
-      } else {
-        throw new error(image2Error.message);
-      }
-      // * upload image 3
-      let image3 = images[2];
-      const { data: image3Data, error: image3Error } = await supabase.storage
-        .from('post_images')
-        .upload(`${Date.now()}_${image3.name}`, image3);
-      const image3Url = image3Data.Key;
-
-      // update image upload UI progress indicator
-      if (image3Data) {
-        setProgressWidth('w-3/4');
-        setUploadPercent(75);
-      } else {
-        throw new error(image3Error.message);
-      }
-      // * upload image 4
-      let image4 = images[3];
-      const { data: image4Data, error: image4Error } = await supabase.storage
-        .from('post_images')
-        .upload(`${Date.now()}_${image4.name}`, image4);
-      const image4Url = image4Data.Key;
-
-      // * Then finally create post in supabase db...
-      if (image4Data) {
-        const { data, error } = await supabase.from('posts').insert({
-          user_id: user.id,
-          width: newWidth,
-          height: newHeight,
-          location: newLocation,
-          installments: newInstallments,
-          price: newPrice,
-          info: newInfo,
-          image1_url: image1Url,
-          image2_url: image2Url,
-          image3_url: image3Url,
-          image4_url: image4Url,
-        });
-        if (data) {
-          setProgressWidth('w-full');
-          setUploadPercent(100);
-          closeModal();
+        // update image upload UI progress indicator
+        if (image1Data) {
+          console.log('Image1data', image1Data);
+          setProgressWidth('w-2/5');
+          setUploadPercent(25);
         } else {
-          throw new error(error.message);
+          throw new error(image1Error.message);
+        }
+        // * upload image 2
+        let image2 = images[1];
+        const { data: image2Data, error: image2Error } = await supabase.storage
+          .from('post_images')
+          .upload(`${Date.now()}_${image2.name}`, image2);
+        const image2Url = image2Data.Key;
+
+        // update image upload UI progress indicator
+        if (image2Data) {
+          setProgressWidth('w-1/2');
+          setUploadPercent(50);
+        } else {
+          throw new error(image2Error.message);
+        }
+        // * upload image 3
+        let image3 = images[2];
+        const { data: image3Data, error: image3Error } = await supabase.storage
+          .from('post_images')
+          .upload(`${Date.now()}_${image3.name}`, image3);
+        const image3Url = image3Data.Key;
+
+        // update image upload UI progress indicator
+        if (image3Data) {
+          setProgressWidth('w-3/4');
+          setUploadPercent(75);
+        } else {
+          throw new error(image3Error.message);
+        }
+        // * upload image 4
+        let image4 = images[3];
+        const { data: image4Data, error: image4Error } = await supabase.storage
+          .from('post_images')
+          .upload(`${Date.now()}_${image4.name}`, image4);
+        const image4Url = image4Data.Key;
+
+        // * Then finally create post in supabase db...
+        if (image4Data) {
+          const { data, error } = await supabase.from('posts').insert({
+            user_id: user.id,
+            width: newWidth,
+            height: newHeight,
+            location: newLocation,
+            installments: newInstallments,
+            price: newPrice,
+            info: newInfo,
+            image1_url: image1Url,
+            image2_url: image2Url,
+            image3_url: image3Url,
+            image4_url: image4Url,
+          });
+          if (data) {
+            setProgressWidth('w-full');
+            setUploadPercent(100);
+            closeModal();
+          } else {
+            throw new error(error.message);
+          }
+        } else {
+          throw new error(image4Error.message);
         }
       } else {
-        throw new error(image4Error.message);
+        setFormError('image-error');
       }
     } else {
-      setFormError('image-error');
+      alert('Please provide atleast 4 images maximum!');
     }
   };
 
@@ -187,6 +234,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                   <section className="w-full">
                     <ModalHeader
                       imageSelected={imageSelected}
+                      imageSelectedCount={images.length}
                       // imageUrl={imageUrlRef.current}
                       imageUrl={sampleImage}
                       handleImageChange={handleImageChange}
