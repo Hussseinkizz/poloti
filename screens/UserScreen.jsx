@@ -2,11 +2,12 @@ import { Zoom } from 'react-reveal';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import CardsGrid from '../components/CardsGrid';
 
-// import sample images
-import sampleAvatar from '../public/images/me.png';
-import sampleImage from '../public/images/img4.jpg';
+// import placeholder image
+import placeholder from '../public/images/placeholder.jpeg';
+
+import { useNumberFormat } from '../hooks/useNumberFormat';
+import { getPublicUrl } from '../supabase-client';
 
 const UserScreen = ({ userposts }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
@@ -15,36 +16,22 @@ const UserScreen = ({ userposts }) => {
   const userSoldPostCount = userposts.filter(
     (post) => post.is_sold !== false
   ).length;
-  const { user_name } = userposts[0];
 
-  // Prices formatting function
-  const priceFormat = (value) => {
-    let digitCount = value.toString().length;
-    // console.log(digitCount);
-
-    if (digitCount >= 7 && digitCount <= 10) {
-      return `${value / 1000000} M`;
-    }
-    if (digitCount >= 10 && digitCount <= 12) {
-      return `${value / 1000000000} B`;
-    }
-    // if (digitCount <= 6) {
-    //   return `${value / 1000} K`;
-    // }
-    return `${value / 1000} K`;
-  };
+  const { user_name, avatar_url } = userposts[0].profiles;
 
   return (
     <section className="mx-auto pb-10">
       {/* User Profile */}
       <div className="bg-svg-pattern flex flex-col justify-center gap-2 items-center sm:pt-4 border-b bg-gray-50 pb-2 mb-4 rounded-b-md pt-16 sm:pt-18">
-        <span className="w-24 sm:32 h-24 sm:32">
+        <span className="w-24 sm:w-32 h-24 sm:h-32">
           <Image
-            src={sampleAvatar}
+            src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
             layout="responsive"
             objectFit="contain"
+            width={50}
+            height={50}
             alt={`${user_name} 's photo`}
-            className="rounded-full"
+            className="rounded-md"
           />
         </span>
         <div className="flex justify-center items-center text-gray-800 capitalize font-bold text-xl sm:text-2xl md:text-3xl gap-2">
@@ -77,12 +64,15 @@ const UserScreen = ({ userposts }) => {
                       <a>
                         <div className="w-full h-60 group relative cursor-pointer flex grow">
                           <Image
-                            src={sampleImage}
+                            src={
+                              post.image1_url
+                                ? getPublicUrl(post.image1_url)
+                                : placeholder
+                            }
                             layout="fill"
                             loading="lazy"
                             objectFit="fill"
                             alt={`Image of ${post.location}`}
-                            // title={title}
                             className={`w-full rounded-t-md hover:opacity-60 hover:scale-105 group-hover:scale-110 group-hover:opacity-75 transition duration-150 ease-linear ${
                               imageIsLoading
                                 ? 'grayscale blur-3xl'
@@ -91,8 +81,21 @@ const UserScreen = ({ userposts }) => {
                             onLoadingComplete={() => setImageIsLoading(false)}
                           />
                           {/* The overlay content */}
-                          <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear capitalize">
-                            <span>{`${post.location} - ${post.width} ku ${post.height}`}</span>
+                          <div
+                            className={`truncate capitalize absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-lg md:text-xl hover:text-orange-300 transition duration-150 ease-linear px-16 ${
+                              imageIsLoading
+                                ? 'bg-gradient-to-b from-orange-300 via-orange-200 to-orange-300 grayscale blur-3xl animate-pulse'
+                                : 'grayscale-0 blur-0 transition-all animate-none duration-300 ease-in-out bg-transparent'
+                            }`}
+                          >
+                            {!imageIsLoading && (
+                              <div className="rounded-md bg-black bg-opacity-25 px-4 py-2 flex justify-center items-center flex-auto flex-wrap gap-2">
+                                <span>{post.location}</span>
+                                <span>
+                                  - {post.width} ku {post.height}
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </a>
@@ -102,7 +105,7 @@ const UserScreen = ({ userposts }) => {
                       <div className="p-2 flex items-center justify-between gap-8">
                         <h1 className="font-bold flex justify-between items-center sm:text-sm md:text-base w-full">
                           <span className="text-gray-700">
-                            {priceFormat(post.price)}
+                            {useNumberFormat(post.price)}
                           </span>
                           <span className="text-green-400">
                             {post.installments ? 'Kibanjampola' : 'Full price'}

@@ -1,28 +1,30 @@
-// import ComponentWrapper from '../components/ComponentWrapper';
-// import CardsGrid from '../components/CardsGrid';
-// import Button from '../components/Button';
 import Hero from '../components/Hero';
 import { useStore } from '../hooks/useStore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import Filters from '../components/Filters';
+import Loader from '../components/Loader';
 import CustomSearchModal from '../components/CustomSearchModal';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { supabase } from '../supabase-client';
 
-// TODO: data structure changed, redo the rendering logic!
-
-// local sample data import
-// import data from '../utils/data.json';
-import sampleImage from '../public/images/img4.jpg';
-
-export default function Home({ posts }) {
-  // console.log(posts);
+export default function Home({ dataExport }) {
+  // console.log('posts', dataExport);
   // const { state, setState } = useStore();
   const { state, setState } = useStore();
   const [showModal, setShowModal] = useState(false);
+  const [posts, setPosts] = useState(null);
 
-  const data = posts; // supabase data
+  useEffect(() => {
+    if (dataExport) {
+      setPosts(dataExport);
+    }
+  }, [dataExport]);
+
+  if (!posts) {
+    // some skeletons loading screen...
+    return <Loader type="main-loader" />;
+  }
 
   return (
     <section className="flex-col gap-8 relative">
@@ -33,9 +35,9 @@ export default function Home({ posts }) {
         {/* The filters and sorting stuff */}
         <Filters openCustomSearchModal={() => setShowModal(true)} />
         <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 py-2">
-          {data.map((post) => {
+          {posts.map((post) => {
             if (post.is_sold !== true) {
-              return <Card key={post.id} post={post} image={sampleImage} />;
+              return <Card key={post.id} post={post} />;
             }
           })}
         </section>
@@ -51,14 +53,13 @@ export default function Home({ posts }) {
   );
 }
 
-// 1. fetch all land posts data
+// 1. fetch all land posts with respective user profiles
 // 2. sort them by creation time stamps using query
 // 3. use that data on page!
-export const getServerSideProps = async (context) => {
-  // Query all land posts
+export const getServerSideProps = async () => {
   const { data: posts, error } = await supabase
     .from('posts')
-    .select('*')
+    .select('*, profiles(*)')
     .order('created_at');
 
   if (error) {
@@ -72,7 +73,7 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      posts,
+      dataExport: posts || null,
     },
   };
 };

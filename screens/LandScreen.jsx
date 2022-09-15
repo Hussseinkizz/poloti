@@ -5,44 +5,82 @@ import {
   HiLocationMarker,
   HiExclamationCircle,
 } from 'react-icons/hi';
-import usePriceFormat from '../hooks/usePriceFormat';
 import Image from 'next/image';
 import Link from 'next/link';
-import { makeSlug } from '../hooks/useMakeSlug';
+import { useMakeSlug } from '../hooks/useMakeSlug';
 import { useWhatsappLink } from '../hooks/useWhatsappLink';
 import SimillarLands from '../components/SimillarLands';
 
-// ?import sample user avatar
-import sampleAvatar from '../public/images/me.png';
-import sampleImage from '../public/images/img4.jpg';
+// import placeholder image
+import placeholder from '../public/images/placeholder.jpeg';
 
-const LandScreen = ({ land, simillarLands }) => {
+import { useNumberFormat } from '../hooks/useNumberFormat';
+import { getPublicUrl } from '../supabase-client';
+import { useState, useEffect } from 'react';
+import { supabase } from '../supabase-client';
+
+const LandScreen = ({ post }) => {
+  const [relatedPosts, setRelatedPosts] = useState(null);
+
   const {
     id,
     width,
     height,
     location,
-    price,
-    photos,
-    info,
     installments,
     is_sold,
-  } = land;
-  let title = `${location} - ${width} ku ${height}`;
+    price,
+    info,
+    user_id,
+    image1_url,
+    image2_url,
+    image3_url,
+    image4_url,
+  } = post;
 
-  const { user_id, user_name, user_avatar } = land;
+  const { user_name, avatar_url } = post.profiles;
 
-  let { slug } = makeSlug(user_name);
+  const title = `${location} - ${width} ku ${height}`;
+  const { slug: userNameSlug } = useMakeSlug(user_name);
+  const image1 = getPublicUrl(image1_url);
+  const image2 = getPublicUrl(image2_url);
+  const image3 = getPublicUrl(image3_url);
+  const image4 = getPublicUrl(image4_url);
 
   // const userLink = `/user/${user_id}/${slug}`;
-  const WhatsappMessage = `Hello Poloti Admin am interested in ${id},${title}`;
+  const WhatsappMessage = `Hello Poloti Admin am interested in #${id},${title}`;
   let { whatsappLink } = useWhatsappLink(256754535493, WhatsappMessage);
   // console.log(whatsappLink);
+
+  // * get related posts from supabase
+  useEffect(() => {
+    if (location) {
+      getRelatedPosts();
+    }
+  }, [location]);
+
+  const getRelatedPosts = async () => {
+    const { data: samePosts, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('location', location)
+      .order('created_at');
+
+    if (samePosts) {
+      // remove the currently rendered post...
+      const uniqueSamePosts = samePosts.filter(
+        (somePost) => somePost.id != post.id
+      );
+      setRelatedPosts(uniqueSamePosts);
+    } else {
+      console.log(error);
+    }
+  };
 
   return (
     <section>
       <LandScreenSlider
-        photos={[sampleImage, sampleImage, sampleImage]}
+        photos={[image1, image2, image3, image4]}
         name={title}
       />
       <div className="mx-auto py-4 sm:py-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -56,7 +94,7 @@ const LandScreen = ({ land, simillarLands }) => {
           {!is_sold ? (
             <h2 className="font-semibold  text-lg flex sm:justify-evenly gap-2 items-center">
               <span className="text-green-500">
-                Price: {usePriceFormat(price)} UGX
+                Price: {useNumberFormat(price)} UGX
               </span>
               <span className="text-gray-400">
                 - {installments ? 'Ku kibanjampola' : 'Full Price'}
@@ -71,17 +109,21 @@ const LandScreen = ({ land, simillarLands }) => {
         </div>
         {/* User Profile */}
         <div className="flex justify-start gap-2 items-center py-2 sm:pt-4">
-          <span className="w-8 h-8">
+          <span className="w-16 h-16">
             <Image
-              src={sampleAvatar}
+              src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
               layout="responsive"
               objectFit="contain"
+              width={50}
+              height={50}
               alt={`${user_name} 's photo`}
-              className="rounded-full"
+              className="rounded-md"
             />
           </span>
           <div className="flex justify-center items-center text-gray-800 capitalize font-bold sm:text-sm md:text-base gap-2">
             <span>Posted by:</span>
+            {/* comment start-- href={`/user/${user_id}?id=${user_id}`}
+            as={`/user/${userNameSlug}`} --comment end */}
             <Link href={`/user/${user_id}`} passHref>
               <a className="text-orange-400 hover:border-b hover:border-orange-400 transition">
                 {user_name}
@@ -124,7 +166,7 @@ const LandScreen = ({ land, simillarLands }) => {
         )}{' '}
       </div>
       {/* Simillar land by location */}
-      {simillarLands.length !== 0 ? (
+      {relatedPosts && relatedPosts.length !== 0 ? (
         <div className="mx-auto py-4 sm:py-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
           <h1 className="flex justify-start items-center font-bold text-xl gap-2">
             <span>
@@ -133,7 +175,7 @@ const LandScreen = ({ land, simillarLands }) => {
             <span>Simillar lands</span>
           </h1>
           {/* <MediaScroller simillarLands={simillarLands} /> */}
-          <SimillarLands simillarLands={simillarLands} />
+          <SimillarLands simillarLands={relatedPosts} />
         </div>
       ) : (
         <Link href="/" passHref>

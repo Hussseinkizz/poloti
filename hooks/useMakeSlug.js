@@ -6,7 +6,7 @@
 // 3. Make a URL friendly string value by concating altogether with a hyphen
 // 4. Finally return a slug object with key-value pair pattern, done!
 
-export function makeSlug(string) {
+export function useMakeSlug(string) {
   let formattedName = string.toLowerCase();
   let arr = formattedName.split(' ');
   let slugValue = arr.reduce(

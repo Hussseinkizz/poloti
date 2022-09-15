@@ -1,62 +1,46 @@
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 import UserScreen from '../../../screens/UserScreen';
 import Loader from '../../../components/Loader';
 import { supabase } from '../../../supabase-client';
+import { useState, useEffect } from 'react';
 
-// ?Import local data for sampling
-import data from '../../../utils/data.json';
-
-export default function DynamicPage({ posts }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-  const { id } = router.query;
-  // console.log(router.query);
+export default function DynamicPage({ dataExport }) {
+  const [userPosts, setUserPosts] = useState();
+  // console.log('log', dataExport);
 
   useEffect(() => {
-    if (!router.isReady) {
-      <Loader type="warning" id={id} />;
+    if (dataExport) {
+      setUserPosts(dataExport);
     }
-    if (router.isReady) {
-      setIsLoading(false);
-    }
-  }, [router.isReady, id]);
+  }, [dataExport]);
 
-  if (isLoading) {
-    return <Loader type="user" id={id} />;
-  }
-  if (!isLoading) {
-    // User Posts
-    const userPosts = [];
-    // set userPosts
-    data.map((post) => {
-      if (post.user_id === id) {
-        userPosts.push(post);
-      }
-    });
-    return <UserScreen userposts={userPosts} />;
-  }
+  return userPosts ? (
+    <UserScreen userposts={userPosts} />
+  ) : (
+    <Loader type="user" />
+  );
 }
 
-// export const getServerSideProps = async () => {
-//   // Query all land posts
-//   const { data: posts, error } = await supabase
-//     .from('posts')
-//     .select('*')
-//     .order('created_at');
+export const getServerSideProps = async ({ params }) => {
+  // Query the targeted user's posts, with the post owner's profile
+  // console.log('params', params);
+  const { data: userPosts, error } = await supabase
+    .from('posts')
+    .select('*, profiles(*)')
+    .eq('user_id', params.id)
+    .order('created_at');
 
-//   if (error) {
-//     console.log(error);
-//     // Return 404 response.
-//     // No land posts found or something went wrong with the query
-//     return {
-//       notFound: true,
-//     };
-//   }
+  if (error) {
+    console.log(error);
+    // Return 404 response.
+    // No land posts found or something went wrong with the query
+    return {
+      notFound: true,
+    };
+  }
 
-//   return {
-//     props: {
-//       posts,
-//     },
-//   };
-// };
+  return {
+    props: {
+      dataExport: userPosts || null,
+    },
+  };
+};

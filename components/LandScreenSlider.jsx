@@ -51,7 +51,7 @@ export default function LandScreenSlider({ photos, name }) {
                 className="absolute z-10 h-full w-full text-center flex flex-col gap-4 items-center justify-center mx-auto
               "
               >
-                <p className="_swiper-content-padding text-gray-300 text-xl sm:text-2xl md:text-4xl ">
+                <p className="_swiper-content-padding text-gray-300 text-xl sm:text-2xl md:text-4xl opacity-75 font-bold tracking-wide uppercase font-mono">
                   Poloti Images
                 </p>
               </div>
