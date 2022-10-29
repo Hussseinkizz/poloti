@@ -15,6 +15,7 @@ import SearchBox from './SearchBox';
 import CheckboxGroup from './CheckboxGroup';
 import EditPostModal from './EditPostModal';
 import CreatePostModal from './CreatePostModal';
+import { useNumberFormat } from '../hooks/useNumberFormat';
 
 const UserPostsArea = ({ handlePostCount, dataExport }) => {
   const [showModal, setShowModal] = useState(false);
@@ -31,7 +32,7 @@ const UserPostsArea = ({ handlePostCount, dataExport }) => {
       postCountValue = userPosts.length;
       handlePostCount(postCountValue);
     }
-  }, [dataExport]);
+  }, [dataExport, userPosts, handlePostCount]);
 
   const checkHandler = (status) => {
     // do foo
@@ -159,7 +160,7 @@ const UserPostsArea = ({ handlePostCount, dataExport }) => {
                     <div className="p-2 flex items-center justify-between gap-8">
                       <h1 className="font-bold flex justify-between items-center sm:text-sm md:text-base w-full">
                         <span className="text-gray-700">
-                          Price: {usePriceFormat(post.price)}
+                          {/* Price: {useNumberFormat(post.price)} */}
                         </span>
                         <span className="text-gray-600">
                           {post.installments ? 'Kibanjampola' : 'Full price'}
