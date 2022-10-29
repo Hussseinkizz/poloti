@@ -23,8 +23,7 @@ const Menu = ({ session }) => {
           <Link href="/" passHref>
             <a
               className="flex space-x-2 place-items-center hover:bg-gray-400 hover:text-gray-50 transition-colors p-1 rounded-md"
-              onClick={onSelect}
-            >
+              onClick={onSelect}>
               <span>
                 <HiIcons.HiHome />
               </span>
@@ -34,8 +33,7 @@ const Menu = ({ session }) => {
           <Link href="/about" passHref>
             <a
               className="flex space-x-2 place-items-center hover:bg-gray-400 hover:text-gray-50 transition-colors p-1 rounded-md"
-              onClick={onSelect}
-            >
+              onClick={onSelect}>
               <span>
                 <HiIcons.HiExclamationCircle />
               </span>
@@ -45,8 +43,7 @@ const Menu = ({ session }) => {
           <Link href="/contact" passHref>
             <a
               className="flex space-x-2 place-items-center hover:bg-gray-400 hover:text-gray-50 transition-colors p-1 rounded-md"
-              onClick={onSelect}
-            >
+              onClick={onSelect}>
               <span>
                 <HiIcons.HiMail />
               </span>
@@ -57,8 +54,7 @@ const Menu = ({ session }) => {
             <a
               className="flex space-x-2 place-items-center hover:bg-gray-400 hover:text-gray-50 transition-colors p-1 rounded-md"
               target="_blank"
-              onClick={onSelect}
-            >
+              onClick={onSelect}>
               <span>
                 <IoIcons.IoLogoFacebook />
               </span>
@@ -77,8 +73,7 @@ const Menu = ({ session }) => {
                     supabase.auth.signOut();
                     // router.replace('/signin');
                     onSelect();
-                  }}
-                >
+                  }}>
                   <span>
                     <IoIcons.IoPerson />
                   </span>
@@ -89,8 +84,7 @@ const Menu = ({ session }) => {
               <Link href="/signup" passHref>
                 <a
                   className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out"
-                  onClick={onSelect}
-                >
+                  onClick={onSelect}>
                   <span>
                     <IoIcons.IoPerson />
                   </span>

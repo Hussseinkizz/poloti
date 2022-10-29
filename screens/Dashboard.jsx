@@ -1,148 +1,125 @@
-// * user can view their posts, edit and delete them
-// * users can also post new land posts
-// * this is a protected route, only authenticated users can view it
+// Todos:
+// - Get all targeted user from session
+// - Read user details
+// - Edit and update user details
+// - Make this a protected route!
 
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import { Zoom, Fade } from 'react-reveal';
 import * as HiIcons from 'react-icons/hi';
-import Loader from '../components/Loader';
-import EditPostModal from '../components/EditPostModal';
-import { supabase } from '../supabase-client';
-import { usePriceFormat } from '../hooks/usePriceFormat';
+import {
+  getImageFromUrl,
+  getPublicUrl,
+  getSignedUrl,
+  supabase,
+} from '../supabase-client';
 
+// import placeholder image
+import placeholder from '../public/images/placeholder.jpeg';
 // ? import sample images
-import sampleAvatar from '../public/images/me.png';
-import DashboardPosts from '../components/DashboardPosts';
-import SearchBox from '../components/SearchBox';
-import CreatePostModal from '../components/CreatePostModal';
-import sampleImage from '../public/images/img4.jpg';
-import CheckboxGroup from '../components/CheckboxGroup';
+// import sampleAvatar from '../public/images/me.png';
+import UserPostsArea from '../components/UserPostsArea';
 
-const UserDashboard = ({ userposts }) => {
+const UserDashboard = ({ userProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newContact, setNewContact] = useState('');
-  const [newEmail, setNewEmail] = useState('');
   const [newName, setNewName] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [editPost, setEditPost] = useState({});
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [newAvatar, setNewAvatar] = useState(null);
+  const [newAvatarUrl, setNewAvatarUrl] = useState('');
+  const [signedUrl, setSignedUrl] = useState(null);
+  // const [imageUrl, setImageUrl] = useState(null);
+  const [postCount, setPostCount] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [avatarUploaded, setavatarUploaded] = useState(false);
 
-  const checkHandler = (status) => {
-    // do foo
-  };
-  // toggle sales status on backend
-  const handlePostSoldYes = async (targetID) => {
-    await supabase
-      .from('posts')
-      .update({
-        is_sold: true,
-      })
-      .match({
-        id: targetID,
-      });
-    // change post sale status to true!
-    // do nothing if already true
-    // do this server side, or client side firstly if possible!
-  };
-  const handlePostSoldNo = async (targetID) => {
-    await supabase
-      .from('posts')
-      .update({
-        is_sold: false,
-      })
-      .match({
-        id: targetID,
-      });
-  };
+  const router = useRouter();
 
   // * destructure user profile details...
-  const { user_id, user_email, user_name, user_contact, user_avatar } =
-    userposts[0];
-  const userPostCount = userposts?.length;
+  const { id, user_email, user_name, user_contact, avatar_url } = userProfile;
 
-  // * populate user detail
+  // * get user's posts count
+  const getPostCount = (value) => {
+    setPostCount(value);
+  };
+  const getUserAvatar = async (url) => {
+    const res = await getSignedUrl('avatars', url);
+    // console.log('res', avatar_url, res);
+    setSignedUrl(res);
+  };
+
+  // * populate user detail for edit mode!
   useEffect(() => {
-    setPosts(userposts);
-    setNewContact(user_contact);
-    setNewEmail(user_email);
-    setNewName(user_name);
-  }, [user_contact, user_email, user_name]);
-  // console.log(posts);
+    if (userProfile) {
+      setNewContact(user_contact);
+      setNewName(user_name);
+      if (avatar_url) {
+        getUserAvatar(avatar_url);
+      }
+    }
+  }, [userProfile]);
+  // console.log(userProfile);
 
   // handle editing
   const handleEditMode = () => {
-    setNewContact(user_contact);
-    setNewEmail(user_email);
-    setNewName(user_name);
     setIsEditing(true);
+    setSaving(false);
   };
 
-  // TODO: fix useRef code!
-  // define the upload button ref
-  const triggerRef = useRef(uploadInput);
+  // handle image uploading
+  // TODO: preview image before upload,
+  const uploadInputRef = useRef();
 
-  // use useRef hook to click on upload file input instead
-  const uploadInput = () => {
-    return (
-      <input
-        type="file"
-        name="photo"
-        id="photo"
-        aria-hidden="true"
-        focusable="false"
-      />
-    );
+  const handleImageUpload = () => {
+    uploadInputRef.current.click();
   };
-
-  // handle new photo uploading
-  const handleUpload = () => {
-    // click the upload trigger
-    triggerRef.current.click();
-  };
-
-  // handle updated user profile saving
-  const handleSaving = () => {
-    setIsEditing(false);
-    // parse all updated user profile details to backend!
-  };
-
-  // handle post editing
-  const handlePostEdit = (id) => {
-    // console.log(id);
-    const targetPost = posts.filter((post) => post.id === id);
-    setEditPost(targetPost[0]);
-    // console.log(editPost);
-    // show edit post modal
-    setShowModal(true);
-  };
-
-  // handle post delete
-  const handlePostDelete = async (id) => {
-    // console.log(id);
-    // console.log(posts);
-    // TODO: Also do delete ops on backend!
-    // delete post
-    // const handlePostDelete = async (targetID) => {
-    //   await supabase.from('posts').delete().match({ id: targetID });
-    // };
-    const { data, error } = await supabase
-      .from('posts')
-      .delete()
-      .match({ id: id });
-    if (data) {
-      console.log(data);
-      // Delete item from UI
-      const filteredPosts = posts.filter((post) => post.id !== id);
-      // console.log('filtered', filteredPosts);
-      setPosts(filteredPosts);
+  const updateUserAvatar = async (newAvatar) => {
+    // update user avatar in bucket
+    setavatarUploaded(true);
+    // const avatarPath = '1660390450360_12bq8vwe_400x400.jpg';
+    const avatarPath = avatar_url.split('avatars/')[1];
+    // console.log('avatar-path', avatarPath);
+    // const bucketName = 'public/avatars';
+    // avatar_url = avatars/1660390450360_12bq8vwe_400x400.jpg;
+    const { data: newAvatarData, error: newAvatarError } =
+      await supabase.storage.from('avatars').update(avatarPath, newAvatar);
+    if (newAvatarData) {
+      setNewAvatarUrl(newAvatarData.Key);
     } else {
-      throw new error(error.message);
+      console.log(newAvatarError.message);
     }
+  };
+  // handle updated user profile saving
+  const handleSaving = async () => {
+    setSaving(true);
+    setIsEditing(false);
+    newAvatar && (await updateUserAvatar(newAvatar));
+    if (newAvatarUrl) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .update({
+          user_name: newName,
+          user_contact: newContact,
+          avatar_url: newAvatarUrl,
+        })
+        .eq('id', id);
+
+      data && router.reload() && console.log('alert: user profile updated...'); // refresh page
+      error && console.log('Update Profile Error', error);
+    } else {
+      const { data, error } = await supabase
+        .from('profiles')
+        .update({
+          user_name: newName,
+          user_contact: newContact,
+        })
+        .eq('id', id);
+
+      data && router.reload() && console.log('alert: user profile updated...'); // refresh page
+      // data && console.log('data', data);
+      error && console.log('Update Profile Error', error);
+    }
+    // console.log(id, newName, newContact, newAvatarUrl);
   };
 
   return (
@@ -163,8 +140,7 @@ const UserDashboard = ({ userposts }) => {
           <div
             className={`flex flex-col justify-center items-center md:items-start ${
               isEditing ? 'gap-3' : 'gap-2'
-            }`}
-          >
+            }`}>
             <div className="flex justify-center items-center gap-2">
               {isEditing ? (
                 <div className="font-semibold w-full flex flex-col md:flex-row justify-between items-center gap-2">
@@ -190,17 +166,15 @@ const UserDashboard = ({ userposts }) => {
               <h1
                 className={`font-semibold w-full flex justify-between items-center gap-2 ${
                   isEditing && 'flex-col md:flex-row'
-                }`}
-              >
+                }`}>
                 <span>Land Posts:</span>
-                <span className="text-gray-500">{userPostCount}</span>
+                <span className="text-gray-500">{postCount}</span>
               </h1>
             )}
             <h1
               className={`font-semibold w-full flex justify-between items-center gap-2 ${
                 isEditing && 'flex-col md:flex-row'
-              }`}
-            >
+              }`}>
               <span>Contact:</span>
               {!isEditing ? (
                 <span className="text-gray-500">{user_contact}</span>
@@ -220,38 +194,22 @@ const UserDashboard = ({ userposts }) => {
             <h1
               className={`font-semibold w-full flex justify-between items-center gap-2 ${
                 isEditing && 'flex-col md:flex-row'
-              }`}
-            >
+              }`}>
               <span>Email:</span>
-              {!isEditing ? (
-                <span className="text-gray-500 truncate">{user_email}</span>
-              ) : (
-                <span className="text-gray-500">
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="grow text-center outline-none border-transparent relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
-                    value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}
-                  />
-                </span>
-              )}
+              <span className="text-gray-500 truncate">{user_email}</span>
             </h1>
             {/* Profile Action */}
             {isEditing ? (
               <button
                 className="flex space-x-2 place-items-center bg-orange-300 text-orange-50 py-1 px-2 rounded-md hover:text-orange-100 hover:bg-orange-400 active:scale-110 transition duration-150 ease-in-out"
-                onClick={handleSaving}
-              >
-                <HiIcons.HiOutlineCheck />
-                <span>Save Profile</span>
+                onClick={handleSaving}>
+                {!saving && <HiIcons.HiOutlineCheck />}
+                <span>{saving ? 'please wait...' : 'Save Profile'}</span>
               </button>
             ) : (
               <button
                 className="flex space-x-2 place-items-center bg-gray-300 text-gray-50 py-1 px-2 rounded-md hover:text-gray-100 hover:bg-gray-400 active:scale-110 transition duration-150 ease-in-out"
-                onClick={handleEditMode}
-              >
+                onClick={handleEditMode}>
                 <HiIcons.HiPencilAlt />
                 <span>Edit Profile</span>
               </button>
@@ -259,194 +217,56 @@ const UserDashboard = ({ userposts }) => {
           </div>
           {/* user avatar */}
           <div className="flex grow flex-col justify-center gap-2 items-center">
-            <span className="w-24 sm:32 h-24 sm:32">
-              <Image
-                src={sampleAvatar}
-                layout="responsive"
-                objectFit="contain"
-                alt={`${user_name} 's photo`}
-                className="rounded-full"
-              />
-            </span>
+            {isEditing && newAvatar ? (
+              <span
+                className="w-24 sm:w-32 h-24 sm:h-32 shadow-sm rounded-md bg-gray-50 grid place-items-center"
+                onClick={handleImageUpload}>
+                <HiIcons.HiPhotograph className="h-8 w-8 md:h-10 md:w-10 cursor-pointer text-orange-400" />
+              </span>
+            ) : (
+              <span className="w-24 sm:w-32 h-24 sm:h-32">
+                <Image
+                  // src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
+                  src={signedUrl ? signedUrl : placeholder}
+                  layout="responsive"
+                  objectFit="contain"
+                  width={50}
+                  height={50}
+                  alt={`${user_name} 's photo`}
+                  className="rounded-md"
+                />
+              </span>
+            )}
+            {isEditing && newAvatar && (
+              <div className="text-sm flex gap-2 items-center">
+                <span className="text-gray-400">Selected:</span>
+                <span className="text-orange-400">
+                  {avatarUploaded ? 'uploaded' : newAvatar.name}
+                </span>
+              </div>
+            )}
             {isEditing && (
               <button
                 className="text-sm sm:text-base flex space-x-2 place-items-center bg-gray-200 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-gray-300 active:scale-110 transition duration-150 ease-in-out"
-                onClick={handleUpload}
-              >
+                onClick={handleImageUpload}>
                 upload photo
               </button>
             )}
+            {/* Image upload ref actual input */}
+            <input
+              type="file"
+              accept={'image/jpeg image/png'}
+              onChange={(event) => setNewAvatar(event.target.files[0])}
+              ref={uploadInputRef}
+              className="hidden"
+            />
           </div>
         </section>
       </div>
-      {/* User Posts Title bar */}
-      <section className="mx-auto lg:max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-2 md:flex-row justify-between items-center shadow-md bg-gray-50 rounded-md p-2 mb-4">
-          <h1 className="flex justify-center md:justify-start items-center gap-2 grow">
-            <HiIcons.HiFolder className="text-2xl md:text-3xl text-gray-400" />
-            <span className="text-sm sm:text-base">Your Posts Here:</span>
-          </h1>
-          {/* Titile bar actions */}
-          <div className="w-full flex flex-col md:flex-row justify-evenly items-center gap-4 grow md:grow-0 md:w-fit">
-            <div className="flex grow w-full md:w-2/6 relative">
-              <SearchBox placeholder="search location..." />
-            </div>
-            <div className="w-full md:w-fit">
-              <button
-                className="w-full grow bg-orange-400 text-orange-50 flex justify-center items-center capitalize p-2 py-3 md:py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
-                onClick={() => setShowCreateModal(true)}
-              >
-                <HiIcons.HiPlus />
-                <span>create post</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* User Posts */}
-      <section className="mx-auto lg:max-w-7xl px-4 sm:px-6 lg:px-8">
-        {posts.length ? (
-          <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 relative z-0">
-            {posts?.map((post, index) => (
-              <Zoom key={index}>
-                <div
-                  key={post.id}
-                  className="w-full flex flex-col shadow-lg bg-gray-50 rounded-md overflow-hidden justify-between items-stretch grow"
-                >
-                  {/* Card Media */}
-                  <Link href={`/land/${post.id}`} passHref>
-                    <a data-mdb-ripple="true">
-                      <div className="w-full h-60 group relative cursor-pointer flex grow">
-                        <Image
-                          src={sampleImage}
-                          layout="fill"
-                          loading="lazy"
-                          objectFit="fill"
-                          alt={`Image of ${post.location}`}
-                          // title={title}
-                          className={`w-full rounded-t-md hover:opacity-60 hover:scale-105 group-hover:scale-110 group-hover:opacity-75 transition duration-150 ease-linear ${
-                            imageIsLoading
-                              ? 'grayscale blur-3xl'
-                              : 'grayscale-0 blur-0 transition-all duration-300 ease-in-out'
-                          }`}
-                          onLoadingComplete={() => setImageIsLoading(false)}
-                        />
-                        {/* The overlay content */}
-                        <div className="truncate absolute z-10 font-bold flex justify-center items-center w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear capitalize">
-                          <span className="rounded-md bg-black bg-opacity-20 px-4 py-2">{`${post.location} - ${post.width} ku ${post.height}`}</span>
-                        </div>
-                      </div>
-                    </a>
-                  </Link>
-                  {/* Card Content */}
-                  <div className="flex flex-col justify-between gap-4 grow">
-                    <div className="p-2 flex items-center justify-between gap-8">
-                      <h1 className="font-bold flex justify-between items-center sm:text-sm md:text-base w-full">
-                        <span className="text-gray-700">
-                          Price: {usePriceFormat(post.price)}
-                        </span>
-                        <span className="text-gray-600">
-                          {post.installments ? 'Kibanjampola' : 'Full price'}
-                        </span>
-                      </h1>
-                    </div>
-                    {/* Card Actions */}
-                    <section className="w-full flex justify-center items-center grow p-2 rounded-md ">
-                      <div className="w-full flex flex-col justify-center items-center grow gap-4 rounded-md border p-2">
-                        <div className="w-full flex justify-between items-center grow gap-2">
-                          <h2 className="text-gray-700 font-semibold capitalize">
-                            <span>Land still available?</span>
-                          </h2>
-                          <CheckboxGroup
-                            checkStatus={!post.is_sold}
-                            handleCheckStatus={checkHandler}
-                          />
-                        </div>
-                        {/* Card Buttons */}
-                        <div className="w-full flex justify-center items-center grow gap-2">
-                          <button
-                            className="w-full bg-red-400 text-red-50 flex justify-center items-center capitalize grow py-2 hover:bg-red-200 hover:text-red-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
-                            onClick={() => handlePostDelete(post.id)}
-                          >
-                            <HiIcons.HiTrash />
-                            <span>delete</span>
-                          </button>
-                          <button
-                            className="w-full bg-green-400 text-green-50 flex justify-center items-center capitalize grow py-2 hover:bg-green-200 hover:text-green-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
-                            onClick={() => handlePostEdit(post.id)}
-                          >
-                            <HiIcons.HiPencilAlt />
-                            <span>edit</span>
-                          </button>
-                          <button className="w-full flex grow">
-                            <Link href={`/land/${post.id}`} passHref>
-                              <a className="w-full bg-orange-400 text-orange-50 flex justify-center items-center capitalize grow py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md">
-                                <HiIcons.HiEye />
-                                <span>view</span>
-                              </a>
-                            </Link>
-                          </button>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </Zoom>
-            ))}
-          </section>
-        ) : (
-          <Fade bottom>
-            <div className="w-full sm:w-1/2 md:w-3/4 border bg-gray-100 p-4 py-16 mx-auto rounded-md shadow-md">
-              <h1 className="text-center text-gray-400  truncate flex flex-col justify-center gap-2 items-center">
-                <HiIcons.HiExclamationCircle className="text-2xl md:text-3xl" />
-                <span className="text-sm sm:text-base">
-                  You have no posts for now, post some now!
-                </span>
-              </h1>
-            </div>
-          </Fade>
-        )}
-      </section>
-      {/* Post Edit Modal Form */}
-      {editPost && showModal && (
-        <EditPostModal
-          post={editPost}
-          isOpen={showModal}
-          closeModal={() => setShowModal(false)}
-        />
-      )}
-      {/* Post Creation Modal Form */}
-      {showCreateModal && (
-        <CreatePostModal
-          isOpen={showCreateModal}
-          closeModal={() => setShowCreateModal(false)}
-        />
-      )}
+      {/* User Posts And Their CRUD ops... */}
+      {/* <UserPostsArea handlePostCount={getPostCount} /> */}
     </section>
   );
 };
 
 export default UserDashboard;
-
-export const getServerSideProps = async (context) => {
-  // Query all land posts
-  const { data: posts, error } = await supabase
-    .from('posts')
-    .select('*')
-    .order('created_at');
-
-  if (error) {
-    console.log(error);
-    // Return 404 response.
-    // No land posts found or something went wrong with the query
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      posts,
-    },
-  };
-};

@@ -1,7 +1,7 @@
-import Link from "next/link";
-import * as HiIcons from "react-icons/hi";
-import Menu from "../components/Menu";
-import { useStore } from "../hooks/useStore";
+import Link from 'next/link';
+import * as HiIcons from 'react-icons/hi';
+import Menu from '../components/Menu';
+import { useStore } from '../hooks/useStore';
 
 const DesktopMenu = ({ session }) => {
   // const { darkMode } = state;
@@ -13,7 +13,7 @@ const DesktopMenu = ({ session }) => {
   // toggle nav menu
   const toggleNav = () => {
     setState({
-      type: "TOGGLE_NAV",
+      type: 'TOGGLE_NAV',
     });
   };
 
@@ -27,8 +27,7 @@ const DesktopMenu = ({ session }) => {
             className="inline-flex items-center p-1 text-white text-sm hover:text-orange-500 transition-colors rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-200"
             aria-controls="mobile-menu"
             aria-expanded="false"
-            onClick={toggleNav}
-          >
+            onClick={toggleNav}>
             <span className="sr-only">Open main menu</span>
             {showNav ? (
               <HiIcons.HiX className="w-6 h-6 icon" />
@@ -46,10 +45,10 @@ const DesktopMenu = ({ session }) => {
         {/* Nav Action Right */}
         <div>
           {session ? (
-            <Link href={`/${session.user?.id}/dashboard`} passHref>
+            <Link href={`/user/${session.user?.id}/dashboard`} passHref>
               <a
                 className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out"
-                target="_blank"
+                // target="_blank"
               >
                 <span>Post Your Land Now</span>
               </a>

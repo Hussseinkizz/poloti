@@ -36,8 +36,7 @@ const Appbar = ({ session }) => {
             className="inline-flex items-center p-1 text-white text-sm hover:text-orange-500 transition-colors rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-200"
             aria-controls="mobile-menu"
             aria-expanded="false"
-            onClick={toggleNav}
-          >
+            onClick={toggleNav}>
             <span className="sr-only">Open main menu</span>
             {showNav ? (
               <HiIcons.HiX className="w-6 h-6 icon" />
@@ -57,7 +56,7 @@ const Appbar = ({ session }) => {
         {/* Nav Action Right */}
         <div>
           {session ? (
-            <Link href={`/${session.user?.id}/dashboard`} passHref>
+            <Link href={`/user/${session.user?.id}/dashboard`} passHref>
               <a className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out">
                 <span>Post Land</span>
               </a>
