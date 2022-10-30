@@ -67,8 +67,7 @@ const Card = ({ post }) => {
                   imageIsLoading
                     ? 'bg-gradient-to-b from-orange-300 via-orange-200 to-orange-300 grayscale blur-3xl animate-pulse'
                     : 'grayscale-0 blur-0 transition-all animate-none duration-300 ease-in-out bg-transparent'
-                }`}
-              >
+                }`}>
                 {!imageIsLoading && (
                   <div className="rounded-md bg-black bg-opacity-25 px-4 py-2 flex justify-center items-center flex-auto flex-wrap gap-2">
                     <span>{title1}</span>
@@ -89,23 +88,22 @@ const Card = ({ post }) => {
               // }}
               // as={`/user/${userNameSlug}`}
               href={`/user/${user_id}`}
-              passHref
-            >
+              passHref>
               <a className="flex justify-start gap-2 items-center cursor-pointer group">
-                <span className="w-14 h-14 rounded-md">
+                <span className="w-12 h-14 md:w-14 md:h-16 rounded-sm">
                   <Image
                     src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
                     layout="responsive"
-                    objectFit="contain"
-                    width={40}
+                    objectFit="fill"
+                    width={35}
                     height={40}
                     alt={`${user_name} 's photo`}
-                    className="rounded-md group-hover:opacity-85"
+                    className="w-full rounded-sm group-hover:opacity-85"
                   />
                 </span>
                 <div className="flex flex-col items-start justify-center">
                   <span className="text-sm text-gray-600">Posted By:</span>
-                  <span className="text-gray-800 group-hover:text-gray-600 capitalize font-bold sm:text-sm md:text-base truncate group-hover:border-b hover:border-gray-600 transition">
+                  <span className="flex flex-auto flex-wrap text-gray-800 group-hover:text-gray-600 capitalize font-bold sm:text-sm md:text-base truncate group-hover:border-b hover:border-gray-600 transition">
                     {user_name}
                   </span>
                 </div>

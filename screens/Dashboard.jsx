@@ -21,7 +21,7 @@ import placeholder from '../public/images/placeholder.jpeg';
 // import sampleAvatar from '../public/images/me.png';
 import UserPostsArea from '../components/UserPostsArea';
 
-const UserDashboard = ({ userProfile }) => {
+const UserDashboard = ({ userData: userposts }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newContact, setNewContact] = useState('');
   const [newName, setNewName] = useState('');
@@ -29,19 +29,21 @@ const UserDashboard = ({ userProfile }) => {
   const [newAvatarUrl, setNewAvatarUrl] = useState('');
   const [signedUrl, setSignedUrl] = useState(null);
   // const [imageUrl, setImageUrl] = useState(null);
-  const [postCount, setPostCount] = useState(0);
   const [saving, setSaving] = useState(false);
   const [avatarUploaded, setavatarUploaded] = useState(false);
 
   const router = useRouter();
+  // console.log('User Data:', userData);
+
+  const userPostCount = userposts.length;
+  const userSoldPostCount = userposts.filter(
+    (post) => post.is_sold !== false
+  ).length;
 
   // * destructure user profile details...
-  const { id, user_email, user_name, user_contact, avatar_url } = userProfile;
+  const { id, user_email, user_name, user_contact, avatar_url } =
+    userposts[0].profiles;
 
-  // * get user's posts count
-  const getPostCount = (value) => {
-    setPostCount(value);
-  };
   const getUserAvatar = async (url) => {
     const res = await getSignedUrl('avatars', url);
     // console.log('res', avatar_url, res);
@@ -50,15 +52,15 @@ const UserDashboard = ({ userProfile }) => {
 
   // * populate user detail for edit mode!
   useEffect(() => {
-    if (userProfile) {
+    if (userposts) {
       setNewContact(user_contact);
       setNewName(user_name);
       if (avatar_url) {
         getUserAvatar(avatar_url);
       }
     }
-  }, [userProfile]);
-  // console.log(userProfile);
+  }, [userposts]);
+  // console.log(userposts);
 
   // handle editing
   const handleEditMode = () => {
@@ -168,7 +170,7 @@ const UserDashboard = ({ userProfile }) => {
                   isEditing && 'flex-col md:flex-row'
                 }`}>
                 <span>Land Posts:</span>
-                <span className="text-gray-500">{postCount}</span>
+                <span className="text-gray-500">{userPostCount}</span>
               </h1>
             )}
             <h1
@@ -264,7 +266,7 @@ const UserDashboard = ({ userProfile }) => {
         </section>
       </div>
       {/* User Posts And Their CRUD ops... */}
-      {/* <UserPostsArea handlePostCount={getPostCount} /> */}
+      <UserPostsArea posts={userposts} />
     </section>
   );
 };
