@@ -94,7 +94,7 @@ const Card = ({ post }) => {
                   <Image
                     src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
                     layout="responsive"
-                    objectFit="fill"
+                    objectFit="contain"
                     width={35}
                     height={40}
                     alt={`${user_name} 's photo`}
