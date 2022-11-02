@@ -68,7 +68,7 @@ const Menu = ({ session }) => {
             {session ? (
               <Link href="/" passHref>
                 <a
-                  className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out"
+                  className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-400 via-orange-400 to-orange-500 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out"
                   onClick={() => {
                     supabase.auth.signOut();
                     // router.replace('/signin');

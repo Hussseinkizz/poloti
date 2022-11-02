@@ -62,7 +62,7 @@ const Filters = ({ openCustomSearchModal }) => {
           </div>
           <div className="px-4 py-4 grow">
             <button
-              className="flex items-center justify-center text-orange-50 rounded-md bg-orange-400 hover:bg-orange-500 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out text:sm sm:text-base w-full p-2 text-center"
+              className="flex items-center justify-center text-orange-50 rounded-md bg-orange-400 hover:bg-orange-500 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out text:sm sm:text-base w-full p-2 text-center"
               onClick={openCustomSearchModal}
             >
               Custom Search

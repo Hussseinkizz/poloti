@@ -18,7 +18,7 @@ const DesktopMenu = ({ session }) => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white shadow-md w-full hidden _show-on-md">
+    <header className="bg-gray-800 text-white shadow-md w-full hidden _show-on-md">
       <nav className="flex items-center justify-between px-4 py-2 w-full">
         {/* Nav Right, for menu & brand */}
         <div className="relative flex items-center justify-evenly px-4 gap-4">
@@ -47,7 +47,7 @@ const DesktopMenu = ({ session }) => {
           {session ? (
             <Link href={`/user/${session.user?.id}/dashboard`} passHref>
               <a
-                className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out"
+                className="flex items-center justify-center text-orange-50 rounded-md bg-orange-400 hover:bg-orange-500 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out text:sm sm:text-base w-full px-2 py-1 text-center"
                 // target="_blank"
               >
                 <span>Post Your Land Now</span>
@@ -55,7 +55,7 @@ const DesktopMenu = ({ session }) => {
             </Link>
           ) : (
             <Link href="/signup" passHref>
-              <a className="flex space-x-2 place-items-center text-orange-50 py-1 px-2 rounded-md bg-gradient-to-r from-orange-300 via-orange-300 to-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out">
+              <a className="flex items-center justify-center text-orange-50 rounded-md bg-orange-400 hover:bg-orange-500 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out text:sm sm:text-base w-full px-2 py-1 text-center">
                 <span>Sell Your Land Now</span>
               </a>
             </Link>

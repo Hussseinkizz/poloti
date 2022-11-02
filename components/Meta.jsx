@@ -11,7 +11,7 @@ const Meta = () => {
   <meta name="description" content="A real estate buy and sell e-commerce app." />
   <meta name="theme-color" content="#1F2937" />
   <title>Poloti</title>
-  <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials"/>
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-icon.png"></link>
      <meta name="application-name" content="Poloti" />
