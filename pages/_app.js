@@ -2,12 +2,18 @@ import '../styles/globals.css';
 import Layout from '../components/Layout';
 import { StoreProvider } from '../hooks/useStore';
 import { UserContextProvider } from '../utils/user-context';
+import dynamic from 'next/dynamic';
+// import PwaUpdater from '../PwaUpdater';
+
 
 function MyApp({ Component, pageProps }) {
+  // const PwaUpdater = dynamic(() => import(`../PwaUpdater`), { ssr: false });
+
   return (
     // Backend Data Layer
     <UserContextProvider>
       {/* Client Data Layer */}
+      {/* <PwaUpdater /> */}
       <StoreProvider>
         {/* App Layout Provider */}
         <Layout>
