@@ -31,7 +31,7 @@ const UserScreen = ({ userposts }) => {
     if (avatar_url) {
       getUserAvatar(avatar_url);
     }
-  }, [location, avatar_url]);
+  }, [avatar_url]);
 
   return (
     <section className="mx-auto pb-10">

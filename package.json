@@ -23,6 +23,7 @@
     "encodeurl": "^1.0.2",
     "nanoid": "^4.0.0",
     "next": "12.1.5",
+    "next-pwa": "^5.6.0",
     "next-seo": "^5.4.0",
     "prettier-plugin-tailwind": "^2.2.12",
     "react": "18.0.0",

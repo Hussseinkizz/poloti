@@ -1,0 +1,38 @@
+{
+    "theme_color": "D97706",
+    "background_color": "1F2937",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/https://poloti.vercel.app/",
+    "name": "Poloti.Com",
+    "short_name": "Poloti",
+    "description": "A real estate buy and sell e-commerce app.",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "maskable_icon_x72.png",
+            "sizes": "72x72",
+            "type": "image/x-icon",
+            "purpose": "maskable"
+          }
+    ]
+}
