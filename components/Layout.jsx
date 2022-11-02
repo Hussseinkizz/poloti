@@ -29,18 +29,6 @@ const Layout = ({ children }) => {
   return (
     <section className="bg-gray-100 w-full min-h-screen flex flex-col">
       {/* <Meta /> */}
-      <Head>
-  <meta charSet="utf-8" />
-  <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <meta name="description" content="A real estate buy and sell e-commerce app." />
-  <meta name="theme-color" content="#D97706" />
-  <title>Poloti</title>
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-</Head>;
-
       {/* The Header, mobile & desktop */}
       <Appbar session={session} />
       <DesktopMenu session={session} />

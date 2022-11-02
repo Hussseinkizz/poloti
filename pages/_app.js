@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import { StoreProvider } from '../hooks/useStore';
 import { UserContextProvider } from '../utils/user-context';
 import dynamic from 'next/dynamic';
+import Meta from '../components/Meta';
 // import PwaUpdater from '../PwaUpdater';
 
 
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
     // Backend Data Layer
     <UserContextProvider>
       {/* Client Data Layer */}
+      <Meta/>
       {/* <PwaUpdater /> */}
       <StoreProvider>
         {/* App Layout Provider */}
