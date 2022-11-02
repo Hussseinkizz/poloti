@@ -15,12 +15,13 @@ import SimillarLands from '../components/SimillarLands';
 import placeholder from '../public/images/placeholder.jpeg';
 
 import { useNumberFormat } from '../hooks/useNumberFormat';
-import { getPublicUrl } from '../supabase-client';
+import { getPublicUrl, getSignedUrl } from '../supabase-client';
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabase-client';
 
 const LandScreen = ({ post }) => {
   const [relatedPosts, setRelatedPosts] = useState(null);
+  const [signedUrl, setSignedUrl] = useState(null);
 
   const {
     id,
@@ -52,12 +53,22 @@ const LandScreen = ({ post }) => {
   let { whatsappLink } = useWhatsappLink(256754535493, WhatsappMessage);
   // console.log(whatsappLink);
 
+  const getUserAvatar = async (url) => {
+    const res = await getSignedUrl('avatars', url);
+    // console.log('res', avatar_url, res);
+    setSignedUrl(res);
+  };
+
+
   // * get related posts from supabase
   useEffect(() => {
     if (location) {
       getRelatedPosts();
     }
-  }, [location]);
+    if (avatar_url) {
+      getUserAvatar(avatar_url);
+    }
+  }, [location, avatar_url]);
 
   const getRelatedPosts = async () => {
     const { data: samePosts, error } = await supabase
@@ -111,7 +122,7 @@ const LandScreen = ({ post }) => {
         <div className="flex justify-start gap-2 items-center py-2 sm:pt-4">
           <span className="w-16 h-16">
             <Image
-              src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
+              src={signedUrl ? signedUrl : placeholder}
               layout="responsive"
               objectFit="contain"
               width={50}

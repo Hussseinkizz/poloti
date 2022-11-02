@@ -1,5 +1,5 @@
 import { Zoom } from 'react-reveal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -7,10 +7,11 @@ import Link from 'next/link';
 import placeholder from '../public/images/placeholder.jpeg';
 
 import { useNumberFormat } from '../hooks/useNumberFormat';
-import { getPublicUrl } from '../supabase-client';
+import { getPublicUrl, getSignedUrl } from '../supabase-client';
 
 const UserScreen = ({ userposts }) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [signedUrl, setSignedUrl] = useState(null);
 
   const userPostCount = userposts.length;
   const userSoldPostCount = userposts.filter(
@@ -19,13 +20,26 @@ const UserScreen = ({ userposts }) => {
 
   const { user_name, avatar_url } = userposts[0].profiles;
 
+  const getUserAvatar = async (url) => {
+    const res = await getSignedUrl('avatars', url);
+    // console.log('res', avatar_url, res);
+    setSignedUrl(res);
+  };
+
+
+  useEffect(() => {
+    if (avatar_url) {
+      getUserAvatar(avatar_url);
+    }
+  }, [location, avatar_url]);
+
   return (
     <section className="mx-auto pb-10">
       {/* User Profile */}
       <div className="bg-svg-pattern flex flex-col justify-center gap-2 items-center sm:pt-4 border-b bg-gray-50 pb-2 mb-4 rounded-b-md pt-16 sm:pt-18">
         <span className="w-24 sm:w-32 h-24 sm:h-32">
           <Image
-            src={avatar_url ? getPublicUrl(avatar_url) : placeholder}
+            src={signedUrl ? signedUrl : placeholder}
             layout="responsive"
             objectFit="contain"
             width={50}
