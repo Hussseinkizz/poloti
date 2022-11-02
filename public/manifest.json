@@ -1,7 +1,8 @@
 {
-    "theme_color": "D97706",
-    "background_color": "1F2937",
+    "theme_color": "#D97706",
+    "background_color": "#1F2937",
     "display": "standalone",
+    "orientation": "portrait-primary",
     "scope": "/",
     "start_url": "/https://poloti.vercel.app/",
     "name": "Poloti.Com",
