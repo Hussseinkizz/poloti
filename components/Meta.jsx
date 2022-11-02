@@ -9,7 +9,7 @@ const Meta = () => {
   <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
   <meta name="description" content="A real estate buy and sell e-commerce app." />
-  <meta name="theme-color" content="#D97706" />
+  <meta name="theme-color" content="#1F2937" />
   <title>Poloti</title>
   <link rel="manifest" href="/manifest.json" />
   <link rel="shortcut icon" href="/favicon.ico" />
@@ -23,7 +23,6 @@ const Meta = () => {
 {/* <meta name="msapplication-config" content="/icons/browserconfig.xml" />
 <meta name="msapplication-TileColor" content="#2B5797" /> */}
 <meta name="msapplication-tap-highlight" content="no" />
-<meta name="theme-color" content="#D97706" />
 
 {/* <link rel="apple-touch-icon" sizes="152x152" href="/icons/touch-icon-ipad.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png" />
