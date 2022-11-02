@@ -218,8 +218,8 @@ export default function CreatePostModal({ isOpen, closeModal }) {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="overflow-y-auto fixed inset-0">
+            <div className="flex justify-center items-center p-4 min-h-full text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -229,7 +229,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="overflow-hidden w-full max-w-md text-left align-middle bg-white rounded-2xl shadow-xl transition-all transform">
                   {/* Modal Content */}
                   <section className="w-full">
                     <ModalHeader
@@ -244,93 +244,93 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                     />
                     {/* Modal Body */}
                     <form
-                      className="w-full flex flex-col justify-center items-center gap-2 px-2"
+                      className="flex flex-col gap-2 justify-center items-center px-2 w-full"
                       onSubmit={handleForm}
                     >
                       {/* Post Location */}
-                      <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
+                      <div className="flex flex-col gap-2 justify-center items-start p-2 w-full grow">
                         <label
                           htmlFor="land-location"
                           className="font-semibold"
                         >
                           Where is this land located?
                         </label>
-                        <div className="w-full flex grow">
+                        <div className="flex w-full grow">
                           <input
                             type="text"
                             value={newLocation}
                             onChange={(e) => setNewLocation(e.target.value)}
-                            className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate"
+                            className="relative text-gray-600 truncate rounded-md border-gray-300 transition-colors outline-none grow hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
                             required
                           />
                         </div>
                       </div>
                       {/* Post Info or about */}
-                      <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
+                      <div className="flex flex-col gap-2 justify-center items-start p-2 w-full grow">
                         <label htmlFor="land-info" className="font-semibold">
                           Why would someone buy this land?
                         </label>
-                        <div className="w-full flex grow">
+                        <div className="flex w-full grow">
                           <textarea
                             cols="30"
                             rows="5"
                             value={newInfo}
                             onChange={(e) => setNewInfo(e.target.value)}
-                            className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate"
+                            className="w-full flex flex-wrap break-words relative text-gray-600 rounded-md border-gray-300 transition-colors outline-none grow hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
                             required
                           />
                         </div>
                       </div>
                       {/* Post Price, Width & Height */}
-                      <div className="w-full p-2 grid grid-cols-2 justify-evenly items-center gap-4 grow">
+                      <div className="grid grid-cols-2 gap-4 justify-evenly items-center p-2 w-full grow">
                         {/* Post Price */}
-                        <div className="w-full flex flex-col justify-center items-start gap-2 grow">
+                        <div className="flex flex-col gap-2 justify-center items-start w-full grow">
                           <label htmlFor="land-price" className="font-semibold">
                             Price:
                           </label>
-                          <div className="w-full flex grow">
+                          <div className="flex w-full grow">
                             <input
                               type="text"
                               value={newPrice}
                               onChange={(e) => setNewPrice(e.target.value)}
-                              className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate"
+                              className="relative text-gray-600 truncate rounded-md border-gray-300 transition-colors outline-none grow hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
                               required
                             />
                           </div>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           {/* Post Width */}
-                          <div className="w-full flex flex-col justify-center items-center gap-2 grow">
+                          <div className="flex flex-col gap-2 justify-center items-center w-full grow">
                             <label
                               htmlFor="land-width"
                               className="font-semibold"
                             >
                               Width:
                             </label>
-                            <div className="w-full flex grow">
+                            <div className="flex w-full grow">
                               <input
                                 type="text"
                                 value={newWidth}
                                 onChange={(e) => setNewWidth(e.target.value)}
-                                className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate text-center"
+                                className="relative text-center text-gray-600 truncate rounded-md border-gray-300 transition-colors outline-none grow hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
                                 required
                               />
                             </div>
                           </div>
                           {/* Post Height */}
-                          <div className="w-full flex flex-col justify-center items-center gap-2 grow">
+                          <div className="flex flex-col gap-2 justify-center items-center w-full grow">
                             <label
                               htmlFor="land-height"
                               className="font-semibold"
                             >
                               Height:
                             </label>
-                            <div className="w-full flex grow">
+                            <div className="flex w-full grow">
                               <input
                                 type="text"
                                 value={newHeight}
                                 onChange={(e) => setNewHeight(e.target.value)}
-                                className="grow outline-none border-gray-300 text-gray-600 relative rounded-md transition-colors hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100 truncate text-center"
+                                className="relative text-center text-gray-600 truncate rounded-md border-gray-300 transition-colors outline-none grow hover:bg-white focus:border-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-100"
                                 required
                               />
                             </div>
@@ -338,40 +338,40 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                         </div>
                       </div>
                       {/* Post Installments */}
-                      <div className="w-full p-2 flex justify-between items-center gap-2 grow">
+                      <div className="flex gap-2 justify-between items-center p-2 w-full grow">
                         <label
                           htmlFor="land-installments"
                           className="font-semibold"
                         >
                           Do you accept kibanjampola?
                         </label>
-                        <div className="flex justify-center items-center gap-4">
-                          <div className="flex justify-center items-center gap-2">
+                        <div className="flex gap-4 justify-center items-center">
+                          <div className="flex gap-2 justify-center items-center">
                             <input
                               type="checkbox"
                               name="land-installments"
                               checked={newInstallments}
                               onChange={() => setNewInstallments(true)}
                               id="land-installments"
-                              className="outline-none border-gray-300 text-gray-600 rounded-md  hover:border-gray-100 focus:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 appearance-none border  bg-white checked:text-gray-800 checked:border-gray-700 transition cursor-pointer h-6 w-6"
+                              className="w-6 h-6 text-gray-600 bg-white rounded-md border border-gray-300 transition appearance-none cursor-pointer outline-none hover:border-gray-100 focus:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 checked:text-gray-800 checked:border-gray-700"
                             />
                             <span>Yes</span>
                           </div>
-                          <div className="flex justify-center items-center gap-2">
+                          <div className="flex gap-2 justify-center items-center">
                             <input
                               type="checkbox"
                               name="land-installments"
                               checked={!newInstallments}
                               onChange={() => setNewInstallments(false)}
                               id="land-installments"
-                              className="outline-none border-gray-300 text-gray-600 rounded-md  hover:border-gray-100 focus:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 appearance-none border  bg-white checked:text-gray-800 checked:border-gray-700 transition cursor-pointer h-6 w-6"
+                              className="w-6 h-6 text-gray-600 bg-white rounded-md border border-gray-300 transition appearance-none cursor-pointer outline-none hover:border-gray-100 focus:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-100 checked:text-gray-800 checked:border-gray-700"
                             />
                             <span>No</span>
                           </div>
                         </div>
                       </div>
                       {/* Post Tip */}
-                      <h2 className="flex justify-center gap-1 items-center text-gray-400 mt-4 px-4">
+                      <h2 className="flex gap-1 justify-center items-center px-4 mt-4 text-gray-400">
                         <span className="flex text-3xl">
                           <HiIcons.HiLightBulb className="text-green-400" />
                         </span>
@@ -382,10 +382,10 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                         </span>
                       </h2>
                       {/* Modal Actions */}
-                      <div className="w-full flex justify-between gap-4 items-center mt-4 p-6">
+                      <div className="flex gap-4 justify-between items-center p-6 mt-4 w-full">
                         <button
                           type="submit"
-                          className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                          className="flex gap-1 justify-center items-center px-4 py-2 text-orange-50 capitalize bg-orange-400 rounded-md transition duration-150 ease-in-out hover:bg-orange-200 hover:text-orange-400 active:scale-110"
                         >
                           {!loading && <HiIcons.HiOutlineCheck />}
                           <span>
@@ -394,7 +394,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                         </button>
                         <button
                           type="button"
-                          className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 rounded-md border border-transparent hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                           onClick={closeModal}
                         >
                           cancel
@@ -405,7 +405,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                     {uploadPercent !== 0 && (
                       <div className="w-full bg-green-50">
                         <div
-                          className={`bg-green-100 text-green-400 rounded-r-lg text-sm text-center px-4 animate-pulse ${progressWidth}`}
+                          className={`px-4 text-sm text-center text-green-400 bg-green-100 rounded-r-lg animate-pulse ${progressWidth}`}
                         >
                           uploading images {uploadPercent}%
                         </div>
