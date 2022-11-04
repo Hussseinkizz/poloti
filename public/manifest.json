@@ -2,7 +2,7 @@
     "theme_color": "#1F2937",
     "background_color": "#1F2937",
     "display": "standalone",
-    "orientation": "portrait-primary",
+    "orientation": "portrait",
     "scope": "/",
     "start_url": ".",
     "name": "Poloti.Com",

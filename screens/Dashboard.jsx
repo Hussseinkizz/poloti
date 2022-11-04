@@ -21,7 +21,7 @@ import placeholder from '../public/images/placeholder.jpeg';
 // import sampleAvatar from '../public/images/me.png';
 import UserPostsArea from '../components/UserPostsArea';
 
-const UserDashboard = ({ userData: userposts }) => {
+const UserDashboard = ({ userProfile, userPosts }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newContact, setNewContact] = useState('');
   const [newName, setNewName] = useState('');
@@ -30,19 +30,18 @@ const UserDashboard = ({ userData: userposts }) => {
   const [signedUrl, setSignedUrl] = useState(null);
   // const [imageUrl, setImageUrl] = useState(null);
   const [saving, setSaving] = useState(false);
-  const [avatarUploaded, setavatarUploaded] = useState(false);
+  const [avatarUploaded, setAvatarUploaded] = useState(false);
 
   const router = useRouter();
   // console.log('User Data:', userData);
 
-  const userPostCount = userposts.length;
-  const userSoldPostCount = userposts.filter(
+  const userPostCount = userPosts?.length;
+  const userSoldPostCount = userPosts?.filter(
     (post) => post.is_sold !== false
   ).length;
 
   // * destructure user profile details...
-  const { id, user_email, user_name, user_contact, avatar_url } =
-    userposts[0].profiles;
+  const { id, user_email, user_name, user_contact, avatar_url } = userProfile;
 
   const getUserAvatar = async (url) => {
     const res = await getSignedUrl('avatars', url);
@@ -52,15 +51,14 @@ const UserDashboard = ({ userData: userposts }) => {
 
   // * populate user detail for edit mode!
   useEffect(() => {
-    if (userposts) {
+    if (userProfile) {
       setNewContact(user_contact);
       setNewName(user_name);
       if (avatar_url) {
         getUserAvatar(avatar_url);
       }
     }
-  }, [userposts]);
-  // console.log(userposts);
+  }, [userProfile, avatar_url]);
 
   // handle editing
   const handleEditMode = () => {
@@ -77,7 +75,7 @@ const UserDashboard = ({ userData: userposts }) => {
   };
   const updateUserAvatar = async (newAvatar) => {
     // update user avatar in bucket
-    setavatarUploaded(true);
+    setAvatarUploaded(true);
     // const avatarPath = '1660390450360_12bq8vwe_400x400.jpg';
     const avatarPath = avatar_url.split('avatars/')[1];
     // console.log('avatar-path', avatarPath);
@@ -202,12 +200,20 @@ const UserDashboard = ({ userData: userposts }) => {
             </h1>
             {/* Profile Action */}
             {isEditing ? (
+            <div className="w-full flex justify-between items-center gap-2">
               <button
                 className="flex space-x-2 place-items-center bg-orange-300 text-orange-50 py-1 px-2 rounded-md hover:text-orange-100 hover:bg-orange-400 active:scale-110 transition duration-150 ease-in-out"
                 onClick={handleSaving}>
                 {!saving && <HiIcons.HiOutlineCheck />}
                 <span>{saving ? 'please wait...' : 'Save Profile'}</span>
               </button>
+               <button
+               className="flex space-x-2 place-items-center bg-blue-100 text-blue-300 py-1 px-2 rounded-md hover:text-blue-400 hover:bg-blue-200 active:scale-110 transition duration-150 ease-in-out"
+               onClick={() => setIsEditing(false)}>
+               <HiIcons.HiX />
+               <span>Cancel</span>
+             </button>
+            </div>
             ) : (
               <button
                 className="flex space-x-2 place-items-center bg-gray-300 text-gray-50 py-1 px-2 rounded-md hover:text-gray-100 hover:bg-gray-400 active:scale-110 transition duration-150 ease-in-out"
@@ -266,7 +272,7 @@ const UserDashboard = ({ userData: userposts }) => {
         </section>
       </div>
       {/* User Posts And Their CRUD ops... */}
-      <UserPostsArea posts={userposts} />
+      <UserPostsArea posts={userPosts} />
     </section>
   );
 };

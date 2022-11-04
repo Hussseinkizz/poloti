@@ -17,8 +17,14 @@ export default function UserPostsArea({ posts }) {
   const [showModal, setShowModal] = useState(false);
   const [editPost, setEditPost] = useState({});
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [userPosts, setUserPosts] = useState(posts);
+  const [userPosts, setUserPosts] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  useEffect(() => {
+    if (posts) {
+      setUserPosts(posts);
+    }
+    }, [posts]);
 
   // toggle sales status on backend
   const handlePostSoldYes = async (targetID) => {
@@ -132,7 +138,7 @@ export default function UserPostsArea({ posts }) {
       </section>
       {/* User Posts */}
       <section className="mx-auto lg:max-w-7xl px-4 sm:px-6 lg:px-8">
-        {userPosts ? (
+        {userPosts?.length > 0 ? (
           <section className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8 relative z-0">
             {userPosts?.map((post, index) => (
               <Zoom key={index}>
@@ -152,7 +158,7 @@ export default function UserPostsArea({ posts }) {
               <h1 className="text-center text-gray-400  truncate flex flex-col justify-center gap-2 items-center">
                 <HiIcons.HiExclamationCircle className="text-2xl md:text-3xl" />
                 <span className="text-sm sm:text-base">
-                  You have no posts for now, post some now!
+                  Oops!<br /> No posts for now, create some by clicking "create post".
                 </span>
               </h1>
             </div>
