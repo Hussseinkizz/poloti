@@ -4,7 +4,7 @@
     "display": "standalone",
     "orientation": "portrait-primary",
     "scope": "/",
-    "start_url": "/https://poloti.vercel.app/",
+    "start_url": ".",
     "name": "Poloti.Com",
     "short_name": "Poloti",
     "description": "A real estate buy and sell e-commerce app.",
