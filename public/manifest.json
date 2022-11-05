@@ -1,39 +1,51 @@
 {
-    "theme_color": "#1F2937",
-    "background_color": "#1F2937",
-    "display": "standalone",
-    "orientation": "portrait",
-    "scope": "/",
-    "start_url": ".",
-    "name": "Poloti.Com",
-    "short_name": "Poloti",
-    "description": "A real estate buy and sell e-commerce app.",
-    "icons": [
-        {
-            "src": "icons/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/icon-256x256.png",
-            "sizes": "256x256",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/icon-384x384.png",
-            "sizes": "384x384",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/icon-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        },
-        {
-            "src": "maskable.png",
-            "sizes": "72x72",
-            "type": "image/x-icon",
-            "purpose": "maskable"
-          }
-    ]
+  "theme_color": "#1F2937",
+  "background_color": "#1F2937",
+  "display": "standalone",
+  "orientation": "natural",
+  "scope": "/",
+  "start_url": ".",
+  "name": "Find your dream land!",
+  "short_name": "Poloti",
+  "description": "Buy or sell your land on the go with us, in a fast, secure and easy way!",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "maskable.png",
+      "sizes": "72x72",
+      "type": "image/x-icon",
+      "purpose": "maskable"
+    }
+  ],
+  "dir": "auto",
+  "lang": "en",
+  "prefer_related_applications": false,
+  "categories": [
+    "business",
+    "finance",
+    "lifestyle",
+    "navigation",
+    "shopping",
+    "social",
+    "travel"
+  ]
 }
