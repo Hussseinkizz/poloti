@@ -153,8 +153,16 @@ export default function CreatePostModal({ isOpen, closeModal }) {
 
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition
+        appear
+        show={isOpen}
+        as={Fragment}
+      >
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeModal}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -215,7 +223,10 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                       </div>
                       {/* Post Info or about */}
                       <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-                        <label htmlFor="land-info" className="font-semibold">
+                        <label
+                          htmlFor="land-info"
+                          className="font-semibold"
+                        >
                           Why would someone buy this land?
                         </label>
                         <div className="w-full flex grow">
@@ -233,7 +244,10 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                       <div className="w-full p-2 grid grid-cols-2 justify-evenly items-center gap-4 grow">
                         {/* Post Price */}
                         <div className="w-full flex flex-col justify-center items-start gap-2 grow">
-                          <label htmlFor="land-price" className="font-semibold">
+                          <label
+                            htmlFor="land-price"
+                            className="font-semibold"
+                          >
                             Price:
                           </label>
                           <div className="w-full flex grow">
@@ -333,7 +347,7 @@ export default function CreatePostModal({ isOpen, closeModal }) {
                       <div className="w-full flex justify-between gap-4 items-center mt-4 p-6">
                         <button
                           type="submit"
-                          className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                          className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
                         >
                           {!loading && <HiIcons.HiOutlineCheck />}
                           <span>

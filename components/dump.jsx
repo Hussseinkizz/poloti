@@ -144,7 +144,7 @@ const handleUpload = async () => {
 //       {/* The overlay content */}
 //       <div className="truncate absolute z-10 font-bold flex justify-center items-end pb-2 w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear capitalize">
 //         <button
-//           className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-110 transition duration-150 ease-in-out"
+//           className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-95 transition duration-150 ease-in-out"
 //           onClick={handleImagesUpload}
 //         >
 //           <HiIcons.HiCloudUpload className="text-xl md:text-2xl" />
@@ -171,7 +171,7 @@ const handleUpload = async () => {
 //       onClick={handleImagesUpload}
 //     />
 //     <button
-//       className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-800 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-110 transition duration-150 ease-in-out"
+//       className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-800 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-95 transition duration-150 ease-in-out"
 //       onClick={handleImagesUpload}
 //     >
 //       Tap to upload photos

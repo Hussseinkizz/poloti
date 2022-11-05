@@ -141,7 +141,8 @@ const UserDashboard = ({ userProfile, userPosts }) => {
           <div
             className={`flex flex-col justify-center items-center md:items-start ${
               isEditing ? 'gap-3' : 'gap-2'
-            }`}>
+            }`}
+          >
             <div className="flex justify-center items-center gap-2">
               {isEditing ? (
                 <div className="font-semibold w-full flex flex-col md:flex-row justify-between items-center gap-2">
@@ -167,7 +168,8 @@ const UserDashboard = ({ userProfile, userPosts }) => {
               <h1
                 className={`font-semibold w-full flex justify-between items-center gap-2 ${
                   isEditing && 'flex-col md:flex-row'
-                }`}>
+                }`}
+              >
                 <span>Land Posts:</span>
                 <span className="text-gray-500">{userPostCount}</span>
               </h1>
@@ -175,7 +177,8 @@ const UserDashboard = ({ userProfile, userPosts }) => {
             <h1
               className={`font-semibold w-full flex justify-between items-center gap-2 ${
                 isEditing && 'flex-col md:flex-row'
-              }`}>
+              }`}
+            >
               <span>Contact:</span>
               {!isEditing ? (
                 <span className="text-gray-500">{user_contact}</span>
@@ -195,30 +198,34 @@ const UserDashboard = ({ userProfile, userPosts }) => {
             <h1
               className={`font-semibold w-full flex justify-between items-center gap-2 ${
                 isEditing && 'flex-col md:flex-row'
-              }`}>
+              }`}
+            >
               <span>Email:</span>
               <span className="text-gray-500 truncate">{user_email}</span>
             </h1>
             {/* Profile Action */}
             {isEditing ? (
-            <div className="w-full flex justify-between items-center gap-2">
-              <button
-                className="flex space-x-2 place-items-center bg-orange-300 text-orange-50 py-1 px-2 rounded-md hover:text-orange-100 hover:bg-orange-400 active:scale-110 transition duration-150 ease-in-out"
-                onClick={handleSaving}>
-                {!saving && <HiIcons.HiOutlineCheck />}
-                <span>{saving ? 'please wait...' : 'Save Profile'}</span>
-              </button>
-               <button
-               className="flex space-x-2 place-items-center bg-blue-100 text-blue-300 py-1 px-2 rounded-md hover:text-blue-400 hover:bg-blue-200 active:scale-110 transition duration-150 ease-in-out"
-               onClick={() => setIsEditing(false)}>
-               <HiIcons.HiX />
-               <span>Cancel</span>
-             </button>
-            </div>
+              <div className="w-full flex justify-between items-center gap-2">
+                <button
+                  className="flex space-x-2 place-items-center bg-orange-300 text-orange-50 py-1 px-2 rounded-md hover:text-orange-100 hover:bg-orange-400 active:scale-95 transition duration-150 ease-in-out"
+                  onClick={handleSaving}
+                >
+                  {!saving && <HiIcons.HiOutlineCheck />}
+                  <span>{saving ? 'please wait...' : 'Save Profile'}</span>
+                </button>
+                <button
+                  className="flex space-x-2 place-items-center bg-blue-100 text-blue-300 py-1 px-2 rounded-md hover:text-blue-400 hover:bg-blue-200 active:scale-95 transition duration-150 ease-in-out"
+                  onClick={() => setIsEditing(false)}
+                >
+                  <HiIcons.HiX />
+                  <span>Cancel</span>
+                </button>
+              </div>
             ) : (
               <button
-                className="flex space-x-2 place-items-center bg-gray-300 text-gray-50 py-1 px-2 rounded-md hover:text-gray-100 hover:bg-gray-400 active:scale-110 transition duration-150 ease-in-out"
-                onClick={handleEditMode}>
+                className="flex space-x-2 place-items-center bg-gray-300 text-gray-50 py-1 px-2 rounded-md hover:text-gray-100 hover:bg-gray-400 active:scale-95 transition duration-150 ease-in-out"
+                onClick={handleEditMode}
+              >
                 <HiIcons.HiPencilAlt />
                 <span>Edit Profile</span>
               </button>
@@ -229,7 +236,8 @@ const UserDashboard = ({ userProfile, userPosts }) => {
             {isEditing && newAvatar ? (
               <span
                 className="w-24 sm:w-32 h-24 sm:h-32 shadow-sm rounded-md bg-gray-50 grid place-items-center"
-                onClick={handleImageUpload}>
+                onClick={handleImageUpload}
+              >
                 <HiIcons.HiPhotograph className="h-8 w-8 md:h-10 md:w-10 cursor-pointer text-orange-400" />
               </span>
             ) : (
@@ -256,8 +264,9 @@ const UserDashboard = ({ userProfile, userPosts }) => {
             )}
             {isEditing && (
               <button
-                className="text-sm sm:text-base flex space-x-2 place-items-center bg-gray-200 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-gray-300 active:scale-110 transition duration-150 ease-in-out"
-                onClick={handleImageUpload}>
+                className="text-sm sm:text-base flex space-x-2 place-items-center bg-gray-200 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-gray-300 active:scale-95 transition duration-150 ease-in-out"
+                onClick={handleImageUpload}
+              >
                 upload photo
               </button>
             )}
@@ -273,7 +282,7 @@ const UserDashboard = ({ userProfile, userPosts }) => {
         </section>
       </div>
       {/* User Posts And Their CRUD ops... */}
-     <UserPostsArea posts={userPosts} />
+      <UserPostsArea posts={userPosts} />
     </section>
   );
 };

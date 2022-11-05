@@ -59,7 +59,6 @@ const LandScreen = ({ post }) => {
     setSignedUrl(res);
   };
 
-
   // * get related posts from supabase
   useEffect(() => {
     if (location) {
@@ -135,7 +134,10 @@ const LandScreen = ({ post }) => {
             <span>Posted by:</span>
             {/* comment start-- href={`/user/${user_id}?id=${user_id}`}
             as={`/user/${userNameSlug}`} --comment end */}
-            <Link href={`/user/${user_id}`} passHref>
+            <Link
+              href={`/user/${user_id}`}
+              passHref
+            >
               <a className="text-orange-400 hover:border-b hover:border-orange-400 transition">
                 {user_name}
               </a>
@@ -157,18 +159,24 @@ const LandScreen = ({ post }) => {
           </div>
         ) : (
           <div className="flex gap-4 justify-start sm:justify-between items-center mt-4">
-            <Link href="tel:+256754535493" passHref>
+            <Link
+              href="tel:+256754535493"
+              passHref
+            >
               <a
                 target="_blank"
-                className="flex space-x-2 text-orange-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
+                className="flex space-x-2 text-orange-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
               >
                 Call Us
               </a>
             </Link>
-            <Link href={whatsappLink} passHref>
+            <Link
+              href={whatsappLink}
+              passHref
+            >
               <a
                 target="_blank"
-                className="flex space-x-2 text-green-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-green-500 hover:bg-green-400 hover:text-green-100 active:scale-110 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
+                className="flex space-x-2 text-green-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-green-500 hover:bg-green-400 hover:text-green-100 active:scale-95 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
               >
                 Whatsapp
               </a>
@@ -189,7 +197,10 @@ const LandScreen = ({ post }) => {
           <SimillarLands simillarLands={relatedPosts} />
         </div>
       ) : (
-        <Link href="/" passHref>
+        <Link
+          href="/"
+          passHref
+        >
           <div className="mx-auto py-4 sm:py-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
             <a className="flex justify-start items-center gap-2 hover:text-orange-400 transition cursor-pointer w-fit">
               <span>

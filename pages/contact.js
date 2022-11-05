@@ -30,7 +30,10 @@ export default function Contact() {
           <section className="w-full grow flex flex-col justify-center items-center gap-2">
             {/* User Name */}
             <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-              <label htmlFor="username" className="font-semibold">
+              <label
+                htmlFor="username"
+                className="font-semibold"
+              >
                 Your Full Name?
               </label>
               <div className="w-full flex grow">
@@ -45,7 +48,10 @@ export default function Contact() {
             </div>
             {/* User Email */}
             <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-              <label htmlFor="useremail" className="font-semibold">
+              <label
+                htmlFor="useremail"
+                className="font-semibold"
+              >
                 Your Email Adrress?
               </label>
               <div className="w-full flex grow">
@@ -60,7 +66,10 @@ export default function Contact() {
             </div>
             {/* User Feedback */}
             <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-              <label htmlFor="feedback" className="font-semibold">
+              <label
+                htmlFor="feedback"
+                className="font-semibold"
+              >
                 Your suggestions or inquiries?
               </label>
               <div className="w-full flex grow">
@@ -79,7 +88,7 @@ export default function Contact() {
           <div className="w-full flex grow justify-center items-center gap-4 mt-2">
             <button
               type="submit"
-              className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+              className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
               onClick={handleSubmit}
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"

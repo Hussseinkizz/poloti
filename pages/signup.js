@@ -210,7 +210,7 @@ export default function Signup() {
           <div className="w-full flex grow justify-center items-center gap-4 mt-2">
             <button
               type="submit"
-              className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+              className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
               // onClick={handleSubmit}
@@ -237,7 +237,10 @@ export default function Signup() {
             />
             <h3 className="text-gray-500 text-sm md:text-base">
               By signing up you agree to poloti.com's
-              <Link href="/terms-and-conditions" passHref>
+              <Link
+                href="/terms-and-conditions"
+                passHref
+              >
                 <a className="text-gray-400 border-b border-transparent hover:border-orange-400 py-1 px-2">
                   terms and conditions
                 </a>

@@ -81,7 +81,7 @@ export default function UserPostsArea({ posts }) {
   // handle post editing
   const handlePostEdit = (id) => {
     // console.log(id);
-    const targetPost = posts.filter((post) => post.id === id);
+    const targetPost = userPosts.filter((post) => post.id === id);
     setEditPost(targetPost[0]);
     // console.log(editPost);
     // show edit post modal
@@ -89,27 +89,43 @@ export default function UserPostsArea({ posts }) {
   };
 
   // handle post delete
+  // todo: check really if images are removed from bucket to save memory!
   const handlePostDelete = async (id) => {
-    // console.log(id);
-    // console.log(posts);
-    //! TODO: Also do delete post's images in bucket!
-    // delete post
-    // const handlePostDelete = async (targetID) => {
-    //   await supabase.from('posts').delete().match({ id: targetID });
-    // };
-    const { data, error } = await supabase
-      .from('posts')
-      .delete()
-      .match({ id: id });
-    if (data) {
-      console.log(data);
-      // Delete item from UI
-      const filteredPosts = posts.filter((post) => post.id !== id);
-      // console.log('filtered', filteredPosts);
-      setUserPosts(filteredPosts);
-    } else {
-      throw new error(error.message);
+    const targetPost = userPosts.filter((post) => post.id === id);
+    const { image1_url, image2_url, image3_url, image4_url } = targetPost[0]
+    const targetImages = [ image1_url, image2_url, image3_url, image4_url]
+    const trimmedImagePaths = targetImages.map((image) => {
+      return image.split('post_images/').pop();
+    });
+
+    setIsProcessing(true);
+
+    try {
+       await supabase
+      .storage
+      .from('post_images')
+      .remove(trimmedImagePaths)
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      deletePost(id);
+      setIsProcessing(false);
     }
+
+    async function deletePost(id) {
+      const { data, error } = await supabase
+        .from('posts')
+        .delete()
+        .match({ id: id });
+      if (data) {
+        // Delete item from UI
+        const filteredPosts = userPosts.filter((post) => post.id !== id);
+        setUserPosts(filteredPosts);
+      } else {
+        throw new error(error.message);
+      }
+    };
+
   };
 
   const userPostsArea_props = {
@@ -136,7 +152,7 @@ export default function UserPostsArea({ posts }) {
             </div>
             <div className="w-full md:w-fit">
               <button
-                className="w-full grow bg-orange-400 text-orange-50 flex justify-center items-center capitalize p-2 py-3 md:py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                className="w-full grow bg-orange-400 text-orange-50 flex justify-center items-center capitalize p-2 py-3 md:py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
                 onClick={() => setShowCreateModal(true)}
               >
                 <HiIcons.HiPlus />

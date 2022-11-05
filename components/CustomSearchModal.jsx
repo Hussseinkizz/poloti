@@ -19,8 +19,16 @@ export default function CustomSearchModal({ isOpen, closeModal }) {
 
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition
+        appear
+        show={isOpen}
+        as={Fragment}
+      >
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeModal}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -77,7 +85,10 @@ export default function CustomSearchModal({ isOpen, closeModal }) {
                       </div>
                       {/* user contact */}
                       <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-                        <label htmlFor="user-contact" className="font-semibold">
+                        <label
+                          htmlFor="user-contact"
+                          className="font-semibold"
+                        >
                           Your Contact
                         </label>
                         <div className="w-full flex grow">
@@ -92,7 +103,10 @@ export default function CustomSearchModal({ isOpen, closeModal }) {
                       </div>
                       {/* user email */}
                       <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-                        <label htmlFor="user-email" className="font-semibold">
+                        <label
+                          htmlFor="user-email"
+                          className="font-semibold"
+                        >
                           Your Email (Optional)
                         </label>
                         <div className="w-full flex grow">
@@ -106,7 +120,10 @@ export default function CustomSearchModal({ isOpen, closeModal }) {
                       </div>
                       {/* user massage */}
                       <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-                        <label htmlFor="user-massage" className="font-semibold">
+                        <label
+                          htmlFor="user-massage"
+                          className="font-semibold"
+                        >
                           What exactly do you want?
                         </label>
                         <div className="w-full flex grow">
@@ -137,7 +154,7 @@ export default function CustomSearchModal({ isOpen, closeModal }) {
                   <div className="flex justify-between gap-4 items-center mt-4 p-6">
                     <button
                       type="submit"
-                      className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                      className=" bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
                       data-mdb-ripple="true"
                       data-mdb-ripple-color="light"
                     >

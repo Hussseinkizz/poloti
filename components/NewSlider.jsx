@@ -69,7 +69,7 @@ export default function NewSlider() {
                 land or sell one with us, so easy!
               </p>
               <button
-                className="flex space-x-2 place-items-center text-orange-50 py-1 px-4 rounded-md bg-orange-400 hover:bg-orange-500 hover:text-orange-100 active:scale-110 transition duration-150 ease-in-out text-lg sm:text-xl mt-4"
+                className="flex space-x-2 place-items-center text-orange-50 py-1 px-4 rounded-md bg-orange-400 hover:bg-orange-500 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out text-lg sm:text-xl mt-4"
                 target="_blank"
               >
                 Learn More

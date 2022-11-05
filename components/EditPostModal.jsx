@@ -59,8 +59,16 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
 
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition
+        appear
+        show={isOpen}
+        as={Fragment}
+      >
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={closeModal}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -108,7 +116,7 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
                         {/* The overlay content */}
                         <div className="truncate absolute z-10 font-bold flex justify-center items-end pb-2 w-full h-full text-white text-xl hover:text-orange-300 transition duration-150 ease-linear capitalize">
                           <button
-                            className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-110 transition duration-150 ease-in-out"
+                            className="text-sm sm:text-base flex justify-center  items-center gap-2 bg-gray-800 bg-opacity-20 text-gray-400 py-1 px-2 rounded-md hover:text-gray-50 hover:bg-opacity-60 active:scale-95 transition duration-150 ease-in-out"
                             onClick={handleImageUpload}
                           >
                             <HiIcons.HiCloudUpload className="text-xl md:text-2xl" />
@@ -138,7 +146,10 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
                       </div>
                       {/* Post Info or about */}
                       <div className="w-full p-2 flex flex-col justify-center items-start gap-2 grow">
-                        <label htmlFor="land-info" className="font-semibold">
+                        <label
+                          htmlFor="land-info"
+                          className="font-semibold"
+                        >
                           Why would someone buy this land?
                         </label>
                         <div className="w-full flex grow">
@@ -155,7 +166,10 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
                       <div className="w-full p-2 grid grid-cols-2 justify-evenly items-center gap-4 grow">
                         {/* Post Price */}
                         <div className="w-full flex flex-col justify-center items-start gap-2 grow">
-                          <label htmlFor="land-price" className="font-semibold">
+                          <label
+                            htmlFor="land-price"
+                            className="font-semibold"
+                          >
                             Price:
                           </label>
                           <div className="w-full flex grow">
@@ -254,7 +268,7 @@ export default function EditPostModal({ post, isOpen, closeModal }) {
                   <div className="flex justify-between gap-4 items-center mt-4 p-6">
                     <button
                       type="submit"
-                      className="bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                      className="bg-orange-400 text-orange-50 flex justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
                       onClick={handlePostSave}
                       data-mdb-ripple="true"
                       data-mdb-ripple-color="light"

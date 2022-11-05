@@ -77,7 +77,10 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
             className="w-full flex flex-col shadow-lg bg-gray-50 rounded-md overflow-hidden justify-between items-stretch grow"
           >
             {/* Card Media */}
-            <Link href={`/land/${post.id}`} passHref>
+            <Link
+              href={`/land/${post.id}`}
+              passHref
+            >
               <a data-mdb-ripple="true">
                 <div className="w-full h-60 group relative cursor-pointer flex grow">
                   <Image
@@ -148,22 +151,25 @@ const DashboardPosts = ({ posts, handlePostEdit, handlePostDelete }) => {
                   {/* Card Buttons */}
                   <div className="w-full flex justify-center items-center grow gap-2">
                     <button
-                      className="w-full bg-red-400 text-red-50 flex justify-center items-center capitalize grow py-2 hover:bg-red-200 hover:text-red-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                      className="w-full bg-red-400 text-red-50 flex justify-center items-center capitalize grow py-2 hover:bg-red-200 hover:text-red-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
                       onClick={() => handlePostDelete(post.id)}
                     >
                       <HiIcons.HiTrash />
                       <span>delete</span>
                     </button>
                     <button
-                      className="w-full bg-green-400 text-green-50 flex justify-center items-center capitalize grow py-2 hover:bg-green-200 hover:text-green-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+                      className="w-full bg-green-400 text-green-50 flex justify-center items-center capitalize grow py-2 hover:bg-green-200 hover:text-green-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
                       onClick={() => handlePostEdit(post.id)}
                     >
                       <HiIcons.HiPencilAlt />
                       <span>edit</span>
                     </button>
                     <button className="w-full flex grow">
-                      <Link href={`/land/${post.id}`} passHref>
-                        <a className="w-full bg-orange-400 text-orange-50 flex justify-center items-center capitalize grow py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md">
+                      <Link
+                        href={`/land/${post.id}`}
+                        passHref
+                      >
+                        <a className="w-full bg-orange-400 text-orange-50 flex justify-center items-center capitalize grow py-2 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md">
                           <HiIcons.HiEye />
                           <span>view</span>
                         </a>

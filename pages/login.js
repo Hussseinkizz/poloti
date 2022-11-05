@@ -112,7 +112,7 @@ export default function Login() {
           <div className="w-full flex grow justify-center items-center gap-4 mt-2">
             <button
               type="submit"
-              className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-110 transition duration-150 ease-in-out gap-1 rounded-md"
+              className="bg-orange-400 text-orange-50 flex grow justify-center items-center capitalize py-2 px-4 hover:bg-orange-200 hover:text-orange-400 active:scale-95 transition duration-150 ease-in-out gap-1 rounded-md"
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
             >
@@ -132,7 +132,10 @@ export default function Login() {
               <HiIcons.HiExclamationCircle className="text-gray-400" />
               <span>
                 Forgot your password?
-                <Link href="/password-reset" passHref>
+                <Link
+                  href="/password-reset"
+                  passHref
+                >
                   <a className="text-gray-400 border-b border-transparent hover:border-orange-400 py-1 px-2">
                     reset password.
                   </a>
