@@ -20,6 +20,7 @@ import placeholder from '../public/images/placeholder.jpeg';
 // ? import sample images
 // import sampleAvatar from '../public/images/me.png';
 import UserPostsArea from '../components/UserPostsArea';
+import Loader from '../components/Loader';
 
 const UserDashboard = ({ userProfile, userPosts }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -272,7 +273,7 @@ const UserDashboard = ({ userProfile, userPosts }) => {
         </section>
       </div>
       {/* User Posts And Their CRUD ops... */}
-      <UserPostsArea posts={userPosts} />
+     <UserPostsArea posts={userPosts} />
     </section>
   );
 };
