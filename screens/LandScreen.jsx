@@ -39,7 +39,19 @@ const LandScreen = ({ post }) => {
     image4_url,
   } = post;
 
-  const { user_name, avatar_url } = post.profiles;
+  const { user_name, avatar_url, user_contact } = post.profiles;
+
+  // Todo: check if user contact starts with 256 and is valid, if true use it on whatsapp link otherwise, use 256754535493 as fallback
+
+  const getContact = () => {
+    if (user_contact) {
+      return user_contact;
+      // check if its valid
+    } else {
+      // return fallback
+      return '256754535493';
+    }
+  };
 
   const title = `${location} - ${width} ku ${height}`;
   const { slug: userNameSlug } = useMakeSlug(user_name);
@@ -49,8 +61,8 @@ const LandScreen = ({ post }) => {
   const image4 = getPublicUrl(image4_url);
 
   // const userLink = `/user/${user_id}/${slug}`;
-  const WhatsappMessage = `Hello Poloti Admin am interested in #${id},${title}`;
-  let { whatsappLink } = useWhatsappLink(256754535493, WhatsappMessage);
+  const WhatsappMessage = `Hello ${user_name} Am From Poloti And am interested in #${id},${title}`;
+  let { whatsappLink } = useWhatsappLink(getContact(), WhatsappMessage);
   // console.log(whatsappLink);
 
   const getUserAvatar = async (url) => {
@@ -134,10 +146,7 @@ const LandScreen = ({ post }) => {
             <span>Posted by:</span>
             {/* comment start-- href={`/user/${user_id}?id=${user_id}`}
             as={`/user/${userNameSlug}`} --comment end */}
-            <Link
-              href={`/user/${user_id}`}
-              passHref
-            >
+            <Link href={`/user/${user_id}`} passHref>
               <a className="text-orange-400 hover:border-b hover:border-orange-400 transition">
                 {user_name}
               </a>
@@ -159,25 +168,17 @@ const LandScreen = ({ post }) => {
           </div>
         ) : (
           <div className="flex gap-4 justify-start sm:justify-between items-center mt-4">
-            <Link
-              href="tel:+256754535493"
-              passHref
-            >
+            <Link href={`tel:${getContact()}`} passHref>
               <a
                 target="_blank"
-                className="flex space-x-2 text-orange-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
-              >
+                className="flex space-x-2 text-orange-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-orange-100 active:scale-95 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center">
                 Call Us
               </a>
             </Link>
-            <Link
-              href={whatsappLink}
-              passHref
-            >
+            <Link href={whatsappLink} passHref>
               <a
                 target="_blank"
-                className="flex space-x-2 text-green-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-green-500 hover:bg-green-400 hover:text-green-100 active:scale-95 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center"
-              >
+                className="flex space-x-2 text-green-50 py-1 sm:py-2 md:py-4 px-2 rounded-md bg-green-500 hover:bg-green-400 hover:text-green-100 active:scale-95 transition duration-150 ease-in-out uppercase sm:grow sm:shrink-0 text-center items-center justify-center">
                 Whatsapp
               </a>
             </Link>
@@ -197,10 +198,7 @@ const LandScreen = ({ post }) => {
           <SimillarLands simillarLands={relatedPosts} />
         </div>
       ) : (
-        <Link
-          href="/"
-          passHref
-        >
+        <Link href="/" passHref>
           <div className="mx-auto py-4 sm:py-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
             <a className="flex justify-start items-center gap-2 hover:text-orange-400 transition cursor-pointer w-fit">
               <span>

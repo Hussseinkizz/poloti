@@ -8,14 +8,15 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   disable: !isProduction,
-  runtimeCaching
+  runtimeCaching,
 });
 
 const nextConfig = withPWA({
-    // next.js config
-    reactStrictMode: true,
-    images: {
-      domains: ['localhost', 'hjqtglhztxzfhnteptxu.supabase.co'],
-    },
+  // next.js config
+  reactStrictMode: true,
+  images: {
+    unoptimized: true,
+    domains: ['localhost', 'hjqtglhztxzfhnteptxu.supabase.co'],
+  },
 });
 module.exports = nextConfig;
