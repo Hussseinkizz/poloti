@@ -37,6 +37,7 @@ export default function LandScreenSlider({ photos, name }) {
                 src={photo}
                 layout="fill"
                 loading="lazy"
+                unoptimized={true}
                 objectFit="fill"
                 alt={`Image of ${name}`}
                 className={`w-full ${

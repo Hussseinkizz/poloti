@@ -14,8 +14,8 @@ const withPWA = require('next-pwa')({
 const nextConfig = withPWA({
   // next.js config
   reactStrictMode: true,
-  images: {
-    unoptimized: true,
+    images: {
+      // unoptimized: true,
     domains: ['localhost', 'hjqtglhztxzfhnteptxu.supabase.co'],
   },
 });

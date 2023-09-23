@@ -86,6 +86,7 @@ const UserScreen = ({ userposts }) => {
                             layout="fill"
                             loading="lazy"
                             objectFit="fill"
+                            unoptimized={true}
                             alt={`Image of ${post.location}`}
                             className={`w-full rounded-t-md hover:opacity-60 hover:scale-105 group-hover:scale-110 group-hover:opacity-75 transition duration-150 ease-linear ${
                               imageIsLoading
